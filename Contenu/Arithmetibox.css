@@ -1,0 +1,128 @@
+/***************************************************
+*****************     header 		****************
+***************************************************/
+
+header
+{
+	position: fixed;
+	background-color: rgba(180, 180, 200, 0.4);
+	width: 100%;
+	margin-left: -8px;
+	margin-top: -20px;
+}
+
+#titre
+{
+	margin-left: 50px;
+}
+
+/***************************************************
+*****************     main 		********************
+***************************************************/
+
+main
+{
+	padding-top: 60px; /*Ligne provisoire*/
+	/* les marges à gauche et droite "auto" permettent de centrer */
+	margin-left: auto;
+	margin-right: auto;
+	/* largeur de la partie centrale principale de l'affichage */
+	width: 100%;
+	/* Forcer à ce que tout le contenu de cette partie reste à l'intérieur de cette partie */
+	/* Par exemple: les marges ne débordent pas */
+	/* Par exemple: les float ne débordent pas */
+	overflow: hidden;
+	display: flex;
+}
+
+html
+{
+	font-family: 'Geomanist', sans-serif;
+	background-color: #f7e8ca;
+}
+
+a
+{
+	text-decoration: none;
+	color:inherit;
+}
+
+li
+{
+	list-style-type:none;
+}
+
+#MenuFonction
+{
+	background-color: #f7e8ca;
+}
+
+#affichage
+{
+	background-color: white;
+	width: 100%;
+	margin-left: 20px;
+}
+
+nav
+{
+	display: inline-block;
+	/*border: 1px solid black; /*ligne provisoire*/
+}
+
+section
+{
+	background-color: white;
+}
+
+#titreFonctions
+{
+	margin-left: 40px;
+	margin-bottom: 10px;
+}
+
+.listeF
+{
+	padding-top: 15px;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	display: block;
+
+	width : 200px;
+	height : 30px;
+
+	color : white;
+	background-color: rgba(180, 180, 200, 0.4);
+	border: 1px solid white;
+
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+ul :hover
+{
+	color: black;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/***************************************************
+*****************     FOOTER 		****************
+***************************************************/
+
+footer
+{
+	background-color: #111111;
+	width: 100%;
+	padding: 1px;
+	padding-right: 20px;
+	margin-left: -8px;
+}
+
+#texte_footer
+{
+	text-align: center;
+	color: white;
+	width: 100%;
+	font-size: 14px;
+}
