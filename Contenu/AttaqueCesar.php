@@ -43,9 +43,13 @@ Clef (optionnel)     : <input size='60' name='clef' type='text'><br>
                             break;
                         }
                         
-                        $decrypt = $decrypt.$_POST['alphabet'][$Y[$i]];
+                     
                     }//Fin for sur les paquet
                     if($test==false) break;
+                    $Y=array_reverse($Y);
+                    foreach($Y as $c => $v){
+                        $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                    }
                 }
                 if($test==false) continue;
                 
@@ -74,9 +78,12 @@ Clef (optionnel)     : <input size='60' name='clef' type='text'><br>
                         break;
                     }
                     
-                    $decrypt = $decrypt.$_POST['alphabet'][$Y[$i]];
                 }//Fin for sur les paquet
                 if($test==false) break;
+                $Y=array_reverse($Y);
+                foreach($Y as $c => $v){
+                    $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                }
             }
             if($test!=false)
                 echo $_POST['clef']." : <br>".$decrypt."<br>";
