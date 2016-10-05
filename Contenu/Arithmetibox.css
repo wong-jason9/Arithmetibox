@@ -8,15 +8,38 @@ header
 	background-color: rgba(180, 180, 200, 0.4);
 	width: 100%;
 	margin-left: -8px;
-	margin-top: -20px;
+	margin-top: -22px;
 }
 
-
+#logo_Arithmetibox
+{
+	width: 83px;
+	height: 83px;
+	margin-bottom: -38px;
+	margin-right: -35px;
+	margin-left: 10px;
+	padding-bottom: -10px;
+}
 
 #titre
 {
 	margin-left: 50px;
 	color: white;
+	display: inline-block;
+}
+
+header p
+{
+	float: right;
+	color: white;
+}
+
+#img_ataraxy
+{
+	width: 50px;
+	height: 50px;
+	float: right;
+	margin-right: 25px;
 }
 
 /***************************************************

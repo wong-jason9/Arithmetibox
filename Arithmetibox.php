@@ -9,7 +9,10 @@ davidulle@gmail.com-->
 </head>
 <body>
 <header>
+<img id="logo_Arithmetibox" src="Contenu/logo.svg" alt="logo_Arithmetibox"/>
 <h1 id="titre">Arithmetibox</h1>
+<a href="http://www.ataraxy.info/Accueil">
+<p>Lien vers Ataraxy<img id="img_ataraxy" src="Contenu/ataraxysvg.svg" alt="logo_ataraxy"/></a>
 </header>
 <main>
 <div id="MenuFonction">
