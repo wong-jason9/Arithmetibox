@@ -50,16 +50,9 @@ davidulle@gmail.com-->
             case 'affi':
                 break;
             case 'cong':
-                echo "<section>
-                <section>
-                <?-- Input -->
-                Congruence
-                </section>
-                <section>
-                Résultat
-                <?-- Affichage résultat -->
-                </section>
-                </section>";
+                echo "<section>";
+                include("Contenu/congruence.php");
+                echo "</section>";
                 break;
             case 'base':
                 echo "<section>
