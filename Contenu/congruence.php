@@ -1,12 +1,17 @@
-
+<!doctype html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
+<meta charset="utf-8"/>
+</head>
+<body>
   <form action='Arithmetibox.php?outil=cong' method='post'>
-    <h1>Congruence</h1>
     <p>
   		<input type="text" name='entierA'></input>
   		modulo
   		<input type="text" name='modulo'></input>
   		est congru à ...
-  		<input type="submit"/>
+  		<input type="submit" value="Calculer" class="boutton"/>
   	</p>
   </form>
   <?php

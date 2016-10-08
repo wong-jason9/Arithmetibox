@@ -176,6 +176,64 @@ ul :hover
 }
 
 /***************************************************
+********** MISE EN PAGE DES FONCTIONALITE **********
+***************************************************/
+
+#msg_fonctionnalité /*msg = mise en page*/
+{
+	margin: 20px;
+}
+
+input
+{
+	margin: 8px;
+}
+
+.boutton
+{
+	color: white;
+	background-color: black;
+	text-decoration:none;
+	border-radius:1px;
+	border-radius:1px;
+	border:1px solid #dbdbdb;
+	width: 100px;
+	height: 25px;
+	font-weight: 40px;
+	margin: 20px;
+}
+
+textarea
+{
+	width: 500px;
+	height: 200px;
+}
+
+/*.boutton {
+	box-shadow:inset 0px -3px 7px 0px #3b474d;
+	background: linear-gradient(to bottom, #96a1a8 5%, #616569 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#96a1a8', endColorstr='#616569',GradientType=0);
+	background-color:#96a1a8;
+	border:1px solid #dbdbdb;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	
+	text-shadow:0px 1px 0px #3f3f42;
+}
+.boutton:hover {
+	background: linear-gradient(top, #616569 5%, #96a1a8 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#616569s', endColorstr='#96a1a8',GradientType=0);
+	background-color: #616569;
+}
+*/
+
+
+
+/***************************************************
 *****************     FOOTER 		****************
 ***************************************************/
 

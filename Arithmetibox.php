@@ -19,15 +19,15 @@ davidulle@gmail.com-->
 <h2 id="titreFonctions">Fonctions</h2>
 <nav>
 <ul>
-<li><a class="listeF" href="Arithmetibox.php?outil=pgcd">Algorithme d'Euclide étendu</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Euclide</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Inverse modulaire</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Matrice modulaire</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=pgcd">Algorithme de factorisation</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=cesa">Exponentiation modulaire rapide</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=affi">Inverse matrice modulaire</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Test de primalité</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=cong">Matrice de changement de base</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=">Algorithme d'Euclide étendu</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Euclide</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Inverse modulaire</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=">Algorithme de factorisation</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=">Inverse matrice modulaire</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Test de primalité</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=">Matrice de changement de base</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
@@ -36,7 +36,7 @@ davidulle@gmail.com-->
 </nav>
 </div>
 <div id="affichage">
-<section>
+<section id="msg_fonctionnalité">
 <?php
     if(isset($_GET['outil'])){
         switch ($_GET['outil']){

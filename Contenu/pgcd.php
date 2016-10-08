@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<title> <?php echo 'Calcul PGCD'; ?> </title>
+<link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
 <meta charset="utf-8"/>
 </head>
 <body>
@@ -9,7 +9,7 @@
 <p>Pour calculer le PGCD nous avons besoin de : </br>
 Un nombre a :<input type="text" name="nbA"/></br>
 Un nombre b :<input type="text" name="nbB"/></br>
-<input type="submit" value="Calculer"></p>
+<input type="submit" value="Calculer" class="boutton"></p>
 </form>
 <?php
     

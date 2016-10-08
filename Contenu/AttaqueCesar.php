@@ -1,10 +1,18 @@
+<!doctype html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
+<meta charset="utf-8"/>
+</head>
+<body>
 <form action='Arithmetibox.php?outil=cesa' method='post'>
-Alphabet : <input size='60' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
-Message  : <textarea name='message'></textarea><br>
-Paquet   : <input size='60' name='paquet' type='text'><br>
-Clef (optionnel)     : <input size='60' name='clef' type='text'><br>
+Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 
-<input type='submit' value='Déchiffrer'>
+Paquet : &nbsp;&nbsp;&nbsp;&nbsp;<input size='50' name='paquet' type='text'><br>
+Clef (optionnel) :&nbsp;<input size='43' name='clef' type='text'><br>
+<p>Message : &nbsp;&nbsp;&nbsp;</p><textarea name='message'></textarea><br>
+
+<input type='submit' value='Déchiffrer'  class="boutton">
 </form>
 <?php
     $nbcarac=strlen($_POST['alphabet'])-1;
@@ -95,3 +103,5 @@ Clef (optionnel)     : <input size='60' name='clef' type='text'><br>
     
     //Fin du for sur les clefs
     ?>
+</body>
+</html> 
