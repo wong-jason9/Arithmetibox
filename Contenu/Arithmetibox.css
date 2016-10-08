@@ -5,18 +5,47 @@
 header
 {
 	position: fixed;
-	background-color: rgba(180, 180, 200, 0.4);
+	background-color: rgba(139, 141, 141, 0.5); 
+	color: rgba(139, 141, 141, 0.7);
 	width: 100%;
 	margin-left: -8px;
-	margin-top: -20px;
+	margin-top: -22px;
 }
 
-
+#logo_Arithmetibox
+{
+	width: 83px;
+	height: 83px;
+	margin-bottom: -38px;
+	margin-right: -35px;
+	margin-left: 10px;
+	padding-bottom: -10px;
+}
 
 #titre
 {
 	margin-left: 50px;
 	color: white;
+	display: inline-block;
+	font-family: 'Lato', sans-serif;
+	font-weight: 200;
+}
+
+header p
+{
+	float: right;
+	color: white;
+	font-weight: bold;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 200;
+}
+
+#img_ataraxy
+{
+	width: 50px;
+	height: 50px;
+	float: right;
+	margin-right: 25px;
 }
 
 /***************************************************
@@ -40,15 +69,13 @@ main
 
 html
 {
-	font-family: 'Geomanist', sans-serif;
-	background-color: #061d2f;
+	background-color: #EDEDED;
 }
 
 a
 {
 	text-decoration: none;
 	color:inherit;
-	font-family: 'Verdana', sans-serif;
 	font-weight: 50;
 }
 
@@ -59,8 +86,12 @@ li
 
 #MenuFonction
 {
-	background-color: #1796dc;
+	background-color: #9ac039;
 	padding-right: 10px;
+	margin-bottom: 10px;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 400;
+
 }
 
 #affichage
@@ -73,7 +104,6 @@ li
 nav
 {
 	display: inline-block;
-	/*border: 1px solid black; /*ligne provisoire*/
 }
 
 section
@@ -84,33 +114,59 @@ section
 #titreFonctions
 {
 	margin-left: 40px;
-	margin-bottom: 10px;
-	color: #def4fc;
+	margin-bottom: 5px;
+	color: white;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 500;
 }
 
 .listeF
 {
-	padding-top: 15px;
-	padding-bottom: 10px;
-	margin-bottom: 20px;
+	padding-top: 8px;
+	padding-bottom: 22px;
+	margin-bottom: 5px;
 	display: block;
 
 	width : 220px;
 	height : 30px;
 
 	color : white;
-	background-color: rgba(0, 78, 103, 0.61);
+	background-color: rgb(161, 162, 148);
 
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
 }
 
+/*Pour centrer le boutton bien au milieu de la 
+case quand le texte n'est pas sur deux lignes*/
+.texte_court 
+{
+	padding-top: 18px;
+	padding-bottom: 12px;
+}
+
 ul :hover
 {
-	color: black;
-	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-	background-color: rgba(8, 56, 82, 0.61);
+	color: #909590; 
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 1);
+	background-color: rgb(70, 70, 70);
+}
+
+#texte_a_propos
+{
+	background-color: #464646;
+	color: white;
+	text-align: center;
+	padding-right: 10%;
+	padding-left: 10%;
+
+	margin-bottom: -16px;
+	margin-right: -13px;
+	margin-left: -13px;
+	padding-bottom: 50px;
+	padding-top: 30px;
+    font-style: italic;
 }
 
 /***************************************************
@@ -132,4 +188,6 @@ footer
 	color: white;
 	width: 100%;
 	font-size: 14px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 200;
 }

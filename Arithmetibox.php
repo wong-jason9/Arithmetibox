@@ -9,21 +9,29 @@ davidulle@gmail.com-->
 </head>
 <body>
 <header>
-<h1 id="titre">Arithmetibox</h1>
+<img id="logo_Arithmetibox" src="Contenu/logo.svg" alt="logo_Arithmetibox"/>
+<h1 id="titre">ArithmetiBox</h1>
+<a href="http://www.ataraxy.info/Accueil">
+<p>Lien vers Ataraxy<img id="img_ataraxy" src="Contenu/ataraxysvg.svg" alt="logo_ataraxy"/></a>
 </header>
 <main>
 <div id="MenuFonction">
 <h2 id="titreFonctions">Fonctions</h2>
 <nav>
 <ul>
-<li><a class="listeF" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=cong">Congruence</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=pgcd">???</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=cesa">???</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=affi">???</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=cong">???</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=pgcd">Algorithme d'Euclide étendu</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Euclide</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Inverse modulaire</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Matrice modulaire</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=pgcd">Algorithme de factorisation</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=cesa">Exponentiation modulaire rapide</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=affi">Inverse matrice modulaire</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Test de primalité</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=cong">Matrice de changement de base</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
 </ul>
 </nav>
 </div>
@@ -95,12 +103,14 @@ davidulle@gmail.com-->
         }
     }
     ?>
-
-
-
 </section>
 </div>
 </main>
+<section id="texte_a_propos">
+<h2>A propos</h2>
+<p> Se site à été dévelloper dans le cadre d'un projet universitaire du semestre 3 du DUT informatique. Il est réalisé par cinq étudiant du groupa A1 de l'année 2016/2017. La page web est développer dans les languages HTML, CSS, PHP et LaTeX, il a pour but de créer une boite à outils d’arithmétique qui est intégrer à Ataraxy, les différent outils developper sont des algorithmes vue en cour de S3 d'arithmétique et de cryptanalyse, cour qui est encadrer par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII d'épinay Villetaneuse.
+</p>
+</section>
 </body>
 <footer>
 <p id="texte_footer"> Projet réalisées par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadouaribou || Copyright © 2016/2017</p>
