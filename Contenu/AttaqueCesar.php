@@ -43,7 +43,7 @@ Clef (optionnel)     : <input size='60' name='clef' type='text'><br>
                             break;
                         }
                         
-                     
+                        
                     }//Fin for sur les paquet
                     if($test==false) break;
                     $Y=array_reverse($Y);
@@ -89,7 +89,7 @@ Clef (optionnel)     : <input size='60' name='clef' type='text'><br>
                 echo $_POST['clef']." : <br>".$decrypt."<br>";
         }
     }
-
+    
     
     
     

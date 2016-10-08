@@ -27,17 +27,23 @@ header
 	margin-left: 50px;
 	color: white;
 	display: inline-block;
+<<<<<<< HEAD
 	font-family: 'Lato', sans-serif;
 	font-weight: 200;
+=======
+>>>>>>> adeec9873c948f7de55bbd4aa4fddb8006f592be
 }
 
 header p
 {
 	float: right;
 	color: white;
+<<<<<<< HEAD
 	font-weight: bold;
 	font-family: 'Lato', sans-serif; 
 	font-weight: 200;
+=======
+>>>>>>> adeec9873c948f7de55bbd4aa4fddb8006f592be
 }
 
 #img_ataraxy

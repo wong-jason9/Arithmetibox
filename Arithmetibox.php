@@ -41,16 +41,9 @@ davidulle@gmail.com-->
     if(isset($_GET['outil'])){
         switch ($_GET['outil']){
             case 'pgcd':
-                echo "<section>
-                <section>
-                <?-- Input -->
-                PGCD
-                </section>
-                <section>
-                Résultat
-                <?-- Affichage résultat -->
-                </section>
-                </section>";
+                echo "<section>";
+                include("Contenu/pgcd.php");
+                echo "</section>";
                 break;
                 
             case 'cesa':
@@ -60,28 +53,11 @@ davidulle@gmail.com-->
                 break;
                 
             case 'affi':
-                echo "<section>
-                <section>
-                <?-- Input -->
-                Affine
-                </section>
-                <section>
-                Résultat
-                <?-- Affichage résultat -->
-                </section>
-                </section>";
                 break;
             case 'cong':
-                echo "<section>
-                <section>
-                <?-- Input -->
-                Congruence
-                </section>
-                <section>
-                Résultat
-                <?-- Affichage résultat -->
-                </section>
-                </section>";
+                echo "<section>";
+                include("Contenu/congruence.php");
+                echo "</section>";
                 break;
             case 'base':
                 echo "<section>
