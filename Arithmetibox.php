@@ -23,7 +23,7 @@ davidulle@gmail.com-->
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Euclide</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Inverse modulaire</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=">Algorithme de factorisation</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=divi">Algorithme de factorisation</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Inverse matrice modulaire</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Test de primalité</a></li>
@@ -59,17 +59,16 @@ davidulle@gmail.com-->
                 include("Contenu/congruence.php");
                 echo "</section>";
                 break;
+            case 'divi':
+                echo "<section>";
+                include("Contenu/diviseur.php");
+                echo "</section>";
+                break;
+                
             case 'base':
-                echo "<section>
-                <section>
-                <?-- Input -->
-                Fonction
-                </section>
-                <section>
-                Résultat
-                <?-- Affichage résultat -->
-                </section>
-                </section>";
+                echo "<section>";
+                
+                echo "</section>";
                 break;
             default :
                 echo "<section>
