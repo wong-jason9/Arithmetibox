@@ -22,7 +22,7 @@ Nombre : <input size='30' name='nombre' type='text'><br>
             }
         }
         echo "</br>";
-        for($i=1; $i<sqrt($_POST['nombre']);$i++){
+        for($i=1; $i<=sqrt($_POST['nombre']);$i++){
             if($_POST['nombre']%$i==0){
                 echo $i." x ".($_POST['nombre']/$i);
                 echo "</br>";
