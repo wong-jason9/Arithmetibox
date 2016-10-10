@@ -25,13 +25,15 @@ davidulle@gmail.com-->
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=divi">Algorithme de factorisation</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide</a></li>
-<li><a class="listeF" href="Arithmetibox.php?outil=">Inverse matrice modulaire</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Test de primalité</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Matrice de changement de base</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Chiffrement de Hill</a></li>
+
 </ul>
 </nav>
 </div>
@@ -65,9 +67,9 @@ davidulle@gmail.com-->
                 echo "</section>";
                 break;
                 
-            case 'base':
+            case 'inverse_matrice_modulaire':
                 echo "<section>";
-                
+                include("Contenu/inverse_matrice_modulaire.php");
                 echo "</section>";
                 break;
             default :
