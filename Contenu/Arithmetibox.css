@@ -209,6 +209,12 @@ textarea
 	height: 200px;
 }
 
+.matrice
+{
+	width: 100px;
+	height: 40px;
+}
+
 /*.boutton {
 	box-shadow:inset 0px -3px 7px 0px #3b474d;
 	background: linear-gradient(to bottom, #96a1a8 5%, #616569 100%);
