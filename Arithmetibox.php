@@ -95,6 +95,6 @@ davidulle@gmail.com-->
 </section>
 </body>
 <footer>
-<p id="texte_footer"> Projet réalisées par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadouaribou || Copyright © 2016/2017</p>
+<p id="texte_footer"> Projet réalisées par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou || Copyright © 2016/2017</p>
 </footer>
 </html>

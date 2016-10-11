@@ -1,10 +1,4 @@
-<!doctype html>
-<html>
-<head>
-<link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
-<meta charset="utf-8"/>
-</head>
-<body>
+<?php require('debut.php'); ?>
 <form action='Arithmetibox.php?outil=cesa' method='post'>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 
