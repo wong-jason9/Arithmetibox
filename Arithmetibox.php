@@ -20,7 +20,7 @@ davidulle@gmail.com-->
 <nav>
 <ul>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Algorithme d'Euclide étendu</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Euclide</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Inverse modulaire</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=divi">Algorithme de factorisation</a></li>
@@ -64,6 +64,11 @@ davidulle@gmail.com-->
             case 'divi':
                 echo "<section>";
                 include("Contenu/diviseur.php");
+                echo "</section>";
+                break;
+            case 'eucl':
+                echo "<section>";
+                include("Contenu/euclide.php");
                 echo "</section>";
                 break;
                 

@@ -2,7 +2,7 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-<form action="euclide.php">
+<form action="Arithmetibox.php?outil=eucl" method="post">
 	<p>
 	Un nombre a :<input type="text" name="nbA" value=""/></br>
 	Un nombre b :<input type="text" name="nbB" value=""/></br>
@@ -23,7 +23,7 @@
     }
 
 
-euclide($_GET['nbA'],$_GET['nbB']);
+euclide($_POST  ['nbA'],$_POST['nbB']);
 
 ?>
 
