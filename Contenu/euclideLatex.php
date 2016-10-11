@@ -1,15 +1,10 @@
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
+<?php require('debut.php'); ?>
 <form action="euclide.php">
 	<p>
 	Un nombre a :<input type="text" name="nbA" value=""/></br>
 	Un nombre b :<input type="text" name="nbB" value=""/></br>
 	<input type="submit" value="Calculer"></p>
 </form>
-
-
 <?php
 
     function euclide($a, $b) {
@@ -26,12 +21,7 @@
 euclide($_GET['nbA'],$_GET['nbB']);
 
 ?>
-
-
-$$
-\begin{array}{l | c | c |r}
-
-\end{array}
-$$
+</body>
+</html>
 
 

@@ -1,9 +1,4 @@
-<!doctype html>
-<html>
-<head>
-<link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
-<meta charset="utf-8"/>
-</head>
+<?php require('debut.php'); ?>
 <body>
   <form action='Arithmetibox.php?outil=cong' method='post'>
     <p>
