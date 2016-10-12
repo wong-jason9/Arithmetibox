@@ -32,7 +32,7 @@ davidulle@gmail.com-->
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Chiffrement de Hill</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=Ch_Hill">Chiffrement de Hill</a></li>
 
 </ul>
 </nav>
@@ -71,10 +71,14 @@ davidulle@gmail.com-->
                 include("Contenu/euclide.php");
                 echo "</section>";
                 break;
-                
             case 'inverse_matrice_modulaire':
                 echo "<section>";
                 include("Contenu/inverse_matrice_modulaire.php");
+                echo "</section>";
+                break;
+            case 'Ch_Hill':
+                echo "<section>";
+                include("Contenu/chiffrementHill.php");
                 echo "</section>";
                 break;
             default :

@@ -66,6 +66,27 @@ $$
 		echo $A[$i].' '.$B[$i].' '.$Q[$i].' '.$R[$i].' '.$U[$i].' '.$V[$i].'</br>';
 	}
 
+
+        echo "\$\$";
+        echo "\\begin{array}{c|c|c|c c}";
+        echo "a&b&r&q&u&v\\\\\\hline";
+        
+        for($i=0; $i<count($A); $i++){
+			echo $A[$i].' '.$B[$i].' '.$Q[$i].' '.$R[$i].' '.$U[$i].' '.$V[$i].'</br>';
+			echo "\\\\";
+		}
+
+      /*  foreach($eucli as $v){
+            foreach($v as $r){
+                echo "$r&";
+            }
+            echo "\\\\";
+            
+        }*/
+        
+        echo"\\end{array}";
+        echo "\$\$";
+	
 	echo '</br>'.$A[0].'*'.$U[0].'+'.$B[0].'*'.$V[0].'= ';
 	echo ($A[0]*$U[0])+($B[0]*$V[0]).'</br></br>';
 
