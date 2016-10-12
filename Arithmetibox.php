@@ -32,11 +32,8 @@ davidulle@gmail.com-->
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
-<<<<<<< HEAD
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=Ch_Hill">Chiffrement de Hill</a></li>
-=======
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
->>>>>>> d2bb7022dbab5183b0d36f40faec1d29f250a0cf
+
 
 </ul>
 </nav>
@@ -85,11 +82,7 @@ davidulle@gmail.com-->
                 include("Contenu/inverse_matrice_modulaire.php");
                 echo "</section>";
                 break;
-            case 'Ch_Hill':
-                echo "<section>";
-                include("Contenu/chiffrementHill.php");
-                echo "</section>";
-                break;
+
             default :
                 echo "<section>
                 Bienvenue sur la page dédié au projet tutoré de 2016-2017</br>

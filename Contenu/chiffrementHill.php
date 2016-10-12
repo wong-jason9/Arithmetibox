@@ -1,17 +1,14 @@
-<<<<<<< HEAD
-<?php require('debut.php'); ?>
-<form action="Arithmetibox.php?outil=Ch_Hill" method = "post">
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<form action="Arithmetibox.php?outil=hill" method = "post">
 <p>Message à chiffrer : <input type="text" name="msgcode"/></p>
 <p>Message à dechiffrer : <input type="text" name="msgdcode"/></p>
 <p>Cle de chiffrement : <input type="text" name="clecode"/></p>
 <p> <input type="submit" name="chiffrer"/></p>
 </form>
-=======
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
 
->>>>>>> d2bb7022dbab5183b0d36f40faec1d29f250a0cf
 <?php
 
 function PGCD($a,$b){ //Fonction a remplacer par celle des autres !!
@@ -146,7 +143,6 @@ else {
 	
 	if(isset($_POST['msgcode'])and trim($_POST['msgcode'])!=''){ //Pour coder 
 		$msgc = $_POST['msgcode'];
-<<<<<<< HEAD
 		$Amccod = str_split(strtoupper($msgc));
 		$compt=count($Amccod);
 
@@ -158,10 +154,6 @@ else {
 
 		else $Amcod=$Amccod;
 
-=======
-		$Amcod = str_split(strtoupper($msgc));
-		$compt=count($Amcod);		
->>>>>>> d2bb7022dbab5183b0d36f40faec1d29f250a0cf
 		foreach($Amcod as $element){ //Afiche les lettres a chiffrer
 			echo $element.'<br>';
 		}
@@ -212,7 +204,6 @@ else {
 		$imelemc = $invmod*(-$Accod[2]); //Matrice Inverse element c
 		$imelemd = $invmod*$Accod[0]; //Matrice Inverse element d
 		$msgdc = $_POST['msgdcode'];
-<<<<<<< HEAD
 		$Amdccod = str_split(strtoupper($msgdc));
 		$dcompt=count($Amdccod);
 
@@ -224,10 +215,6 @@ else {
 
 		else $Amdcod=$Amdccod;
 
-=======
-		$Amdcod = str_split(strtoupper($msgdc));
-		$dcompt=count($Amdcod);
->>>>>>> d2bb7022dbab5183b0d36f40faec1d29f250a0cf
 		echo '<br>';		
 		
 		foreach($Amdcod as $element){ //Afiche les lettres a chiffrer
@@ -289,10 +276,6 @@ else {
 \$\$'; */
 
 echo "\$\$ \\LARGE det(A) \\equiv_{26} $mod <br>\$\$";
-<<<<<<< HEAD
-}
-?>
-=======
 
 
 
@@ -304,12 +287,3 @@ echo "\$\$ \\LARGE det(A) \\equiv_{26} $mod <br>\$\$";
 ?>
 
 
-<form action="Arithmetibox.php?outil=hill" method = "post">
-<p>Message à chiffrer : <input type="text" name="msgcode"/></p>
-<p>Message à dechiffrer : <input type="text" name="msgdcode"/></p>
-<p>Cle de chiffrement : <input type="text" name="clecode"/></p>
-<p> <input type="submit" name="chiffrer"/></p>
-</form>
-
-
->>>>>>> d2bb7022dbab5183b0d36f40faec1d29f250a0cf
