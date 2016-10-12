@@ -32,7 +32,11 @@ davidulle@gmail.com-->
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
+<<<<<<< HEAD
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=Ch_Hill">Chiffrement de Hill</a></li>
+=======
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
+>>>>>>> d2bb7022dbab5183b0d36f40faec1d29f250a0cf
 
 </ul>
 </nav>
@@ -42,6 +46,11 @@ davidulle@gmail.com-->
 <?php
     if(isset($_GET['outil'])){
         switch ($_GET['outil']){
+            case 'hill':
+                echo "<section>";
+                include("Contenu/chiffrementHill.php");
+                echo "</section>";
+                break;
             case 'pgcd':
                 echo "<section>";
                 include("Contenu/pgcd.php");
