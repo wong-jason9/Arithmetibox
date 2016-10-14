@@ -15,25 +15,25 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 
 <?php
     function cesar(){
-if(isset($_POST['alphabet']) and isset($_POST['paquet']) and isset($_POST['message'])){
-        $nbcarac=strlen($_POST['alphabet'])-1;
-        if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
-            preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
-            $Amess = explode($caract[2], $_POST['message']);
-        }
+	if(isset($_POST['alphabet']) and isset($_POST['paquet']) and isset($_POST['message'])){
+        	$nbcarac=strlen($_POST['alphabet'])-1;
+        	if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
+            		preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
+            		$Amess = explode($caract[2], $_POST['message']);
+        	}
         
         
         
-        $paquet = $_POST['paquet'];
-        $mod = 0;
-        for($i=0 ; $i<$paquet ; $i++) $mod = 100*$mod + $nbcarac;
-        $mod=$mod+1;
+        	$paquet = $_POST['paquet'];
+        	$mod = 0;
+        	for($i=0 ; $i<$paquet ; $i++) $mod = 100*$mod + $nbcarac;
+        	$mod=$mod+1;
         
         //$mod = 25252526
-        if($_POST['paquet']!='' and $_POST['message']!=''){
-            if($_POST['clef']==''){
+        	if($_POST['paquet']!='' and $_POST['message']!=''){
+            		if($_POST['clef']==''){
                 
-                for($clef = 0 ; $clef<$mod ; $clef++){
+                		for($clef = 0 ; $clef<$mod ; $clef++){
                     $test = true;
                     $decrypt = "";
                     //11h41
@@ -101,14 +101,18 @@ if(isset($_POST['alphabet']) and isset($_POST['paquet']) and isset($_POST['messa
                 }
                 if($test!=false){
                     $tab[]=$res;
+
+
                     $tab[]=$res1;
                     $tab[]=$res2;
                     $tab[]=$res3;
                     $tab[]=$res4;
+
                     echo $_POST['clef']." : <br>".$decrypt."<br>";
                 }
             }
-        }}
+        }
+	}
 	if(isset($tab))
         return $tab;
 	
@@ -118,7 +122,7 @@ if(isset($_POST['alphabet']) and isset($_POST['paquet']) and isset($_POST['messa
     if($cesa!=NULL){
         
         echo "\$\$";
-        echo "\\begin{array}{|c|c}";
+        echo "\\begin{array}{c|c}";
         foreach($cesa as $c=>$v){
             switch($c){
                 case 0:
@@ -131,37 +135,56 @@ if(isset($_POST['alphabet']) and isset($_POST['paquet']) and isset($_POST['messa
                     echo " modulo&";
                     break;
                 case 3:
-                    echo " séparation\ paquets&";
+                    echo " paquetage&";
                     break;
                 case 4:
                     echo " résultat&";
                     break;
             }
-            if($c==0 or $c==1 or $c==2){
-                foreach($v as $r){
-                    echo "\\multicolumn{$_POST['paquet']}{|c|}{$r} & ";
-                }
-            }
-            else{
-                foreach($v as $r){
-                    echo "$r&";
-                }
-            }
-            
+		if($c==0 or $c==1 or $c==2){
+			
+			if($_POST['paquet']%2==0){
+				foreach($v as $r){
+					for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+						echo "&";
+					}
+	                		echo $r.'&';
+					for($i=0; $i<(int)($_POST['paquet']/2)-1;$i++){
+						echo "&";
+					}
+				}
+			}
+			elseif($_POST['paquet']%2==1 and $_POST['paquet']!=1){
+				foreach($v as $r){				
+					for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+						echo "&";
+					}
+	             			echo "$r&";
+					for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+						echo "&";
+					}
+				}
+			}
+			else{
+				foreach($v as $r){			
+					echo "$r&";
+				}
+			}
+							
+		}
+		else{
+			foreach($v as $r){			
+				echo "$r&";
+			}
+		}
+
             echo "\\\\\\hline";
-            
-        }
-        
+        }   
         echo"\\end{array}";
         echo "\$\$";
-    }
     
-    
-    
-    
-    //Fin du for sur les clefs
+}
+
     ?>
-
-
 </body>
 </html>
