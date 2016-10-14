@@ -107,8 +107,6 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
                     $tab[]=$res2;
                     $tab[]=$res3;
                     $tab[]=$res4;
-
-                    echo $_POST['clef']." : <br>".$decrypt."<br>";
                 }
             }
         }
