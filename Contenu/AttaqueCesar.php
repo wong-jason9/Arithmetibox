@@ -15,6 +15,7 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 
 <?php
     function cesar(){
+if(isset($_POST['alphabet']) and isset($_POST['paquet']) and isset($_POST['message'])){
         $nbcarac=strlen($_POST['alphabet'])-1;
         if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
             preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
@@ -107,9 +108,12 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
                     echo $_POST['clef']." : <br>".$decrypt."<br>";
                 }
             }
-        }
+        }}
+	if(isset($tab))
         return $tab;
+	
     }
+
     $cesa=cesar();
     if($cesa!=NULL){
         
