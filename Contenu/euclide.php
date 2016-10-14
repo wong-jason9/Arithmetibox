@@ -23,26 +23,24 @@ Un nombre b :<input type="text" name="nbB" value=""/></br>
         }
         return $tab;
     }
-    
-    $eucli=euclide($_POST  ['nbA'],$_POST['nbB']);
-    
-    ?>
-<?php
-    if($eucli!=NULL){
+    if(!empty($_POST  ['nbA'])&&!empty($_POST  ['nbB'])){
+    	$eucli=euclide($_POST  ['nbA'],$_POST['nbB']);
+    	if($eucli!=NULL){
         
-        echo "\$\$";
-        echo "\\begin{array}{c|c|c|c c}";
-        echo "a&b&r&q\\\\\\hline";
+        	echo "\$\$";
+       		echo "\\begin{array}{c|c|c|c c}";
+        	echo "a&b&r&q\\\\\\hline";
         
-        foreach($eucli as $v){
-            foreach($v as $r){
+       	 foreach($eucli as $v){
+       	     foreach($v as $r){
                 echo "$r&";
-            }
-            echo "\\\\";
+       	     }
+       	     echo "\\\\";
             
-        }
+       	 }
         
-        echo"\\end{array}";
-        echo "\$\$";
-    }
+       	 echo"\\end{array}";
+       	 echo "\$\$";
+    	}
+}
     ?>
