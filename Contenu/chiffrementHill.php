@@ -11,7 +11,7 @@
 
 <?php
 
-	require('euclide.php');
+	require('euclidehill.php');
 
 function PGCD($a,$b){ //Fonction a remplacer par celle des autres !!
 
