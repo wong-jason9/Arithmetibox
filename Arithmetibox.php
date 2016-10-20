@@ -21,7 +21,7 @@ davidulle@gmail.com-->
 <ul>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Algorithme d'Euclide étendu</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide</a></li>
-<li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Inverse modulaire</a></li>
+<li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=divi">Algorithme de factorisation</a></li>
 <li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide</a></li>
@@ -80,6 +80,11 @@ davidulle@gmail.com-->
             case 'inverse_matrice_modulaire':
                 echo "<section>";
                 include("Contenu/inverse_matrice_modulaire.php");
+                echo "</section>";
+                break;
+            case 'inv_mod':
+                echo '<section>';
+                include("Contenu/inverse_modulaire.php");
                 echo "</section>";
                 break;
 

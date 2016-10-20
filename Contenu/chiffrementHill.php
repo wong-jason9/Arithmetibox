@@ -2,14 +2,16 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-<form action="Arithmetibox.php?outil=hill" method = "post">
-<p>Message à chiffrer : <input type="text" name="msgcode"/></p>
-<p>Message à dechiffrer : <input type="text" name="msgdcode"/></p>
-<p>Cle de chiffrement : <input type="text" name="clecode"/></p>
-<p> <input type="submit" name="chiffrer"/></p>
+<form action="chiffrementHill.php" method = "post">
+<p>Crypter : <input type="radio" name="msgcode" value="optcode"/> Decrypter : <input type="radio" name="msgcode" value="optdcode"/></p>
+<p>Message <input type="text" name="msg"/></p>
+<p>Cle : <input type="text" name="clecode"/></p>
+<p> <input type="submit" name="chiffrer" value="Crypter/Decrypter"/></p>
 </form>
 
 <?php
+
+	require('euclidehill.php');
 
 function PGCD($a,$b){ //Fonction a remplacer par celle des autres !!
 
@@ -131,42 +133,55 @@ $melemc = $Accod[2]; //Matrice element c
 $melemd = $Accod[3]; //Matrice element d
 
 $Gamma = (($melema*$melemd)-($melemc*$melemb)); //Calcul de det(A) avec Gamma
-
 //verifier si cle valide XO
 $mod=$Gamma%26; //Mod26
 if ($mod<0) $mod=$mod+26;
+echo "\$\$ \\Large det(A) = (($melema \\times $melemd)-($melemc \\times $melemb)) <br>\$\$";
+echo "\$\$ \\Large det(A) = $Gamma <br>\$\$";
+echo "\$\$ \\Large det(A) \\equiv_{26} $mod <br>\$\$";
+if($Gamma!=0) euclide(26,$mod);
 $pgcd=PGCD(26,$mod); // Calcul du PGCD
-$invmod = inverseModulaire($mod,26);
-if($pgcd!=1)  echo 'cle non valide';
+echo "\$\$ \\Large PGCD(26,$mod) = $pgcd <br>\$\$";
+
+if($pgcd==1)  { $invmod = inverseModulaire($mod,26); echo "\$\$ \\Large \\text{Cle valide} <br>\$\$"; }
+
+if($pgcd!=1)  echo "\$\$ \\Large \\text{Cle non valide} <br>\$\$";
 
 else {
 	
-	if(isset($_POST['msgcode'])and trim($_POST['msgcode'])!=''){ //Pour coder 
-		$msgc = $_POST['msgcode'];
+  if(isset($_POST['msg'])and trim($_POST['msg'])!=''){ //Pour coder 
+    	
+	if(strcmp($_POST['msgcode'],'optcode') == 0){
+	echo "\$\$	\\Large Cle = \\begin{pmatrix}";
+ 	echo "$melema&$melemb \\\\ $melemc&$melemd \\end{pmatrix} \$\$";
+  	echo '<br>';			
+		$msgc = $_POST['msg'];
 		$Amccod = str_split(strtoupper($msgc));
 		$compt=count($Amccod);
 
 		if ($compt%2!=0) {
-			$Amcod[$compt+1]; 
+			
 			$Amcod=$Amccod;
-			$Amcod[$compt+1]=0;
+			$Amcod[]='A'; 
+			$compt++;
 		}
-
 		else $Amcod=$Amccod;
 
+		echo 'Texte : ';
 		foreach($Amcod as $element){ //Afiche les lettres a chiffrer
-			echo $element.'<br>';
+			echo $element;
 		}
 		echo '<br>';		
 		
-		for($i=0;$i<$compt;$i++){ //Convertie les lettres en chiffres et les affichent
+		echo 'Codage : ';
+		for($i=0;$i<count($Amcod);$i++){ //Convertie les lettres en chiffres et les affichent
 			$Amcod[$i]=aton($Amcod[$i]);
-			echo $Amcod[$i].'<br>';
+			echo $Amcod[$i].' ';
 		} 	
 		echo '<br>';
 		
 		if ($compt%2==0){ //Crypte le msg
-			for($i=0;$i<$compt;$i++){
+			for($i=0;$i<count($Amcod);$i++){
 				if($i%2==0){
 					$val=$Amcod[$i];
 					$Amcod[$i]=(($Amcod[$i]*$melema)+($Amcod[$i+1]*$melemb))%26;
@@ -182,49 +197,58 @@ else {
 				}			
 			}
 		}
-		echo '<br>';
 		
+		echo 'A.X : ';
 		foreach($Amcod as $element){ //Affiche A.X
-			echo $element.'<br>';
+			echo $element.' ';
 		}
 		echo '<br>';		
 		
+		echo 'Decodage : ';
 		for($i=0;$i<$compt;$i++){ //Convertie les chiffres en lettres et les affichent
 			$Amcod[$i]=ntoa($Amcod[$i]);
-			echo $Amcod[$i].'<br>';
+			echo $Amcod[$i];
 		}
 		echo '<br>'; 		
 	}
-
-	if(isset($_POST['msgdcode'])and trim($_POST['msgdcode'])!=''){ //Pour decoder 
+  }
+ 
+ if(isset($_POST['msg'])and trim($_POST['msg'])!=''){ //Pour decoder 
+ 
+	if(strcmp($_POST['msgcode'],'optdcode') == 0){	
 		
-		
-		$imelema = $invmod*$Accod[3]; //Matrice Inverse element a 
-		$imelemb = $invmod*(-$Accod[1]); //Matrice Inverse element b
-		$imelemc = $invmod*(-$Accod[2]); //Matrice Inverse element c
-		$imelemd = $invmod*$Accod[0]; //Matrice Inverse element d
-		$msgdc = $_POST['msgdcode'];
+		$imelema = ($invmod*$Accod[3])%26; //Matrice Inverse element a 
+		$imelemb = ($invmod*(-$Accod[1]))%26; //Matrice Inverse element b
+		$imelemc = ($invmod*(-$Accod[2]))%26; //Matrice Inverse element c
+		$imelemd = ($invmod*$Accod[0])%26; //Matrice Inverse element d
+		$msgdc = $_POST['msg'];
 		$Amdccod = str_split(strtoupper($msgdc));
 		$dcompt=count($Amdccod);
-
-		if ($compt%2!=0) {
+		
+		echo "\$\$	\\Large A^{-1} \\equiv_{26} \\begin{pmatrix}";
+ 		echo "$imelema&$imelemb \\\\ $imelemc&$imelemd \\end{pmatrix} \$\$";
+  		echo '<br>';
+		
+		if ($dcompt%2!=0) {
 			$Amdcod[$compt+1]; 
-			$Amdcod=$Amdccod;
-			$Amdcod[$compt+1]=0;
+			$Amdcod[]='A';
+			$dcompt++;
 		}
 
 		else $Amdcod=$Amdccod;
 
 		echo '<br>';		
 		
+		echo 'Texte : ';
 		foreach($Amdcod as $element){ //Afiche les lettres a chiffrer
-			echo $element.'<br>';
+			echo $element;
 		}
 		echo '<br>';		
 		
+		echo 'Codage : ';
 		for($i=0;$i<$dcompt;$i++){ //Convertie les lettres en chiffres et les affichent
 			$Amdcod[$i]=aton($Amdcod[$i]);
-			echo $Amdcod[$i].'<br>';
+			echo $Amdcod[$i].' ';
 		} 	
 		echo '<br>';
 		
@@ -245,20 +269,22 @@ else {
 				}			
 			}
 		}
-		echo '<br>';
 		
+		echo 'A-1.X : ';
 		foreach($Amdcod as $element){ //Affiche A.X
-			echo $element.'<br>';
+			echo $element.' ';
 		}
 		echo '<br>';		
 		
+		echo 'Decodage : ';
 		for($i=0;$i<$dcompt;$i++){ //Convertie les chiffres en lettres et les affichent
 			$Amdcod[$i]=ntoa($Amdcod[$i]);
-			echo $Amdcod[$i].'<br>';
+			echo $Amdcod[$i];
 		}
 		echo '<br>'; 		
 	}
-
+ }
+ 
 }
 
 
@@ -275,7 +301,7 @@ else {
 \end{pmatrix} \\
 \$\$'; */
 
-echo "\$\$ \\LARGE det(A) \\equiv_{26} $mod <br>\$\$";
+
 
 
 
