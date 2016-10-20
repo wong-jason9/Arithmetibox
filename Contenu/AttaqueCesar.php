@@ -2,7 +2,7 @@
 
 <form action='Arithmetibox.php?outil=cesa' method='post'>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
-Paquet : <input size='50' name='paquet' type='text'><br>
+Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef (optionnel) : <input size='43' name='clef' type='text'><br>
 <p>Message :<br>
 <label>Format Code<input type='radio' name='methode' value='code'></label><label>Format Alphabet<input type='radio' name='methode' value='alpha'></label></p>
