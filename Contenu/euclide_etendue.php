@@ -44,7 +44,7 @@
         echo "\\begin{array}{c|c|c|c|c|c c}";
         echo "a&b&r&q&u&v\\\\\\hline";        
         for($i=0; $i<count($A); $i++){
-        echo $A[$i].'&'.$B[$i].'&'.$Q[$i].'&'.$R[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
+        echo $A[$i].'&'.$B[$i].'&'.$R[$i].'&'.$Q[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
         echo "\\\\";
       }
       echo"\\end{array}".'\\\\';
