@@ -19,7 +19,7 @@ davidulle@gmail.com-->
 <h2 id="titreFonctions">Fonctions</h2>
 <nav>
 <ul>
-<li><a class="listeF" href="Arithmetibox.php?outil=">Algorithme d'Euclide étendu</a></li>
+<li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
 <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire</a></li>
@@ -43,6 +43,11 @@ davidulle@gmail.com-->
 <?php
     if(isset($_GET['outil'])){
         switch ($_GET['outil']){
+            case 'eucl_etendue':
+                echo "<section>";
+                include("Contenu/euclide_etendue.php");
+                echo "</section>";
+                break;
             case 'hill':
                 echo "<section>";
                 include("Contenu/chiffrementHill.php");

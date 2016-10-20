@@ -200,7 +200,8 @@ input
 	width: 100px;
 	height: 25px;
 	font-weight: 40px;
-	margin: 20px;
+	margin: 30px;
+	margin-left: 100px;
 }
 
 textarea
@@ -211,8 +212,10 @@ textarea
 
 .matrice
 {
-	width: 100px;
-	height: 40px;
+	width: 55px;
+	height: 75px;
+	font-size: 30px;
+	margin-bottom: -32px;
 }
 
 /*.boutton {

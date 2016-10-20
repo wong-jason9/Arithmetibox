@@ -1,8 +1,7 @@
 <?php require('debut.php'); ?>
 <form action="Arithmetibox.php?outil=inverse_matrice_modulaire" method="POST">
-<p>Saisir votre matrice :</p>
-<textarea name='matrice' class="matrice"></textarea><br>
-<input type='submit' value='Calculer'  class="boutton">
+	<p>Saisir votre matrice: <textarea name='matrice' class="matrice"></textarea><br></p>
+	<input type='submit' value='Calculer'  class="boutton">
 </form>
 
 $$
@@ -22,10 +21,6 @@ $$
 
    function inverseModulaire($a,$n,$m1,$m3,$m5,$m7){
 
-	if(!(PGCD($a,$n)==1 || PGCD($a,$n)==-1)){
-		echo "echo le pgcd n'est pas égal a 1";
-		return 0;
-	}
 	 //On créer de tableau pour stocker A B R Q U V
 	$A=array();
 	$B=array();
@@ -57,67 +52,69 @@ $$
 		$V[$j] = -$Q[$j]*$U[$j]+$U[$j+1];
 	}
 	
-
-	/*$res = $U[0]%$n;
-	if($res<0) return $res+$n; //si u inférieur à 0 on retourne u+n
-	*/
-
-	for($i=0; $i<count($A); $i++){
-		echo $A[$i].' '.$B[$i].' '.$Q[$i].' '.$R[$i].' '.$U[$i].' '.$V[$i].'</br>';
+    echo "\$\$";
+    echo "\\begin{array}{c|c|c|c|c|c c}";
+    echo "a&b&r&q&u&v\\\\\\hline";        
+    for($i=0; $i<count($A); $i++){
+		echo $A[$i].'&'.$B[$i].'&'.$Q[$i].'&'.$R[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
+		echo "\\\\";
+	}
+    echo"\\end{array}".'\\\\';
+    echo "\$\$";
+	
+    if(!(PGCD($a,$n)==1 || PGCD($a,$n)==-1)){
+		echo "\$\$ \\textrm{Le pgcd n'est pas égale a 1}\$\$";
+		return 0;
 	}
 
+	echo "\$\$";
+	echo $A[0].'*'.$U[0].'+'.$B[0].'*'.$V[0].'= ';
+	echo ($A[0]*$U[0])+($B[0]*$V[0]);
+	echo "\$\$";
 
-        echo "\$\$";
-        echo "\\begin{array}{c|c|c|c c}";
-        echo "a&b&r&q&u&v\\\\\\hline";
-        
-        for($i=0; $i<count($A); $i++){
-			echo $A[$i].' '.$B[$i].' '.$Q[$i].' '.$R[$i].' '.$U[$i].' '.$V[$i].'</br>';
-			echo "\\\\";
-		}
+	echo "\$\$";
+	echo "M^{-1}\\equiv_{26}$V[0]\\times ";
+	echo "\\begin{pmatrix}";
+	echo $m7.'&'.-$m3.'\\\\';
+	echo -$m5.'&'.$m1;
+	echo "\\end{pmatrix}";
+	echo "\$\$";
 
-      /*  foreach($eucli as $v){
-            foreach($v as $r){
-                echo "$r&";
-            }
-            echo "\\\\";
-            
-        }*/
-        
-        echo"\\end{array}";
-        echo "\$\$";
-	
-	echo '</br>'.$A[0].'*'.$U[0].'+'.$B[0].'*'.$V[0].'= ';
-	echo ($A[0]*$U[0])+($B[0]*$V[0]).'</br></br>';
+	echo "\$\$";
+	echo "\\begin{pmatrix}";
+	echo $V[0]*$m7.'&'.$V[0]*$m3.'\\\\';
+	echo $V[0]*$m5.'&'.$V[0]*(-$m1);
+	echo "\\end{pmatrix}";
+	echo "\$\$";
 
-	echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp('.$m7.' '.-($m3).')'.'</br>';
-	echo 'M-&sup1=26 '.$V[0].'('.-($m5).' '.$m1.')</br></br>';
-
-	echo $V[0]*$m7.' '.$V[0]*(-$m3).'</br>';
-	echo $V[0]*$m5.' '.$V[0]*(-$m1).'</br></br>';
-
-	echo (($V[0]*$m7)%26).' '.(($V[0]*(-$m3))%26).'</br>';
-	echo (($V[0]*$m5)%26).' '.(($V[0]*(-$m1))%26).'</br>';
-
-	/*return $res;*/
+		echo "\$\$";
+	echo "\\begin{pmatrix}";
+	echo (($V[0]*$m7)%26).'&'.(($V[0]*(-$m3))%26).'\\\\';
+	echo (($V[0]*$m5)%26).'&'.(($V[0]*(-$m1))%26);
+	echo "\\end{pmatrix}";
+	echo "\$\$";
 }
+	
+	if(isset($_POST['matrice']) and trim($_POST['matrice'])!=''){
+    	if(preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#' , $_POST['matrice'], $res)){
+	        echo "\$\$";
+	        echo "M= ";
+			echo "\\begin{pmatrix}";
+			echo $res[1].'&'.$res[3].'\\\\';
+			echo $res[5].'&'.$res[7];
+			echo "\\end{pmatrix}";
+			echo "\$\$";
 
-    preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\ )([-]?[0-9]*)(\ )([-]?[0-9]*)#' , $_POST['matrice'], $res);
-        /*echo $res[0]."<br/>"; //sa affiche la totaliter du resultat
-        echo 'res 1: '.$res[1]."<br/>"; //sa afiche le premier rejex
-        echo $res[2]."<br/>";
-        echo 'res 3: '.$res[3]."<br/>";
-        echo $res[4]."<br/>";
-        echo 'res 5: '.$res[5]."<br/>";
-        echo $res[6]."<br/>";
-        echo 'res 7: '.$res[7]."<br/>";*/
+	        $nb= ($res[1]*$res[7]) - ($res[3]*$res[5]);
+	        echo "\$\$";
+	        echo 'det(M)= '.$res[1].' * '.$res[7].' - '.$res[3].' * '.$res[5].'\\\\';
+	        echo 'det(M)= '.($res[1]*$res[7]).' - '.($res[3]*$res[5]).'\\\\';
+	        echo 'det(M)= '.$nb;
+	        echo "\$\$";
 
-        $nb= ($res[1]*$res[7]) - ($res[3]*$res[5]);
-        echo 'dit(M)= '.$res[1].' * '.$res[7].' - '.$res[3].' * '.$res[5].'</br>';
-        echo 'dit(M)= '.($res[1]*$res[7]).' - '.($res[3]*$res[5]).'</br>';
-        echo 'dit(M)= '.$nb.'</br></br>';
-
-       inverseModulaire(26, $nb, $res[1], $res[3], $res[5], $res[7]);
+	       inverseModulaire(26, $nb, $res[1], $res[3], $res[5], $res[7]);
+   		}
+    }
     ?>
 </body>
 </html>
