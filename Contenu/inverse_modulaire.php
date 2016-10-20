@@ -26,42 +26,78 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
         }
         return $a;
       }
-/****#############################*/
-      function euclide($a, $b) {
-        while ($b!=0){
-            $t=$a%$b;
-            $res['0']=$a;
-            $res['1']=$b;
-            $res['2']=$t;
-            $res['3']=(int)($a/$b);
-            $tab[]=$res;
-            $a=$b;
-            $b=$t;
-        }
-        return $tab;
-    }
-    if(!empty($_POST['entier'])&&!empty($_POST['modulo'])){
-      $eucli=euclide($_POST['entier'],$_POST['modulo']);
-      if($eucli!=NULL){
-        
+
+      function euclideEtendue($a,$n){
+           //On créer de tableau pour stocker A B R Q U V
+          $A=array();
+          $B=array();
+          $Q=array();
+          $R=array();
+          $U=array();
+          $V=array();
+          
+          $i=0;
+          $A[$i]=$a;
+          $B[$i]=$n;
+          $Q[$i]=(int)($A[$i]/$B[$i]);  //calcul du quotient
+          $R[$i]=$A[$i]%$B[$i];     //calcul du reste
+
+          while($R[$i]!=0){   //tant que le reste n'est pas égale a 0 on continue a calculer
+            $i++;
+            $A[$i] = $B[$i-1];
+            $B[$i] = $R[$i-1];
+            $Q[$i]=(int)($A[$i]/$B[$i]);
+            $R[$i]=$A[$i]%$B[$i];
+          }
+          
+          //on initialise les deux première valeur de u et v a 0 et 1
+          $U[$i]=0;
+          $V[$i]=1;
+
+          for($j=$i-1 ; $j>=0 ; $j--){  //calcul de u et v
+            $U[$j] = $V[$j+1];
+            $V[$j] = -$Q[$j]*$U[$j]+$U[$j+1];
+          }
+          
+            echo "\$\$";
+            echo "\\begin{array}{c|c|c|c|c|c c}";
+            echo "a&b&r&q&u&v\\\\\\hline";        
+            for($i=0; $i<count($A); $i++){
+            echo $A[$i].'&'.$B[$i].'&'.$R[$i].'&'.$Q[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
+            echo "\\\\";
+          }
+          echo"\\end{array}".'\\\\';
           echo "\$\$";
-          echo "\\begin{array}{c|c|c|c c}";
-          echo "a&b&r&q\\\\\\hline";
-        
-         foreach($eucli as $v){
-             foreach($v as $r){
-                echo "$r&";
-             }
-             echo "\\\\";
-            
-         }
-        
-         echo"\\end{array}";
-         echo "\$\$";
       }
-}
-/*###############################*/
-      //*********
+
+      
+      function euclEtendu($a, $b){
+        $i = 0;
+        $A[$i] = $a;
+        $B[$i] = $b;
+        $R[$i] = $a%$b;
+        $Q[$i] = (int)($A[$i]/$B[$i]);
+
+        while($R[$i]!=0){
+          $i++;
+          $A[$i] = $B[$i-1];
+          $B[$i] = $R[$i-1];
+          $R[$i] = $A[$i]%$B[$i];
+          $Q[$i] = (int)($A[$i]/$B[$i]);
+        }
+        $U[$i] = 0;
+        $V[$i] = 1;
+        for($j = $i-1; $j>=0; $j--){
+          $U[$j] = $V[$j+1];
+          $V[$j] = -$Q[$j]*$U[$j]+$U[$j+1];
+        }
+    
+        $tab;
+        for($cpt=0; $cpt<=$i; $cpt++){
+          $tab[$cpt] = [$A[$cpt], $B[$cpt], $R[$cpt], $Q[$cpt], $U[$cpt], $V[$cpt]];
+        } 
+        return $tab;
+      }
 
       if(isset($_POST['entier']) and isset($_POST['modulo']) and
         trim($_POST['entier'])!='' and trim($_POST['modulo'])!='' and
@@ -100,7 +136,29 @@ src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
             $u[$j] = $v[$j+1];
             $v[$j] = -$q[$j]*$u[$j]+$u[$j+1];
           }
+/*
+          $tab = euclEtendu($_POST['entier'], $_POST['modulo']);
+          echo '
+          \\begin{array}{c|c|c|c|c|c}
+          \\hline
+          a & b & r & q & u & v \\\\
+          \\hline
+          '; 
+          foreach($tab as $c=>$v){
+            foreach($v as $val){
+              echo $val.'&';
+            }
+            echo '
+            \\\\
+            \\hline
+            ';
+          }
+          echo '\\end{array}';
+*/
+          euclideEtendue($_POST['entier'], $_POST['modulo']);
+          echo '\['.$_POST['entier'].'^{-1} \equiv_{'.$_POST['modulo'].'} '.$tab[0][5].' \]';
           echo '\['.$_POST['entier'].'^{-1} \equiv_{'.$_POST['modulo'].'} '.$v[0].'\]';
+
 
         }
         
