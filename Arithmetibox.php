@@ -105,12 +105,12 @@ davidulle@gmail.com-->
 </div>
 </main>
 <section id="texte_a_propos">
-<h2>A propos</h2>
-<p> Se site à été dévelloper dans le cadre d'un projet universitaire du semestre 3 du DUT informatique. Il est réalisé par cinq étudiant du groupa A1 de l'année 2016/2017. La page web est développer dans les languages HTML, CSS, PHP et LaTeX, il a pour but de créer une boite à outils d’arithmétique qui est intégrer à Ataraxy, les différent outils developper sont des algorithmes vue en cour de S3 d'arithmétique et de cryptanalyse, cour qui est encadrer par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII d'épinay Villetaneuse.
+<h2>À propos</h2>
+<p> Ce site a été développé dans le cadre d'un projet universitaire du semestre 3 du DUT informatique. Il est réalisé par cinq étudiants du groupa A1 de l'année 2016/2017. La page web est développée dans les languages HTML, CSS, PHP et LaTeX, il a pour but de créer une boîte à outils d’arithmétique qui est intégrée à Ataraxy, les différents outils développés sont des algorithmes étudiés en cours de S3 d'arithmétique et de cryptanalyse, cours qui est encadré par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII d'Épinay Villetaneuse.
 </p>
 </section>
 </body>
 <footer>
-<p id="texte_footer"> Projet réalisées par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou || Copyright © 2016/2017</p>
+<p id="texte_footer"> Projet réalisés par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou || Copyright © 2016/2017</p>
 </footer>
 </html>
