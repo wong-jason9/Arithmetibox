@@ -16,6 +16,7 @@ Liste des nombres premiers jusqu'a n : <input type="text" name="liste_primary"><
     }
 
 function era($n){
+    $sautDeLigne=0;
     $tab=array();
     for($i=0;$i<=$n;$i++) $tab[$i]=true;
     $tab[0]=false;
@@ -29,13 +30,18 @@ function era($n){
         }
     }
     echo "\$\$";
-    echo "\\begin{array}{| c |}";
-    echo "Nombre\\hspace{1cm}premier\\hspace{1cm} jusqu'à\\hspace{1cm} ".$_POST['liste_primary']."\\\\\\hline";
-    for($i=0;$i<$n;$i++){
-        if($tab[$i]){
-          echo $i;
-          echo "\\\\";  
-        } 
+    echo "\\text{Nombre premier jusqu'à ".$_POST['liste_primary']."}\\\ " ;
+    echo "\\begin{array}{|c|c|c|c|c|c|c|c|c|c}";
+    for($i=1;$i<=$n;$i++){
+        $sautDeLigne++;
+            if($tab[$i] && $sautDeLigne%10!=0){
+                echo '\boxed{'.$i.'}&';
+            }
+            elseif($sautDeLigne%10==0 ){
+                echo "$i&\\\\";
+            }
+            else
+                echo $i.'&';
     }   
     echo"\\end{array}";
     echo "\$\$";
