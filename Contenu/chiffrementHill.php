@@ -1,8 +1,5 @@
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-<form action="chiffrementHill.php" method = "post">
+<?php require('debut.php');?>
+<form action="Arithmetibox.php?outil=hill" method = "post">
 <p>Crypter : <input type="radio" name="msgcode" value="optcode"/> Decrypter : <input type="radio" name="msgcode" value="optdcode"/></p>
 <p>Message <input type="text" name="msg"/></p>
 <p>Cle : <input type="text" name="clecode"/></p>
@@ -125,7 +122,7 @@ function ntoa($a){ //Fonction qui transforme les chifres en lettre
 // Chiffrement De Hill
 if(!empty($_POST)){
 $ccod = $_POST['clecode'];
-$Accod = explode(' ', $ccod);
+$Accod = explode(' ', $ccod); // Tableu de caractere qui recupere la cles
 
 $melema = $Accod[0]; //Matrice element a 
 $melemb = $Accod[1]; //Matrice element b
@@ -156,12 +153,12 @@ else {
  	echo "$melema&$melemb \\\\ $melemc&$melemd \\end{pmatrix} \$\$";
   	echo '<br>';			
 		$msgc = $_POST['msg'];
-		$Amccod = str_split(strtoupper($msgc));
+		$Amccod = str_split(strtoupper($msgc)); // Tableu de caractere qui recupere le msg
 		$compt=count($Amccod);
 
-		if ($compt%2!=0) {
+		if ($compt%2!=0) { //Ajout du caractere A
 			
-			$Amcod=$Amccod;
+			$Amcod=$Amccod; 
 			$Amcod[]='A'; 
 			$compt++;
 		}

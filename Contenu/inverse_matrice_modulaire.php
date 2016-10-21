@@ -72,25 +72,28 @@ $$
 	echo ($A[0]*$U[0])+($B[0]*$V[0]);
 	echo "\$\$";
 
+	$m3 = -$m3;
+	$m5 = -$m5;
+
 	echo "\$\$";
 	echo "M^{-1}\\equiv_{26}$V[0]\\times ";
 	echo "\\begin{pmatrix}";
-	echo $m7.'&'.-$m3.'\\\\';
-	echo -$m5.'&'.$m1;
+	echo $m7.'&'.$m3.'\\\\';
+	echo $m5.'&'.$m1;
 	echo "\\end{pmatrix}";
 	echo "\$\$";
 
 	echo "\$\$";
 	echo "\\begin{pmatrix}";
 	echo $V[0]*$m7.'&'.$V[0]*$m3.'\\\\';
-	echo $V[0]*$m5.'&'.$V[0]*(-$m1);
+	echo $V[0]*$m5.'&'.$V[0]*$m1;
 	echo "\\end{pmatrix}";
 	echo "\$\$";
 
 		echo "\$\$";
 	echo "\\begin{pmatrix}";
-	echo (($V[0]*$m7)%26).'&'.(($V[0]*(-$m3))%26).'\\\\';
-	echo (($V[0]*$m5)%26).'&'.(($V[0]*(-$m1))%26);
+	echo (($V[0]*$m7)%26).'&'.(($V[0]*$m3)%26).'\\\\';
+	echo (($V[0]*$m5)%26).'&'.(($V[0]*$m1)%26);
 	echo "\\end{pmatrix}";
 	echo "\$\$";
 }
