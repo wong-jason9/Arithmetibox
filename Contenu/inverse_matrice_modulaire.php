@@ -1,7 +1,7 @@
 <?php require('debut.php'); ?>
 <form action="Arithmetibox.php?outil=inverse_matrice_modulaire" method="POST">
 	<p>Saisir votre matrice: <textarea name='matrice' class="matrice"></textarea><br></p>
-	<input type='submit' value='Calculer'  class="boutton">
+	<input type='submit' value='Calculer'  class="boutton_matrice">
 </form>
 
 $$

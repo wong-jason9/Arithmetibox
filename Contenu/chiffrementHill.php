@@ -1,15 +1,14 @@
 <?php require('debut.php');?>
 <form action="Arithmetibox.php?outil=hill" method = "post">
-<p>Crypter : <input type="radio" name="msgcode" value="optcode"/> Decrypter : <input type="radio" name="msgcode" value="optdcode"/></p>
-<p>Message <input type="text" name="msg"/></p>
-<p>Cle : <input type="text" name="clecode"/></p>
-<p> <input type="submit" name="chiffrer" value="Crypter/Decrypter"/></p>
+	<p>Crypter : <input type="radio" name="msgcode" value="optcode"/> Decrypter : <input type="radio" name="msgcode" value="optdcode"/></p>
+	<p>Message <input type="text" name="msg"/></p>
+	<!--<p>Cle : <input type="text" name="clecode"/></p>-->
+	 <p>Cle: <textarea name='clecode' class="matrice"></textarea></p>
+	<p> <input type="submit" name="chiffrer" value="Crypter/Decrypter" class="boutton_matrice"/></p>
 </form>
 
 <?php
-
 	require('euclidehill.php');
-
 function PGCD($a,$b){ //Fonction a remplacer par celle des autres !!
 
 	if($a==0) return $b;

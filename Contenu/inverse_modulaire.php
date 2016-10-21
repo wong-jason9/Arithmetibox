@@ -1,9 +1,9 @@
 <?php require("debut.php");?>
 <form action="Arithmetibox.php?outil=inv_mod" method='post'>	<?php //A definir action ici + outil dans Arithmetibox.php?>
 <p>
-<p>Entier<input type='text' name='entier'/></br>
-   Modulo<input type='text' name='modulo'/></br>
-<input type='submit' value='Calculer'/>
+<p>Entier :<input type='text' name='entier'/></br>
+   Modulo :<input type='text' name='modulo'/></br>
+<input type='submit' value='Calculer' class="boutton"/>
 </p>
 </form>
 <script type="text/javascript" async

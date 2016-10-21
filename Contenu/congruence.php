@@ -1,12 +1,12 @@
 <?php require('debut.php'); ?>
 <form action="Arithmetibox.php?outil=cong" method="post">
-<p>
-<input type="text" name='entierA'></input>
-modulo
-<input type="text" name='modulo'></input>
-est congru à ...
-<input type="submit"/>
-</p>
+  <p>
+  <input type="text" name='entierA'></input>
+  modulo
+  <input type="text" name='modulo'></input>
+  est congru à ...
+  <input type="submit" class="boutton"/>
+  </p>
 </form>
 <?php
     function partieEntiere($d){

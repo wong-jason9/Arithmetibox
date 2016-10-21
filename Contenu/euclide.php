@@ -1,11 +1,11 @@
 <?php require('debut.php'); ?>
 <form action="Arithmetibox.php?outil=eucl" method="post">
-<p>
-Un nombre a :<input type="text" name="nbA" value=""/></br>
-Un nombre b :<input type="text" name="nbB" value=""/></br>
-<input type="submit" value="Calculer"></p>
+  <p>
+  Un nombre a :<input type="text" name="nbA" value=""/></br>
+  Un nombre b :<input type="text" name="nbB" value=""/></br>
+  <input type="submit" value="Calculer" class="boutton">
+  </p>
 </form>
-
 
 <?php
     

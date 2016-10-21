@@ -1,9 +1,9 @@
 <?php require('debut.php'); ?>
 <form action="Arithmetibox.php?outil=eucl_etendue" method="POST">
   <p>
-    Un nombre a :<input type="text" name="nbA"/></br>
-    Un nombre b :<input type="text" name="nbB"/></br>
-    <input type="submit" value="Calculer">
+  Un nombre a :<input type="text" name="nbA"/></br>
+  Un nombre b :<input type="text" name="nbB"/></br>
+  <input type="submit" value="Calculer" class="boutton">
   </p>
 </form>
 

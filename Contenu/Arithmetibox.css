@@ -27,23 +27,17 @@ header
 	margin-left: 50px;
 	color: white;
 	display: inline-block;
-<<<<<<< HEAD
 	font-family: 'Lato', sans-serif;
 	font-weight: 200;
-=======
->>>>>>> adeec9873c948f7de55bbd4aa4fddb8006f592be
 }
 
 header p
 {
 	float: right;
 	color: white;
-<<<<<<< HEAD
 	font-weight: bold;
 	font-family: 'Lato', sans-serif; 
 	font-weight: 200;
-=======
->>>>>>> adeec9873c948f7de55bbd4aa4fddb8006f592be
 }
 
 #img_ataraxy
@@ -197,10 +191,25 @@ input
 	border-radius:1px;
 	border-radius:1px;
 	border:1px solid #dbdbdb;
-	width: 100px;
+	width: 120px;
 	height: 25px;
 	font-weight: 40px;
-	margin: 30px;
+	margin-top: 18px;
+	margin-left: 100px;
+}
+
+.boutton_matrice
+{
+	color: white;
+	background-color: black;
+	text-decoration:none;
+	border-radius:1px;
+	border-radius:1px;
+	border:1px solid #dbdbdb;
+	width: 120px;
+	height: 25px;
+	font-weight: 40px;
+	margin-top: 40px;
 	margin-left: 100px;
 }
 
@@ -212,35 +221,10 @@ textarea
 
 .matrice
 {
-	width: 55px;
+	width: 150px;
 	height: 75px;
-	font-size: 30px;
 	margin-bottom: -32px;
 }
-
-/*.boutton {
-	box-shadow:inset 0px -3px 7px 0px #3b474d;
-	background: linear-gradient(to bottom, #96a1a8 5%, #616569 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#96a1a8', endColorstr='#616569',GradientType=0);
-	background-color:#96a1a8;
-	border:1px solid #dbdbdb;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	padding:9px 23px;
-	
-	text-shadow:0px 1px 0px #3f3f42;
-}
-.boutton:hover {
-	background: linear-gradient(top, #616569 5%, #96a1a8 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#616569s', endColorstr='#96a1a8',GradientType=0);
-	background-color: #616569;
-}
-*/
-
-
 
 /***************************************************
 *****************     FOOTER 		****************
