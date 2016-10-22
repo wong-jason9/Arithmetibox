@@ -23,11 +23,11 @@ davidulle@gmail.com-->
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide (Jeremy)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire (Jack)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire(?)</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=divi">Algorithme de factorisation(Qui la fait ?)</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide(?)</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=algo_factorisation">Algorithme de factorisation(Qui la fait ?)</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide(Jack)</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire(Quentin)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Test de primalité(?)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Valuation Péadique(?)</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité(Jeremy)</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique(Quentin)</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=">Matrice de changement de base(?)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD(Jeremy)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar(Jason)</a></li>
@@ -63,7 +63,6 @@ davidulle@gmail.com-->
                     include("Contenu/AttaqueCesar.php");
                     echo "</section>";
                     break;
-                    
                 case 'affi':
                     break;
                 case 'cong':
@@ -71,9 +70,9 @@ davidulle@gmail.com-->
                     include("Contenu/congruence.php");
                     echo "</section>";
                     break;
-                case 'divi':
+                case 'algo_factorisation':
                     echo "<section>";
-                    include("Contenu/diviseur.php");
+                    include("Contenu/algo_factorisation.php");
                     echo "</section>";
                     break;
                 case 'eucl':
@@ -91,7 +90,16 @@ davidulle@gmail.com-->
                     include("Contenu/inverse_modulaire.php");
                     echo "</section>";
                     break;
-
+                case 'val_p_adique':
+                    echo '<section>';
+                    include("Contenu/valuation_p_adique.php");
+                    echo "</section>";
+                    break;
+                case 'test_primalite':
+                    echo '<section>';
+                    include("Contenu/test_primalite.php");
+                    echo "</section>";
+                    break;
                 default :
                     echo "<section>
                     Bienvenue sur la page dédié au projet tutoré de 2016-2017</br>

@@ -1,9 +1,9 @@
 <?php require('debut.php'); ?>
-<form action="nb_premier.php" method="post">
-<p> 
-Testez si un nombre est premier : <input type="text" name="test_primary"></br>
-Liste des nombres premiers jusqu'a n : <input type="text" name="liste_primary"></br>
-<input type="submit" value="Calculer"></p>
+<form action="Arithmetibox.php?outil=test_primalite" method="post">
+    <p> 
+    Testez si un nombre est premier : <input type="text" name="test_primary"></br>
+    Liste des nombres premiers jusqu'a n : <input type="text" name="liste_primary"></br>
+    <input type="submit" value="Calculer" class="boutton"></p>
 </form>
 
 <?php
@@ -59,3 +59,5 @@ if(isset($_POST['liste_primary'])&& !empty($_POST['liste_primary'])){
     era($_POST['liste_primary']);
 }
 ?>
+</body>
+</html>

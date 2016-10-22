@@ -1,11 +1,10 @@
-
 <?php require('debut.php'); ?>
-<form action="valuation_p.php" method="post">
-<p> 
-Entier n : <input type="text" name="entN"></br>
-Puissance de n : <input type="text" value="1" name="puissance"/></br>
-Valuation : <input type="text" name="mod"></br>
-<input type="submit" value="Calculer"></p>
+<form action="Arithmetibox.php?outil=val_p_adique" method="post">
+    <p> 
+    Entier n : <input type="text" name="entN"></br>
+    Puissance de n : <input type="text" value="1" name="puissance"/></br>
+    Valuation : <input type="text" name="mod"></br>
+    <input type="submit" value="Calculer" class="boutton"></p>
 </form>
 
 <?php
@@ -30,3 +29,5 @@ if(!empty($_POST['mod'])&&!empty($_POST['entN'])&&!empty($_POST['puissance'])){
     echo "\$\$";
 }
 ?>
+</body>
+</html>
