@@ -2,9 +2,9 @@
     require('fonctions.php'); ?>
 <form action="Arithmetibox.php?outil=cong" method="post">
   <p>
-  <input type="text" name='entierA'></input>
+  <input type="text" name='entierA'>
   modulo
-  <input type="text" name='modulo'></input>
+  <input type="text" name='modulo'>
   est congru à ...
   <input type="submit" class="boutton"/>
   </p>
