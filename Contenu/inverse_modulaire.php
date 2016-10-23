@@ -1,4 +1,6 @@
-<?php require("debut.php");?>
+<?php require("debut.php");
+      require("fonctions.php");
+?>
 <form action="Arithmetibox.php?outil=inv_mod" method='post'>	<?php //A definir action ici + outil dans Arithmetibox.php?>
 <p>
 <p>Entier :<input type='text' name='entier'/></br>
@@ -9,24 +11,7 @@
 <script type="text/javascript" async
 src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
-<?php
-      function partieEntiere($d){
-        if(preg_match('#\.#', $d)){
-            $tab = explode('.', $d);
-            return $tab[0];
-        }
-        else
-            return $d;
-      }
-      function pgcd($a, $b){
-        while($b != 0){
-          $r = $a%$b;
-          $a = $b;
-          $b = $r;
-        }
-        return $a;
-      }
-
+<?php     
       function euclideEtendue($a,$n){
            //On créer de tableau pour stocker A B R Q U V
           $A=array();
