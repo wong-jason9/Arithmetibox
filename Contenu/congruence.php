@@ -1,4 +1,5 @@
-<?php require('debut.php'); ?>
+<?php require('debut.php');
+    require('fonctions.php'); ?>
 <form action="Arithmetibox.php?outil=cong" method="post">
   <p>
   <input type="text" name='entierA'></input>
@@ -9,15 +10,6 @@
   </p>
 </form>
 <?php
-    function partieEntiere($d){
-        if(preg_match('#\.#', $d)){
-            $tab = explode('.', $d);
-            return $tab[0];
-        }
-        else
-            return $d;
-    }
-    
     if( isset($_POST['entierA']) and isset($_POST['modulo'])
         and trim($_POST['entierA'])!='' and trim($_POST['modulo'])!=''
         and preg_match('#^-?[0-9]+$#', $_POST['entierA']) and preg_match('#^-?[0-9]+$#', $_POST['modulo']) 

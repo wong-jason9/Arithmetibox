@@ -1,4 +1,5 @@
-<?php require('debut.php'); ?>
+<?php require('debut.php');
+    require('fonctions.php');?>
 <form action="Arithmetibox.php?outil=eucl" method="post">
   <p>
   Un nombre a :<input type="text" name="nbA" value=""/></br>
@@ -8,21 +9,6 @@
 </form>
 
 <?php
-    
-    function euclide($a, $b) {
-        while ($b!=0){
-            $t=$a%$b;
-            
-            $res['0']=$a;
-            $res['1']=$b;
-            $res['2']=$t;
-            $res['3']=(int)($a/$b);
-            $tab[]=$res;
-            $a=$b;
-            $b=$t;
-        }
-        return $tab;
-    }
     if(!empty($_POST  ['nbA'])&&!empty($_POST  ['nbB'])){
     	$eucli=euclide($_POST  ['nbA'],$_POST['nbB']);
     	if($eucli!=NULL){

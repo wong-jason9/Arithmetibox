@@ -1,4 +1,5 @@
-<?php require('debut.php'); ?>
+<?php require('debut.php');
+    require('fonctions.php');?>
 <form action="Arithmetibox.php?outil=val_p_adique" method="post">
     <p> 
     Entier n : <input type="text" name="entN"></br>
@@ -8,15 +9,6 @@
 </form>
 
 <?php
-
-function val_p($n,$mod,$pui){
-    $res=0;
-    while($n%$mod==0){
-        $res++;
-        $n=$n/$mod;
-    }
-    return $res*$pui;
-}
 if(!empty($_POST['mod'])&&!empty($_POST['entN'])&&!empty($_POST['puissance'])){
     echo "\$\$";
     echo "\\text{V}";

@@ -1,4 +1,5 @@
-<?php require('debut.php'); ?>
+<?php require('debut.php');
+    require('fonctions.php');?>
 <form action="Arithmetibox.php?outil=algo_factorisation" method="POST">
     Nombre : <input size='30' name='nombre' type='text'><br>
     <input type='submit' value='Calculer'  class="boutton">
@@ -24,6 +25,7 @@
         else
             echo "Saisie incorrecte.";
     }
+    
     ?>
 </body>
 </html>
