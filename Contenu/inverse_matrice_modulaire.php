@@ -4,22 +4,8 @@
 	<p>Saisir votre matrice: <textarea name='matrice' class="matrice"></textarea><br></p>
 	<input type='submit' value='Calculer'  class="boutton_matrice">
 </form>
-
-$$
-\begin{array}{l | c | c |r}
-\end{array}
-$$
  
 <?php
-    function pgcd($a, $b) {
-        while ($b!=0){
-            $t=$a%$b;
-            $a=$b;
-            $b=$t;
-        }
-        return $a;
-    }
-
    function inverseModulaire($a,$n,$m1,$m3,$m5,$m7){
 
 	 //On créer de tableau pour stocker A B R Q U V

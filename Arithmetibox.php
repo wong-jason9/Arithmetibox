@@ -64,6 +64,9 @@ davidulle@gmail.com-->
                     echo "</section>";
                     break;
                 case 'affi':
+                    echo "<section>";
+                    include("Contenu/AttaqueAffine.php");
+                    echo "</section>";
                     break;
                 case 'cong':
                     echo "<section>";
