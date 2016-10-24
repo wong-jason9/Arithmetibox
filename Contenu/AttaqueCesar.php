@@ -45,16 +45,15 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
             for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = 100*$mod + $nbcarac;
             $mod=$mod+1;
             
-            //$mod = 25252526
             if($_POST['paquet']!='' and $_POST['message']!=''){
+                //Affichage pour toutes les clés
+                
                 if($_POST['clef']==''){
-                    
                     for($clef = 0 ; $clef<$mod ; $clef++){
                         $test = true;
                         $decrypt = "";
-                        //11h41
                         foreach($Amess as $x){
-                            $y=(int)$x-$clef;
+                            $y=(int)$x-$_POST['clef'];
                             $y=$y%$mod;
                             if($y<0) $y=$y+$mod;
                             
@@ -69,7 +68,7 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
                                 }
                                 
                                 
-                            }//Fin for sur les paquet
+                            }
                             if($test==false) break;
                             $Y=array_reverse($Y);
                             foreach($Y as $c => $v){
@@ -82,11 +81,10 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
                         
                     }
                 }
+                //Affichage pour une seule clé
                 elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
-                    
                     $test = true;
                     $decrypt = "";
-                    //11h41
                     foreach($Amess as $x){
                         $res[]=$x;
                         $y=(int)$x-$_POST['clef'];
@@ -106,7 +104,7 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
                                 break;
                             }
                             
-                        }//Fin for sur les paquet
+                        }
                         if($test==false) break;
                         $Y=array_reverse($Y);
                         foreach($Y as $c => $v){
