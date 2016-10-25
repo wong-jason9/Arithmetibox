@@ -1,9 +1,10 @@
 <?php require('debut.php'); ?>
 
 <form action='Arithmetibox.php?outil=cesa' method='post'>
+<label>Décryptage<input type='radio' name='fonction' value='decrypt'></label><label>Cryptage<input type='radio' name='fonction' value='crypt'></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
-Clef (optionnel) : <input size='43' name='clef' type='text'><br>
+Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><br>
 <p>Message :<br>
 <label>Format Code<input type='radio' name='methode' value='code'></label><label>Format Alphabet<input type='radio' name='methode' value='alpha'></label></p>
 <textarea name='message'></textarea><br>
@@ -44,19 +45,55 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
             $mod = 0;
             for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = 100*$mod + $nbcarac;
             $mod=$mod+1;
-            
-            if($_POST['paquet']!='' and $_POST['message']!=''){
-                //Affichage pour toutes les clés
-                
-                if($_POST['clef']==''){
-                    for($clef = 0 ; $clef<$mod ; $clef++){
+            if($_POST['fonction']=='decrypt'){
+                if($_POST['paquet']!='' and $_POST['message']!=''){
+                    //Affichage pour toutes les clés
+                    
+                    if($_POST['clef']==''){
+                        for($clef = 0 ; $clef<$mod ; $clef++){
+                            $test = true;
+                            $decrypt = "";
+                            foreach($Amess as $x){
+                                $y=(int)$x-$_POST['clef'];
+                                $y=$y%$mod;
+                                if($y<0) $y=$y+$mod;
+                                
+                                $Y=array();
+                                for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
+                                    $Y[$i] = $y%100;
+                                    $y=($y - $Y[$i])/100;
+                                    
+                                    if($Y[$i]>$nbcarac) {
+                                        $test=false;
+                                        break;
+                                    }
+                                    
+                                    
+                                }
+                                if($test==false) break;
+                                $Y=array_reverse($Y);
+                                foreach($Y as $c => $v){
+                                    $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                                }
+                            }
+                            if($test==false) continue;
+                            
+                            echo $clef." : <br>".$decrypt."<br>";
+                            
+                        }
+                    }
+                    //Affichage pour une seule clé
+                    elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
                         $test = true;
                         $decrypt = "";
                         foreach($Amess as $x){
+                            $res[]=$x;
                             $y=(int)$x-$_POST['clef'];
+                            $res1[]=$y;
                             $y=$y%$mod;
-                            if($y<0) $y=$y+$mod;
                             
+                            if($y<0) $y=$y+$mod;
+                            $res2[]=$y;
                             $Y=array();
                             for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
                                 $Y[$i] = $y%100;
@@ -64,61 +101,78 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
                                 
                                 if($Y[$i]>$nbcarac) {
                                     $test=false;
+                                    echo "clef incorrecte";
                                     break;
                                 }
-                                
                                 
                             }
                             if($test==false) break;
                             $Y=array_reverse($Y);
                             foreach($Y as $c => $v){
+                                $res3[]=$v;
+                                $res4[]=$_POST['alphabet'][$Y[$c]];
                                 $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
                             }
                         }
-                        if($test==false) continue;
-                        
-                        echo $clef." : <br>".$decrypt."<br>";
-                        
+                        if($test!=false){
+                            $tab[]=$res;
+                            $tab[]=$res1;
+                            $tab[]=$res2;
+                            $tab[]=$res3;
+                            $tab[]=$res4;
+                        }
                     }
                 }
-                //Affichage pour une seule clé
-                elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
-                    $test = true;
-                    $decrypt = "";
-                    foreach($Amess as $x){
-                        $res[]=$x;
-                        $y=(int)$x-$_POST['clef'];
-                        $res1[]=$y;
-                        $y=$y%$mod;
-                        
-                        if($y<0) $y=$y+$mod;
-                        $res2[]=$y;
-                        $Y=array();
-                        for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
-                            $Y[$i] = $y%100;
-                            $y=($y - $Y[$i])/100;
-                            
-                            if($Y[$i]>$nbcarac) {
-                                $test=false;
-                                echo "clef incorrecte";
-                                break;
-                            }
-                            
-                        }
-                        if($test==false) break;
-                        $Y=array_reverse($Y);
-                        foreach($Y as $c => $v){
-                            $res3[]=$v;
-                            $res4[]=$_POST['alphabet'][$Y[$c]];
-                            $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
-                        }
+                
+            }
+            elseif($_POST['fonction']=='crypt'){
+                if($_POST['paquet']!='' and $_POST['message']!=''){
+                    //Affichage pour toutes les clés
+                    
+                    if($_POST['clef']==''){
+                        echo "Clé nécessaire";
                     }
-                    if($test!=false){
-                        $tab[]=$res;
-                        $tab[]=$res1;
-                        $tab[]=$res2;
-                        $tab[]=$res3;
-                        $tab[]=$res4;
+                    //Affichage pour une seule clé
+                    elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
+                        $test = true;
+                        $decrypt = "";
+                        foreach($Amess as $x){
+                            $res[]=$x;
+                            $y=(int)$x+$_POST['clef'];
+                            $res1[]=$y;
+                            $y=$y%$mod;
+                            
+                            if($y<0) $y=$y+$mod;
+                            $res2[]=$y;
+                            $Y=array();
+                            for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
+                                $Y[$i] = $y%100;
+                                $y=($y - $Y[$i])/100;
+                                
+                                if($Y[$i]>$nbcarac) {
+                                    $test=false;
+                                    echo "clef incorrecte";
+                                    break;
+                                }
+                                
+                            }
+                            if($test==false) break;
+                            $Y=array_reverse($Y);
+                            foreach($Y as $c => $v){
+                                $res3[]=$v;
+                                $res4[]=$_POST['alphabet'][$Y[$c]];
+                                $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                            }
+
+                        }
+                        if($test!=false){
+                            echo $_POST['clef']." : <br>".$decrypt."<br>";
+                            $tab[]=$res;
+                            $tab[]=$res1;
+                            $tab[]=$res2;
+                            $tab[]=$res3;
+                            $tab[]=$res4;
+                        }
                     }
                 }
             }
@@ -139,7 +193,7 @@ Clef (optionnel) : <input size='43' name='clef' type='text'><br>
                     echo " &";
                     break;
                 case 1:
-                    echo " - clef&";
+                    echo " clef&";
                     break;
                 case 2:
                     echo " modulo&";
