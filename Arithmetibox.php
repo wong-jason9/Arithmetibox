@@ -24,7 +24,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire (Jack)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=">Matrice modulaire(?)</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=algo_factorisation">Algorithme de factorisation(Qui la fait ?)</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=">Exponentiation modulaire rapide(Jack)</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide(Jack)</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire(Quentin)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité(Jeremy)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique(Quentin)</a></li>
@@ -102,6 +102,11 @@ davidulle@gmail.com-->
                     echo '<section>';
                     include("Contenu/test_primalite.php");
                     echo "</section>";
+                    break;
+                case 'expo_mod_rapide':
+                    echo '<section>';
+                    include("Contenu/exponentiation_modulaire_rapide.php");
+                    echo '</section>';
                     break;
                 default :
                     echo "<section>

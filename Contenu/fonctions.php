@@ -123,4 +123,29 @@
         }
         return $res*$pui;
     }
+
+    //Exponentiation modulaire rapide
+
+    function expoModRapide($entier, $puissance, $modulo){
+        $bin = decbin($puissance);
+        $taille = strlen($bin);
+        $tab = array();
+        for($i=0; $i < $taille; $i++){
+            if($i == 0)
+                $tab[0] = $entier%$modulo;
+            else
+                $tab[$i] = $tab[$i-1]*$tab[$i-1]%$modulo;
+        }
+        $res = 1;
+        for($i=0; $i<$taille; $i++){
+            if($bin[$taille-$i-1] == 1)
+                $res = $res*$tab[$i]%$modulo;
+        }
+            
+        return $res;
+    }
+
+    function carre($x){
+        return $x*$x;
+    }
 ?>
