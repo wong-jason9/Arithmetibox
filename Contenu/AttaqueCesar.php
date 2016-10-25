@@ -163,7 +163,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                                 $res4[]=$_POST['alphabet'][$Y[$c]];
                                 $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
                             }
-
+                            
                         }
                         if($test!=false){
                             echo $_POST['clef']." : <br>".$decrypt."<br>";
