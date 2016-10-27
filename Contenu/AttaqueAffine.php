@@ -6,13 +6,17 @@
 		Decrypter : <input type="radio" name="msgcode" value="decrypter"/></br>
 		clée (optionnel pour décrypter) : <input type="text" name="clee"></br>
 		paquet de n : <input type="text" name="paquet"></br>
-		alphabet : <input type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"></br>
+		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789"></br>
 		Message :</br>
 		Format Code <input type='radio' name='methode' value='code'>
 		Format Alphabet <input type='radio' name='methode' value='alphabet'></br>
-		<textarea name='message'>02-01-11-23-03</textarea></br>
+		<textarea name='message'></textarea></br>
 		<!--02-01-11-23-03-->
-		<input type="submit">
+		<!--28-27-37-49-29-->
+		<!--cblxd-->
+		<!--nsaiakpmoeecuocrrapo-->
+		<!--CblxD-->
+		<input type="submit" class="boutton">
 	</p>
 </form>
 
@@ -70,6 +74,18 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 	$mess = $_POST['message'];
 	$paquet = $_POST['paquet'];
 	$XYZ = $_POST['alphabet'];
+	$nbcarac=strlen($_POST['alphabet']);
+
+	if($_POST['alphabet']=="ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+		$nbcarac=$nbcarac-1;
+	/*echo $XYZ.'</br>';
+	echo $nbcarac;
+	$test=explode('-',$XYZ);
+	echo 'test:</br>';
+	foreach ($test as $key => $value) {
+		echo $key.'='.$value.'</br>';
+	}
+	$XYZ=$test;*/
 
 	$AffL1=array(); //Pour stocker les lettres du message si ce n'est pas un code
 
@@ -118,8 +134,8 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			$clefb=$res[3];
 
 			$mod = 0;
-			for($i=0 ; $i<$paquet ; $i++) //calculer le modulo en fonction du paquet (ex: paquet 1=26, paquet 2=2526)
-				$mod = 100*$mod + 25;
+			for($i=0 ; $i<$paquet ; $i++) //calculer le modulo en fonction du paquet
+				$mod = 100*$mod + $nbcarac;
 			$mod=$mod+1;
 
 			if(PGCD($clefa, $mod)!=1) //Si $clefa et $mod n'est pas une clee valide on passe
@@ -151,21 +167,29 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 					$y=$y+$mod;
 					
 				$Y=array();
-				for($i=0 ; $i<$paquet and $test==true; $i++){
-					$Y[$i] = $y%100;
-					/*$y=($y - $Y[$i])/100;	*/			
-					/*if($Y[$i]>25) {
-						$test=false;
-							break;
-					}*/
-					$decrypt = $decrypt.$XYZ[$Y[$i]];
-				}//Fin for sur les paquet
-				/*if($test==false)
-					break;*/
+                            for($i=0 ; $i<$paquet and $test==true; $i++){
+                                $Y[$i] = $y%100;
+                                $y=($y - $Y[$i])/100;
+                                
+                                if($Y[$i]>$nbcarac) {
+                                    $test=false;
+                                    echo "clef incorrecte";
+                                    break;
+                                }
+                                
+                            }
+                            if($test==false) break;
+                            $Y=array_reverse($Y);
+                            foreach($Y as $c => $v){
+                                $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                            }
+                        
+
+
 				$cmpt++;
 			}//Fin for sur le message		
-				/*if($test==false) 
-					continue;*/
+			/*if($test==false) 
+				continue;*/
 			$AffL6=str_split($decrypt);
 			
     		echo "\$\$";
@@ -217,7 +241,7 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 	{
 		$mod = 0;
 		for($i=0 ; $i<$paquet ; $i++) //calculer le modulo en fonction du paquet (ex: paquet 1=26, paquet 2=2526)
-			$mod = 100*$mod + 25;
+			$mod = 100*$mod + $nbcarac;
 		$mod=$mod+1;
 
 		for($clefa=0 ; $clefa<$mod ; $clefa++){	//On cherche la clee a
@@ -241,12 +265,8 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 					$Y=array();
 					for($i=0 ; $i<$paquet and $test==true; $i++){
 						$Y[$i] = $y%100;
-						/*echo 'y= '.$y.'</br>';
-						echo 'Y[$i]='.$Y[$i].'</br>';*/
 						$y=($y - $Y[$i])/100;
-						/*echo 'y= '.$y.'</br></br>';*/
-						
-						if($Y[$i]>25) {
+						if($Y[$i]>$nbcarac) {
 							$test=false;
 							break;
 						}
@@ -261,14 +281,117 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 				if($test==false) 
 					continue;
 				
-				echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong><br><br>".$decrypt."<hr>";
+				echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong><br><br>";
+				echo '<p>'.$decrypt.'</p>';
+				echo "<hr>";
 			
 			}//Fin for sur clefb
 
 			}//Fin for sur clefa
+			/*$AffL2=array();
+			$AffL3=array();
+			$AffL4=array();
+			$AffL5=array();
+			$AffL6=array();
+		$mod = 0;
+		for($i=0 ; $i<$paquet ; $i++) //calculer le modulo en fonction du paquet (ex: paquet 1=26, paquet 2=2526)
+			$mod = 100*$mod + $nbcarac;
+		$mod=$mod+1;
+
+		for($clefa=0 ; $clefa<$mod ; $clefa++){	//On cherche la clee a
+			if(PGCD($clefa, $mod)!=1) //Si $clefa et $mod n'est pas une clee valide on passe
+				continue;
+			$clefa1 = inverseModulaire($clefa, $mod);
+			if($clefa1==0)  //Si $clefa1 est égal à 0 on passe
+				continue;
+			
+			for($clefb = 0 ; $clefb<$mod ; $clefb++){	//On cherche la clee b
+				
+				$test = true;
+				$decrypt = "";
+
+				foreach($Amess as $x){	//On parcour le message
+					
+if($clefa == 59 and $clefb == 53){
+
+				$AffL2[]=$x;
+				$y=(int)$x-$clefb;
+				echo "clee b=".$clefb;
+				$AffL3[]=$y;
+				$y=$clefa1*$y; //clee a * (valeur - clee b)
+				$AffL4[]=$y;
+				$y=$y%$mod;
+				$AffL5[]=$y;
+
+				/*	$y=$clefa1*((int)$x-$clefb); //clee a * (valeur - clee b)
+					$y=$y%$mod;*/
+					/*if($y<0) //si modulo negatif on le met en positif
+						$y=$y+$mod;
+					
+					$Y=array();
+					for($i=0 ; $i<$paquet and $test==true; $i++){
+						$Y[$i] = $y%100;
+						$y=($y - $Y[$i])/100;
+
+						if($Y[$i]>$nbcarac) {
+							$test=false;
+							break;
+						}
+						
+						
+					}//Fin for sur les paquet
+                                if($test==false) break;
+                                $Y=array_reverse($Y);
+                                foreach($Y as $c => $v){
+                                    $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                                }
+
+				}//Fin for sur le message
+				}
+				
+				if($test==false) 
+					continue;
+
+		if($clefa == 59 and $clefb == 53){	
+echo "\$\$";
+    		echo "\\begin{array}";
+
+			
+				foreach ($AffL1 as $key => $value) {
+				echo $value;
+				echo "\\\\\\hline";
+			} 
+			
+				foreach ($AffL2 as $key => $value) {
+				echo $value;
+			}
+			echo "\\\\\\hline"; 
+				foreach ($AffL3 as $key => $value) {
+				echo $value;
+			}
+			echo "\\\\\\hline";
+				foreach ($AffL4 as $key => $value) {
+				echo $value;
+			}
+			echo "\\\\\\hline";
+				foreach ($AffL5 as $key => $value) {
+				echo $value;
+			}
+			echo "\\\\\\hline ";
+				foreach ($AffL6 as $key => $value) {
+				echo $value;
+			}
+			echo"\\end{array}".'\\\\';
+			echo "\$\$";
+				echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong><br><br>";
+				echo '<p>'.$decrypt.'</p>';
+				echo "<hr>";
+			}
+			}//Fin for sur clefb
+
+			}//Fin for sur clefa*/
 		}
 	}
-	else echo "Saisie incorrect";
 ?>
 </body>
 </html>

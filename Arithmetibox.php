@@ -31,7 +31,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF" href="Arithmetibox.php?outil=">Matrice de changement de base(?)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD(Jeremy)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar(Jason)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine(?)</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine(Quentin)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence(Jack)</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill(Fahath)</a></li>
                 </ul>
