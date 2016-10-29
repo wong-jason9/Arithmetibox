@@ -4,14 +4,14 @@
 	<p>
 		Crypter : <input type="radio" name="msgcode" value="crypter"/> 
 		Decrypter : <input type="radio" name="msgcode" value="decrypter"/></br>
-		clée (optionnel pour décrypter) : <input type="text" name="clee"></br>
-		paquet de n : <input type="text" name="paquet"></br>
+		clée (optionnel pour décrypter) : <input type="text" name="clee" value="1999 999"></br>
+		paquet de n : <input type="text" name="paquet" value="2"></br>
 		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"></br>
 		<!--ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789-->
 		Message :</br>
 		Format Code <input type='radio' name='methode' value='code'>
 		Format Alphabet <input type='radio' name='methode' value='alphabet'></br>
-		<textarea name='message'></textarea></br>
+		<textarea name='message'>21-00-02-00-13-02-04-18</textarea></br>
 		<!--VALEUR DE TEST:
 			02-01-11-23-03-->
 		<!--28-27-37-49-29-->
@@ -197,17 +197,19 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 				$Y=array();
                 for($i=0 ; $i<$paquet and $test==true; $i++){
                     $Y[$i] = $y%100;
+                    echo '$Y[$i]='.$Y[$i].'</br>';
                     $y=($y - $Y[$i])/100;
-                    echo $y;
+                    echo $i.'='.$y.'</br>';
 
-	                if($Y[$i]>$nbcarac) {
-                    	echo $Y[$i];
+	                if($Y[$i]>$nbcarac and $paquet==1){
+	                	echo $Y[$i]; //A SUPRIMMER
                     	$test=false;
-                    	echo "clef incorrecte";
+                    	echo "clef incorrecte pour crypter";
                     	break;
                     }
                                 
                 }
+                echo '</br>';
 
                 if($test==false) break;
                 $Y=array_reverse($Y);
@@ -226,6 +228,8 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			}
 			echo "\$\$";
 			affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
+
+			
 		}
 	}
 

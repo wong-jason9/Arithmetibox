@@ -1,0 +1,10 @@
+A FAIRE POUR LE PROCHAIN RENDEZ-VOUS:
+-Faire Hill et inverse modulaire opérationnelle et changer la saisie des matrices avec un textearea (sur plusieurs ligne)
+-Faire l’algorithme de factorisation (ex: 12 = 2*2*3)
+-Déterminer la valuation péadique
+-Faire l’algorithme d'expo rapide
+-Décryptage/Cryptage césar force brut avec dictionnaire et pareil pour affine
+
+-en php il y a une librairie qui s'appelle GMP qui joue avec des grand nombre donc on refait tout avec une gestion des grand entier (ex: GMPadd_$y)
+
+-preparer un fichier zipper pour le prof il sera mis sur la page
