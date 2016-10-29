@@ -2,11 +2,7 @@
 
 <form action='Arithmetibox.php?outil=cesa' method='post'>
 <label>Décryptage<input type='radio' name='fonction' value='decrypt' checked='checked'></label>
-<select name='attaque'>
-<option value='dico' selected='selected'>Attaque par dictionnaire</option>
-<option value='brute'>Attaque force brute</option>
-</select>
-<br><label>Cryptage<input type='radio' name='fonction' value='crypt'></label></p>
+<label>Cryptage<input type='radio' name='fonction' value='crypt'></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><br>
@@ -20,9 +16,10 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
     
     function cesar(){
         
-        $dico=['le','de','des','que','elle','je','tu','il','un','ou'];
+        $dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
             $Amess=array();
+            $text=array();
             $alphabet=str_split($_POST['alphabet']);
             if($_POST['methode']=='code'){
                 if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
@@ -84,21 +81,20 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                             }
                             if($test==false) continue;
                             $occurence=0;
-                            if($_POST['attaque']=='brute'){
-                                echo "<p>".$clef." : <br>".$decrypt."<br></p>";
-                            }
-                            else{
+                            $text[$clef]=$decrypt;
                             foreach($dico as $v){
                                 $occurence+=substr_count(strtolower($decrypt),$v);
                             }
                             if($occurence>$maxoccurence){
+                                $clefpossible= $clef;
                                 $decryptpossible=$decrypt;
                                 $maxoccurence=$occurence;
                             }
-                            }
                         }
-                        if($_POST['attaque']=='dico')
-                            echo "<p><br>Message le plus probable :<br> $decryptpossible</p>";
+                        echo "<p><br>Message le plus probable est celui de la clé : $clefpossible <br> $decryptpossible</p>";
+                        foreach($text as $cl => $te){
+                            echo "<p>".$cl." : <br>".$te."<br></p>";
+                        }
                     }
                     //Affichage pour une seule clé
                     elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
