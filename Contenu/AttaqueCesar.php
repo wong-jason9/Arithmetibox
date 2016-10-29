@@ -1,12 +1,17 @@
 <?php require('debut.php'); ?>
 
 <form action='Arithmetibox.php?outil=cesa' method='post'>
-<label>Décryptage<input type='radio' name='fonction' value='decrypt'></label><label>Cryptage<input type='radio' name='fonction' value='crypt'></label></p>
+<label>Décryptage<input type='radio' name='fonction' value='decrypt' checked='checked'></label>
+<select name='attaque'>
+<option value='dico' selected='selected'>Attaque par dictionnaire</option>
+<option value='brute'>Attaque force brute</option>
+</select>
+<br><label>Cryptage<input type='radio' name='fonction' value='crypt'></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><br>
 <p>Message :<br>
-<label>Format Code<input type='radio' name='methode' value='code'></label><label>Format Alphabet<input type='radio' name='methode' value='alpha'></label></p>
+<label>Format Alphabet<input type='radio' name='methode' value='alpha' checked='checked'></label><label>Format Code<input type='radio' name='methode' value='code'></label></p>
 <textarea name='message'></textarea><br>
 <input type='submit' value='Déchiffrer'  class="boutton">
 </form>
@@ -14,6 +19,8 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
 <?php
     
     function cesar(){
+        
+        $dico=['le','de','des','que','elle','je','tu','il','un','ou'];
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
             $Amess=array();
             $alphabet=str_split($_POST['alphabet']);
@@ -50,11 +57,12 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                     //Affichage pour toutes les clés
                     
                     if($_POST['clef']==''){
+                        $maxoccurence=0;
                         for($clef = 0 ; $clef<$mod ; $clef++){
                             $test = true;
                             $decrypt = "";
                             foreach($Amess as $x){
-                                $y=(int)$x-$_POST['clef'];
+                                $y=(int)$x-$clef;
                                 $y=$y%$mod;
                                 if($y<0) $y=$y+$mod;
                                 
@@ -67,8 +75,6 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                                         $test=false;
                                         break;
                                     }
-                                    
-                                    
                                 }
                                 if($test==false) break;
                                 $Y=array_reverse($Y);
@@ -77,10 +83,22 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                                 }
                             }
                             if($test==false) continue;
-                            
-                            echo $clef." : <br>".$decrypt."<br>";
-                            
+                            $occurence=0;
+                            if($_POST['attaque']=='brute'){
+                                echo "<p>".$clef." : <br>".$decrypt."<br></p>";
+                            }
+                            else{
+                            foreach($dico as $v){
+                                $occurence+=substr_count(strtolower($decrypt),$v);
+                            }
+                            if($occurence>$maxoccurence){
+                                $decryptpossible=$decrypt;
+                                $maxoccurence=$occurence;
+                            }
+                            }
                         }
+                        if($_POST['attaque']=='dico')
+                            echo "<p><br>Message le plus probable :<br> $decryptpossible</p>";
                     }
                     //Affichage pour une seule clé
                     elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
@@ -166,7 +184,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                             
                         }
                         if($test!=false){
-                            echo $_POST['clef']." : <br>".$decrypt."<br>";
+                            echo "<p>".$_POST['clef']." : <br>".$decrypt."<br></p>";
                             $tab[]=$res;
                             $tab[]=$res1;
                             $tab[]=$res2;
@@ -185,7 +203,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
     $cesa=cesar();
     if($cesa!=NULL){
         
-        echo "\$\$";
+        echo "<p>\$\$";
         echo "\\begin{array}{c|c}";
         foreach($cesa as $c=>$v){
             switch($c){
@@ -245,7 +263,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
             echo "\\\\\\hline";
         }
         echo"\\end{array}";
-        echo "\$\$";
+        echo "\$\$</p>";
         
     }
     
