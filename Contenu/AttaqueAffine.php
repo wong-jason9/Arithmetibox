@@ -4,14 +4,16 @@
 	<p>
 		Crypter : <input type="radio" name="msgcode" value="crypter"/> 
 		Decrypter : <input type="radio" name="msgcode" value="decrypter"/></br>
-		clée (optionnel pour décrypter) : <input type="text" name="clee" value="1999 999"></br>
-		paquet de n : <input type="text" name="paquet" value="2"></br>
-		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"></br>
+		clée (optionnel pour décrypter) : <input type="text" name="clee"></br>
+		Attaque par dictionnaire <input type='radio' name='opt_attaque' value='Avec_dico'>
+		Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dico'></br>
+		paquet de n : <input type="text" name="paquet" value="1"></br>
+		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789"></br>
 		<!--ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789-->
 		Message :</br>
 		Format Code <input type='radio' name='methode' value='code'>
 		Format Alphabet <input type='radio' name='methode' value='alphabet'></br>
-		<textarea name='message'>21-00-02-00-13-02-04-18</textarea></br>
+		<textarea name='message'>aMJiJzDuzXiVliVuzaMJiJzb1uzXiVliV4iJzuYbzeJzx4DGziGuV4oi4JzVuiD4YuzPiVzvM1Jz24D4eYzubzYMVb4zuJz3RO6wzsDzYz4JYP4VuzD4lVuGuJbzruYzVuo4bYzruzHMluVbzgwzpMkiVrzYuzruVMeDiJbzriJYzDz.uz1qlMV4uJzubziqiJbzaMJiJzDuzXiVliVuzoMGGuzPuVYMJJi.uzPV4Jo4PiDwzUVJMDrzKo1kiVtuJu..uVz4JbuVPVubuzDuzVMDuzb4bVuzeJz7ueJuzliVliVuzSe4zo1uVo1uzizhuJ.uVzDizGMVbzruzYuYzPiVuJbYziYYiYY4JuYzPiVzDuzo1uxzrzeJuzYuobuzirMViJbzDuYzYuVPuJbYwzviGuYzgiVDzvMJuYzKiJri1DzXuV.GiJzmuVVqz Putzubz2iAMzoMGPDubuJbzDizr4YbV4leb4MJzPV4Jo4PiDuwzz uzPVM7ubzruzVuiD4YuVzeJzx4DGzliYuzYeVzDuYzihuJbeVuYzruzaMJiJzuYbzruhuDMPPuzPiVzgrkiVrzHwzBVuYYGiJzizPiVb4Vzruz3RLFwz8D4huVzKbMJuzuoV4bzeJuzPVuG4uVuzhuVY4MJzrezYouJiV4MzGi4YzBVuYYGiJzSe4zGiJSeuzruzoiP4bienzhuJrzYuYzrVM4bYzizd4JMzduz ieVuJb44YwzvM1Jz24D4eYzuYbziDMVYzuJ.i.uzPMeVzVuiD4YuVzDuzx4DGzubzVuuoV4bzDuzYouJiV4Mwz uzbMeVJi.uzYuzruVMeDuzuJzgYPi.JuzreViJbzPDeYzruzSeibVuzGM4YzubzJuouYY4buzDizoVuib4MJzruzPDeY4ueVYzruoMVYz4GPMYiJbYzi4JY4zSeuzDizVuiD4Yib4MJzrzuxxubYzYPuo4ienzGuoiJ4SeuYzoMGPDunuYwzBDeY4ueVYzYouJuYz7e.uuYzbVMPzh4MDuJbuYzPiVzDuYzPVMreobueVYzYMJbzoMePuuYziezGMJbi.uwzz uzx4DGzoMJJi4bzDuzYeoouYzoMGGuVo4iDzizYizYMVb4uziezo4JuGizGiD.VuzruYzoV4b4SeuYziYYutzG4b4.uuYwz izliJruzMV4.4JiDuzruzXiY4DzBMDurMeV4YzuYbzDiV.uGuJbzYiDeuuzPMeVzYizSeiD4buwz uYzb1uGuYzPV4Jo4Pienzrezx4DGzYMJbzDuzYuoVubzruzDzio4uVzi4JY4zSeuzDizGMVbzubzDizVuJi4YYiJouzGi4YzeJuzPiVb4uzruYziJiDqYbuYzhM4bzriJYzDuzx4DGzeJuzouDulVib4MJzrezYeV1MGGuzubzruzDz4Jr4h4reiD4YGuzVuhuJezuJzhM.euziezrulebzruYziJJuuYz3RO0wz uzx4DGzDiJouzDizoiVV4uVuzruzKo1kiVtuJu..uVzubzeJuzYe4buzaMJiJzDuzduYbVeobueVzYMVbzuJz3ROCwzsDzViPPMVbuzPiVzDizYe4buzrz4GPMVbiJbYzPVMx4bYzizbVihuVYzYuYzr4huVYuYzYMVb4uYzuJzh4ruMw</textarea></br>
 		<!--VALEUR DE TEST:
 			02-01-11-23-03-->
 		<!--28-27-37-49-29-->
@@ -297,9 +299,12 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 		}
 	}
 
-	if($_POST['msgcode']=='decrypter' and $_POST['clee']=='')	//DECRYPTER SI PAS DE CLEE
+	if($_POST['msgcode']=='decrypter' and $_POST['clee']=='' and isset($_POST['opt_attaque']) and trim($_POST['opt_attaque'])!='')	//DECRYPTER SI PAS DE CLEE
 	{
+
+        $dico=[' le ','de ','des ',' que ',' elle ',' je ',' tu ',' il ',' un ',' ou ',' la ',' les ',' une ',' et ',' pour ',' par '];
 		$mod = calculeModulo($paquet, $nbcarac);
+		$maxoccurence=0;
 
 		for($clefa=0 ; $clefa<$mod ; $clefa++){	//On cherche la clee a
 			if(PGCD($clefa, $mod)!=1) //Si $clefa et $mod n'est pas une clee valide on passe
@@ -336,12 +341,34 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 				if($test==false) 
 					continue;
 				
-				echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong></br>";
-				echo '<p>'.$decrypt.'</p></br>';
-				echo "<hr>";
+				if($_POST['opt_attaque']=='Sans_dico'){
+					echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong></br>";
+					echo '<p>'.$decrypt.'</p></br>';
+					echo "<hr>";
+				}
+				else{
+					$occurence=0;
+	                /*$text[$clef]=$decrypt;*/
+	                foreach($dico as $v){
+	                    $occurence+=substr_count(strtolower($decrypt),$v);
+	                }
+	                if($occurence>$maxoccurence){
+	                    $clefpossiblea= $clefa;
+	                    $clefpossiblea1= $clefa1;
+	                    $clefpossibleb= $clefb;
+	                    $decryptpossible= $decrypt;
+	                    $maxoccurence= $occurence;
+	                }
+	            }
 			}//Fin for sur clefb
 
 			}//Fin for sur clefa
+			if($_POST['opt_attaque']=='Avec_dico'){
+				echo "<p><br>Message le plus probable est celui de la clé :<br> <strong>a =$clefpossiblea <br> a-&sup1 =$clefpossiblea1 <br> b =$clefpossibleb <br></strong><br> $decryptpossible</p>";
+			}
+            /*foreach($text as $cl => $te){
+                echo "<p>".$cl." : <br>".$te."<br></p>";
+            }*/
 		}//FIN DU IF POUR DECRYPTER SI PAS DE CLEE
 	}
 ?>
