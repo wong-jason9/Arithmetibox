@@ -19,19 +19,19 @@ davidulle@gmail.com-->
             <h2 id="titreFonctions">Fonctions</h2>
             <nav>
                 <ul>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu (Quentin)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide (Jeremy)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire (Jack)</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=algo_factorisation">Algorithme de factorisation(Qui la fait ?)</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide(Jack)</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire(Quentin)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité(Jeremy)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique(Jeremy)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD(Jeremy)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar(Jason)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Méthode Affine(Quentin)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence(Jack)</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill(Fahath)</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=algo_factorisation">Algorithme de factorisation</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
                 </ul>
             </nav>
         </div>
