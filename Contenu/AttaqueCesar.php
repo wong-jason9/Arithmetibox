@@ -147,16 +147,19 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                     }
                     //Affichage pour une seule clé
                     elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
-                        $test = true;
-                        $decrypt = "";
                         foreach($Amess as $x){
                             $y=(int)$x+$_POST['clef'];
                             $y=$y%$mod;
                             $res1[]=$y;
                             
                         }
+                        echo $_POST['message']."<br>";
+                        $i=0;
                         foreach($res1 as $v){
-                            echo $v."-";
+                            echo $v;
+                            $i++;
+                            if($i<count($res1))
+                                echo "-";
                         }
                         
                     }
