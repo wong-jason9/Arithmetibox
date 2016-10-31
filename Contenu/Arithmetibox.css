@@ -226,6 +226,14 @@ textarea
 	margin-bottom: -32px;
 }
 
+.message 
+/*Pour que le message afficher au
+ décryptage passe à la ligne tout seul*/
+{
+	width: 43%;
+	word-wrap: break-word;
+}
+
 /***************************************************
 *****************     FOOTER 		****************
 ***************************************************/
