@@ -141,7 +141,6 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
             }
             elseif($_POST['fonction']=='crypt'){
                 if($_POST['paquet']!='' and $_POST['message']!=''){
-                    //Affichage pour toutes les clés
                     
                     if($_POST['clef']==''){
                         echo "Clé nécessaire";
@@ -151,42 +150,15 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                         $test = true;
                         $decrypt = "";
                         foreach($Amess as $x){
-                            $res[]=$x;
                             $y=(int)$x+$_POST['clef'];
-                            $res1[]=$y;
                             $y=$y%$mod;
-                            
-                            if($y<0) $y=$y+$mod;
-                            $res2[]=$y;
-                            $Y=array();
-                            for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
-                                $Y[$i] = $y%100;
-                                $y=($y - $Y[$i])/100;
-                                
-                                if($Y[$i]>$nbcarac) {
-                                    $test=false;
-                                    echo "clef incorrecte";
-                                    break;
-                                }
-                                
-                            }
-                            if($test==false) break;
-                            $Y=array_reverse($Y);
-                            foreach($Y as $c => $v){
-                                $res3[]=$v;
-                                $res4[]=$_POST['alphabet'][$Y[$c]];
-                                $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
-                            }
+                            $res1[]=$y;
                             
                         }
-                        if($test!=false){
-                            echo "<p>".$_POST['clef']." : <br>".$decrypt."<br></p>";
-                            $tab[]=$res;
-                            $tab[]=$res1;
-                            $tab[]=$res2;
-                            $tab[]=$res3;
-                            $tab[]=$res4;
+                        foreach($res1 as $v){
+                            echo $v."-";
                         }
+                        
                     }
                 }
             }
