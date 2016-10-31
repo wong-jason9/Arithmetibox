@@ -2,18 +2,18 @@
 
 <form action="Arithmetibox.php?outil=affi" method="post">
 	<p>
-		Crypter : <input type="radio" name="msgcode" value="crypter"/> 
-		Decrypter : <input type="radio" name="msgcode" value="decrypter"/></br>
-		clée (optionnel pour décrypter) : <input type="text" name="clee" value="1999 999"></br>
+		Crypter : <input type="radio" name="msgcode" value="crypter"> 
+		Decrypter : <input type="radio" name="msgcode" value="decrypter"></br>
+		clée (optionnel pour décrypter) : <input type="text" name="clee"></br>
 		Attaque par dictionnaire <input type='radio' name='opt_attaque' value='Avec_dico'>
 		Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dico'></br>
-		paquet de n : <input type="text" name="paquet" value="2"></br>
+		paquet de n : <input type="text" name="paquet"></br>
 		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"></br>
 		<!--ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789-->
 		Message :</br>
 		Format Code <input type='radio' name='methode' value='code'>
 		Format Alphabet <input type='radio' name='methode' value='alphabet'></br>
-		<textarea name='message'>21-00-02-00-13-02-04-18</textarea></br>
+		<textarea name='message'></textarea></br>
 		<!--VALEUR DE TEST:
 			02-01-11-23-03-->
 		<!--28-27-37-49-29-->
@@ -23,6 +23,7 @@
 		<!--CblxD-->
 		<!--VOICI-->
 		<!--21-00-02-00-13-02-04-18-->
+		<!--687-1691-117-1369-->
 		<input type="submit" class="boutton">
 	</p>
 </form>
@@ -68,6 +69,16 @@ function inverseModulaire($a,$n){
 		$V[$j] = -$Q[$j]*$U[$j]+$U[$j+1];
 	}
 	
+   /*echo "\$\$";
+    echo "\\begin{array}{c|c|c|c|c|c c}";
+    echo "a&b&r&q&u&v\\\\\\hline";        
+    for($i=0; $i<count($A); $i++){
+		echo $A[$i].'&'.$B[$i].'&'.$R[$i].'&'.$Q[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
+		echo "\\\\";
+	}
+    echo"\\end{array}".'\\\\';
+    echo "\$\$";*/
+
 	$res = $U[0]%$n;
 	if($res<0) return $res+$n;
 	return $res;
@@ -104,9 +115,20 @@ function affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6){
 				if(($i+1)!=$cmpt) echo '&';
 			}
 			echo "\\\\\\hline ";
-			for($i=0; $i<$cmpt; $i++) {
-				echo $AffL6[$i];
-				if(($i+1)!=$cmpt) echo '&';
+			for($i=0; $i<count($AffL6); $i++) {
+				if($_POST['paquet']==1 and $_POST['msgcode']=="crypter"){
+					echo $AffL6[$i];
+					if(($i+1)!=$cmpt) echo '&';
+				}
+				else{
+					$j=0;
+					while($j!=($_POST['paquet'])){ //A MODIFIER POUR D'AUTRE PAQUET
+						echo $AffL6[$j+$i];
+						$j++;
+					}
+					$i=$i+$j-1;
+					echo '&';
+				}
 			}
 			echo"\\end{array}".'\\\\';
 			echo "\$\$";
@@ -126,13 +148,12 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 	$paquet = $_POST['paquet'];
 	$XYZ = $_POST['alphabet'];
 	$nbcarac=strlen($_POST['alphabet'])-1;
-	$AffL2=array();
+	$AffL1=array(); //Pour stocker les lettres du message si ce n'est pas un code
+	$AffL2=array();  
 	$AffL3=array();
 	$AffL4=array();
 	$AffL5=array();
 	$AffL6=array();
-
-	$AffL1=array(); //Pour stocker les lettres du message si ce n'est pas un code
 
 	if($_POST['methode']=='alphabet'){ //convertir alphabet au format code
 		$alphabet=str_split($_POST['alphabet']);
@@ -184,9 +205,18 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			$test = true;
 			$decrypt = "";
 			$cmpt = 0;
-			foreach($Amess as $x){	//On parcour le message
-				$AffL2[$cmpt]=$x;
-				$y=(int)$x*$clefa;
+			for($j=0; $j<count($Amess); $j++){
+			/*foreach($Amess as $key => $x){	//On parcour le message
+				echo "clee=$key valeur=$x</br>";*/
+				$AffL2[$cmpt]=$Amess[$j];
+				
+
+				if(((($j+1)%$paquet)==0) and $paquet!=1){
+					if($Amess[$j]=='00') $y = (int)($Amess[$j-1]*$clefa.$Amess[$j]);
+					else $y = (int)($Amess[$j-1]*$clefa.($Amess[$j]*$clefa));
+				}
+				else $y=(int)$Amess[$j]*$clefa;
+
 				$AffL3[$cmpt]=$y;
 				$y=$y+$clefb; //clee a * (valeur - clee b)
 				$AffL4[$cmpt]=$y;
@@ -199,9 +229,7 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 				$Y=array();
                 for($i=0 ; $i<$paquet and $test==true; $i++){
                     $Y[$i] = $y%100;
-                    echo '$Y[$i]='.$Y[$i].'</br>';
                     $y=($y - $Y[$i])/100;
-                    echo $i.'='.$y.'</br>';
 
 	                if($Y[$i]>$nbcarac and $paquet==1){
 	                	echo $Y[$i]; //A SUPRIMMER
@@ -211,7 +239,6 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
                     }
                                 
                 }
-                echo '</br>';
 
                 if($test==false) break;
                 $Y=array_reverse($Y);
@@ -224,14 +251,19 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			$AffL6=str_split($decrypt);
 			echo "\$\$ \\textrm{clee= ($clefa, $clefb)} \$\$";
 			echo "\$\$ \\textrm{par paquet de $paquet} \$\$";
-			echo "\$\$ \\textrm{alphabet= }";
-			foreach ($alphabet as $key => $value) {
-				echo "$value";
-			}
-			echo "\$\$";
-			affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
-
 			
+
+			if($paquet>1){
+				echo "\$\$ \\textrm{";
+				for($i=0; $i<$cmpt; $i++) {
+					if((($i+1)%$paquet)==0) echo $AffL5[$i];
+					if((($i+1)%$paquet)==0 and $i+1!=$cmpt) echo '-';
+				}
+				echo "}";
+				echo "\$\$";
+			}
+			else
+				affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
 		}
 	}
 
@@ -242,11 +274,12 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			$clefb=$res[3];
 
 			$mod = calculeModulo($paquet, $nbcarac);
-				
+
 			if(PGCD($clefa, $mod)!=1){ //Si $clefa et $mod n'est pas une clee valide on passe
 				echo "clee ($clefa, $clefb) non valide (pgcd n'est pas égal à 1)";
 				return 0;
 			}
+
 			$clefa1 = inverseModulaire($clefa, $mod);
 			if($clefa1==0){  //Si $clefa1 est égal à 0 on passe
 				echo "clee ($clefa, $clefb) non valide";
@@ -263,10 +296,11 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 				$y=$clefa1*$y; //clee a * (valeur - clee b)
 				$AffL4[$cmpt]=$y;
 				$y=$y%$mod;
-				$AffL5[$cmpt]=$y;
-
+				
 				if($y<0) //si modulo negatif on le met en positif
 					$y=$y+$mod;
+
+				$AffL5[$cmpt]=$y;
 					
 				$Y=array();
                 for($i=0 ; $i<$paquet and $test==true; $i++){
@@ -290,18 +324,16 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			/*if($test==false) 
 				continue;*/
 			$AffL6=str_split($decrypt);
+
+			echo "\$\$ \\textrm{clee= ($clefa, $clefb)} \$\$";
+			echo "\$\$ \\textrm{par paquet de $paquet} \$\$";
+			
     		affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
-		}
-		else
-		{
-			echo "Saisie de la clee incorect";
-			return 0;
 		}
 	}
 
 	if($_POST['msgcode']=='decrypter' and $_POST['clee']=='' and isset($_POST['opt_attaque']) and trim($_POST['opt_attaque'])!='')	//DECRYPTER SI PAS DE CLEE
 	{
-
         $dico=[' le ','de ','des ',' que ',' elle ',' je ',' tu ',' il ',' un ',' ou ',' la ',' les ',' une ',' et ',' pour ',' par '];
 		$mod = calculeModulo($paquet, $nbcarac);
 		$maxoccurence=0;
@@ -343,7 +375,7 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 				
 				if($_POST['opt_attaque']=='Sans_dico'){
 					echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong></br>";
-					echo '<p>'.$decrypt.'</p></br>';
+					echo '<p class=\'message\'>'.$decrypt.'</p></br>';
 					echo "<hr>";
 				}
 				else{
@@ -364,7 +396,7 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 
 			}//Fin for sur clefa
 			if($_POST['opt_attaque']=='Avec_dico'){
-				echo "<p><br>Message le plus probable est celui de la clé :<br> <strong>a =$clefpossiblea <br> a-&sup1 =$clefpossiblea1 <br> b =$clefpossibleb <br></strong><br> $decryptpossible</p>";
+				echo "<p class='message' ><br>Message le plus probable est celui de la clé :<br> <strong>a =$clefpossiblea <br> a-&sup1 =$clefpossiblea1 <br> b =$clefpossibleb <br></strong><br> $decryptpossible</p>";
 			}
             /*foreach($text as $cl => $te){
                 echo "<p>".$cl." : <br>".$te."<br></p>";
