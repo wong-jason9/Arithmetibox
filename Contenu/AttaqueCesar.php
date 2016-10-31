@@ -153,7 +153,8 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                             $res1[]=$y;
                             
                         }
-                        echo $_POST['message']."<br>";
+                        echo $_POST['message']."<br><br>";
+						echo "Après cryptage : <br>";
                         $i=0;
                         foreach($res1 as $v){
                             echo $v;
@@ -166,8 +167,8 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                 }
             }
         }
-        
-        return $tab;
+        if(isset($tab))
+			return $tab;
         
     }
     

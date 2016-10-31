@@ -10,14 +10,14 @@ Nombre : <input size='30' name='nombre' type='text'><br>
         if(preg_match('#^[0-9]*$#',$_POST['nombre']) and $_POST['nombre']!=NULL){
             echo "Les diviseurs de ".$_POST['nombre']." sont : ";
             for($i=1; $i<=$_POST['nombre'];$i++){
-                if($_POST['nombre']%$i==0){
+                if(gmp_mod($_POST['nombre'],$i)==0){
                     echo $i." | ";
                 }
             }
             echo "</br>";
-            for($i=1; $i<=sqrt($_POST['nombre']);$i++){
-                if($_POST['nombre']%$i==0){
-                    echo $i." x ".($_POST['nombre']/$i);
+            for($i=1; $i<=gmp_sqrt($_POST['nombre']);$i++){
+                if(gmp_mod($_POST['nombre'],$i)==0){
+                    echo $i." x ".gmp_div($_POST['nombre'],$i);
                     echo "</br>";
                 }
             }
@@ -28,15 +28,14 @@ Nombre : <input size='30' name='nombre' type='text'><br>
             $nombre = $_POST['nombre'];
             while($nombre!=1){
                 foreach($tabPremiers as $v){
-                    if($nombre%$v==0){
-                        $nombre=($nombre/$v);
+                    if(gmp_mod($nombre,$v)==0){
+                        $nombre=gmp_div($nombre,$v);
                         echo $v;
                         if($nombre !=1) echo " x ";
                         break;
                     }
                 }
             }
-            
         }
         else
             echo "Saisie incorrecte.";
