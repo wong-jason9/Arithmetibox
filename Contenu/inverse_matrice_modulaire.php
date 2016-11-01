@@ -19,15 +19,15 @@
 	$i=0;
 	$A[$i]=$a;
 	$B[$i]=$n;
-	$Q[$i]=(int)($A[$i]/$B[$i]);	//calcul du quotient
-	$R[$i]=$A[$i]%$B[$i];			//calcul du reste
+    $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i])); //calcul du quotient
+    $R[$i]=gmp_mod($A[$i], $B[$i]);         //calcul du reste
 
 	while($R[$i]!=0){		//tant que le reste n'est pas égale a 0 on continue a calculer
 		$i++;
 		$A[$i] = $B[$i-1];
 		$B[$i] = $R[$i-1];
-		$Q[$i]=(int)($A[$i]/$B[$i]);
-		$R[$i]=$A[$i]%$B[$i];
+        $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i]));
+        $R[$i]=gmp_mod($A[$i], $B[$i]);
 	}
 	
 	//on initialise les deux première valeur de u et v a 0 et 1
@@ -36,7 +36,7 @@
 
 	for($j=$i-1 ; $j>=0 ; $j--){	//calcul de u et v
 		$U[$j] = $V[$j+1];
-		$V[$j] = -$Q[$j]*$U[$j]+$U[$j+1];
+		$V[$j] = gmp_add(gmp_mul(gmp_neg($Q[$j]), $U[$j]), $U[$j+1]); //équivaut à  -$Q[$j]*$U[$j]+$U[$j+1]
 	}
 	
     echo "\$\$";
@@ -56,11 +56,11 @@
 
 	echo "\$\$";
 	echo $A[0].'*'.$U[0].'+'.$B[0].'*'.$V[0].'= ';
-	echo ($A[0]*$U[0])+($B[0]*$V[0]);
+	echo gmp_add(gmp_mul($A[0], $U[0]), gmp_mul($B[0], $V[0]));
 	echo "\$\$";
 
-	$m3 = -$m3;
-	$m5 = -$m5;
+	$m3 = gmp_neg($m3);
+	$m5 = gmp_neg($m5);
 
 	echo "\$\$";
 	echo "M^{-1}\\equiv_{26}$V[0]\\times ";
@@ -72,15 +72,15 @@
 
 	echo "\$\$";
 	echo "\\begin{pmatrix}";
-	echo $V[0]*$m7.'&'.$V[0]*$m3.'\\\\';
-	echo $V[0]*$m5.'&'.$V[0]*$m1;
+	echo gmp_mul($V[0], $m7).'&'.gmp_mul($V[0], $m3).'\\\\';
+	echo gmp_mul($V[0], $m5).'&'.gmp_mul($V[0], $m1);
 	echo "\\end{pmatrix}";
 	echo "\$\$";
 
-		echo "\$\$";
+	echo "\$\$";
 	echo "\\begin{pmatrix}";
-	echo (($V[0]*$m7)%26).'&'.(($V[0]*$m3)%26).'\\\\';
-	echo (($V[0]*$m5)%26).'&'.(($V[0]*$m1)%26);
+	echo gmp_mod((gmp_mul($V[0], $m7)), 26).'&'.gmp_mod(gmp_mul($V[0], $m3), 26).'\\\\';
+	echo gmp_mod((gmp_mul($V[0], $m5)), 26).'&'.gmp_mod(gmp_mul($V[0], $m1), 26);
 	echo "\\end{pmatrix}";
 	echo "\$\$";
 }
@@ -95,10 +95,10 @@
 			echo "\\end{pmatrix}";
 			echo "\$\$";
 
-	        $nb= ($res[1]*$res[7]) - ($res[3]*$res[5]);
+	        $nb= gmp_sub(gmp_mul($res[1], $res[7]), gmp_mul($res[3], $res[5]));
 	        echo "\$\$";
 	        echo 'det(M)= '.$res[1].' * '.$res[7].' - '.$res[3].' * '.$res[5].'\\\\';
-	        echo 'det(M)= '.($res[1]*$res[7]).' - '.($res[3]*$res[5]).'\\\\';
+	        echo 'det(M)= '.gmp_mul($res[1], $res[7]).' - '.gmp_mul($res[3], $res[5]).'\\\\';
 	        echo 'det(M)= '.$nb;
 	        echo "\$\$";
 
