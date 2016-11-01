@@ -92,20 +92,20 @@
         $i = 0;
         $A[$i] = $a;
         $B[$i] = $b;
-        $R[$i] = $a%$b;
-        $Q[$i] = (int)($A[$i]/$B[$i]);
+        $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i])); //calcul du quotient
+         $R[$i]=gmp_mod($A[$i], $B[$i]);         //calcul du reste
         while($R[$i]!=0){
             $i++;
             $A[$i] = $B[$i-1];
             $B[$i] = $R[$i-1];
-            $R[$i] = $A[$i]%$B[$i];
-            $Q[$i] = (int)($A[$i]/$B[$i]);
+            $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i]));
+            $R[$i]=gmp_mod($A[$i], $B[$i]);
         }
         $U[$i] = 0;
         $V[$i] = 1;
         for($j = $i-1; $j>=0; $j--){
             $U[$j] = $V[$j+1];
-            $V[$j] = -$Q[$j]*$U[$j]+$U[$j+1];
+            $V[$j] = gmp_add(gmp_mul(gmp_neg($Q[$j]), $U[$j]), $U[$j+1]);   //équivaut à  -$Q[$j]*$U[$j]+$U[$j+1]
         }
         $tab;
         for($cpt=0; $cpt<=$i; $cpt++){
@@ -117,12 +117,13 @@
     //Valuation p-adique
     function val_p($n,$mod,$pui){
         $res=0;
-        while($n%$mod==0){
+        while(gmp_mod($n, $mod)==0){
             $res++;
-            $n=$n/$mod;
+            $n=gmp_div_q($n, $mod);
         }
-        return $res*$pui;
+        return gmp_mul($res, $pui);
     }
+
 
     //Exponentiation modulaire rapide
 
