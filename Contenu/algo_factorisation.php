@@ -8,6 +8,7 @@ Nombre : <input size='30' name='nombre' type='text'><br>
 <?php
     if(isset($_POST['nombre']) and trim($_POST['nombre'])!=''){
         if(preg_match('#^[0-9]*$#',$_POST['nombre']) and $_POST['nombre']!=NULL){
+			$_POST['nombre']=gmp_init($_POST['nombre']);
             echo "Les diviseurs de ".$_POST['nombre']." sont : ";
             for($i=1; $i<=$_POST['nombre'];$i++){
                 if(gmp_mod($_POST['nombre'],$i)==0){
