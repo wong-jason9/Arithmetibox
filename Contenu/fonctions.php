@@ -62,15 +62,6 @@
         echo "\$\$";
     }
     
-    //Congruence
-    function partieEntiere($d){
-        if(preg_match('#\.#', $d)){
-            $tab = explode('.', $d);
-            return $tab[0];
-        }
-        else
-            return $d;
-    }
     
     //Euclide
     function euclide($a, $b) {
