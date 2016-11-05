@@ -1,0 +1,19 @@
+A FAIRE POUR LE PROCHAIN RENDEZ-VOUS:
+-Le test de primalité de Miller-Rabin
+-Mettre un bouton à part pour eratosthène
+-proposer plusieur resolution pour les nombres premier
+-1 boutons attaque et propose le choix entre affine, cesar et Hill
+-Mettre des éxemples de format de saisie
+-/times pour changer le signe multiplication
+-rajouter module inverse modulaire
+-rajouter des titres au fonction quand on est dedans
+-retirer lien vers ataraxy
+-ordonner par importance dans l'ordre:
+	-PGCD
+	-Euclide
+	-Euclide etendue
+	-Congruence
+	...
+-LateX pour algo de factorisation, changer le nom en factorisation et on enleve les diviseur possible (2^2*3) et non 2*2*3 utiliser val_p
+-Deux partis Math/Crypto
+
