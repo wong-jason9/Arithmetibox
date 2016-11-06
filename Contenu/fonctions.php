@@ -3,7 +3,7 @@
     function pgcd($a, $b) {
         
         while ($b!=0){
-            $t=$a%$b;
+            $t=gmp_mod($a,$b);
             $a=$b;
             $b=$t;
         }
@@ -124,14 +124,14 @@
         $tab = array();
         for($i=0; $i < $taille; $i++){
             if($i == 0)
-                $tab[0] = $entier%$modulo;
+                $tab[0] = gmp_mod($entier, $modulo);
             else
-                $tab[$i] = $tab[$i-1]*$tab[$i-1]%$modulo;
+                $tab[$i] = gmp_mod(gmp_mul($tab[$i-1], $tab[$i-1]), $modulo);
         }
         $res = 1;
         for($i=0; $i<$taille; $i++){
             if($bin[$taille-$i-1] == 1)
-                $res = $res*$tab[$i]%$modulo;
+                $res = gmp_mod(gmp_mul($res, $tab[$i]), $modulo);
         }
             
         return $res;

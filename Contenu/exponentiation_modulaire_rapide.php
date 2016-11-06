@@ -26,11 +26,11 @@
  			$tab_mod = array();
  			
  			$tab_entier[0] = $_POST['entier'];
- 			$tab_mod[0] = $_POST['entier']%$_POST['modulo'];
+ 			$tab_mod[0] = gmp_mod($_POST['entier'], $_POST['modulo']);
 
  			for($i=1; $i<$taille; $i++){
  				$tab_entier[$i] = carre($tab_mod[$i-1]);
- 				$tab_mod[$i] = $tab_entier[$i]%$_POST['modulo'];
+ 				$tab_mod[$i] = gmp_mod($tab_entier[$i], $_POST['modulo']);
  			}
 
  			echo "\["; 			
