@@ -7,7 +7,7 @@
 	 <p>Cle: <textarea name='clecode' class="matrice"></textarea></p>
 	<p> <input type="submit" name="chiffrer" value="Crypter/Decrypter" class="boutton_matrice"/></p>
 </form>
-
+	<p>Pour saisir la matrice:<br> Veuillez saisir le premier nombre ensuite espace, saisir le deuxième nombre, saut de ligne (touche "Entrée"), saisir le troisième nombre, espace, saisir le quatrième nombre. <br>Exemple:<img class="exemple_saisie_matrice" src="Contenu/exemple_saisie.png" alt="exemple_de_saisie_de_matrice"/></p>
 <?php
 	require('euclidehill.php');
 function PGCD($a,$b){ //Fonction a remplacer par celle des autres !!

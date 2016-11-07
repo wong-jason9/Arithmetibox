@@ -2,8 +2,10 @@
     require('fonctions.php');?>
 <h2 class="titreDansLaFonctions">Inverse matrice modulaire</h2>
 <form action="Arithmetibox.php?outil=inverse_matrice_modulaire" method="POST">
-	<p>Saisir votre matrice: <textarea name='matrice' class="matrice"></textarea><br></p>
-	<input type='submit' value='Calculer'  class="boutton_matrice">
+	<p>Saisir votre matrice: <textarea name='matrice' class="matrice"></textarea><br><br></p>
+	<p>Sasir le modulo: <input type="text" name="modulo"></p>
+	<input type='submit' value='Calculer' style="margin-top: -50px;"  class="boutton_matrice">
+	<p>Pour saisir la matrice:<br> Veuillez saisir le premier nombre ensuite espace, saisir le deuxième nombre, saut de ligne (touche "Entrée"), saisir le troisième nombre, espace, saisir le quatrième nombre. <br>Exemple:<img class="exemple_saisie_matrice" src="Contenu/exemple_saisie.png" alt="exemple_de_saisie_de_matrice"/></p>
 </form>
  
 <?php
@@ -41,11 +43,20 @@
 	}
 	
     echo "\$\$";
-    echo "\\begin{array}{c|c|c|c|c|c c}";
-    echo "a&b&r&q&u&v\\\\\\hline";        
-    for($i=0; $i<count($A); $i++){
-		echo $A[$i].'&'.$B[$i].'&'.$R[$i].'&'.$Q[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
-		echo "\\\\";
+    if(!(PGCD($a,$n)==1 || PGCD($a,$n)==-1)){
+    	 echo "\\begin{array}{c|c|c|c c}";
+   		 echo "a&b&r&q\\\\\\hline";
+    	 for($i=0; $i<count($A); $i++){
+			echo $A[$i].'&'.$B[$i].'&'.$R[$i].'&'.$Q[$i].'&'.'</br>';
+			echo "\\\\";
+		}
+    }else{
+    	echo "\\begin{array}{c|c|c|c|c|c c}";
+   		echo "a&b&r&q&u&v\\\\\\hline";
+	    for($i=0; $i<count($A); $i++){
+			echo $A[$i].'&'.$B[$i].'&'.$R[$i].'&'.$Q[$i].'&'.$U[$i].'&'.$V[$i].'&'.'</br>';
+			echo "\\\\";
+		}
 	}
     echo"\\end{array}".'\\\\';
     echo "\$\$";
@@ -56,7 +67,7 @@
 	}
 
 	echo "\$\$";
-	echo $A[0].'*'.$U[0].'+'.$B[0].'*'.$V[0].'= ';
+	echo $A[0].'\times'.$U[0].'+'.$B[0].'\times'.$V[0].'= ';
 	echo gmp_add(gmp_mul($A[0], $U[0]), gmp_mul($B[0], $V[0]));
 	echo "\$\$";
 
@@ -86,7 +97,7 @@
 	echo "\$\$";
 }
 	
-	if(isset($_POST['matrice']) and trim($_POST['matrice'])!=''){
+	if(isset($_POST['matrice']) and trim($_POST['matrice'])!='' and isset($_POST['modulo']) and trim($_POST['modulo'])!=''){
     	if(preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#' , $_POST['matrice'], $res)){
 	        echo "\$\$";
 	        echo "M= ";
@@ -98,12 +109,12 @@
 
 	        $nb= gmp_sub(gmp_mul($res[1], $res[7]), gmp_mul($res[3], $res[5]));
 	        echo "\$\$";
-	        echo 'det(M)= '.$res[1].' * '.$res[7].' - '.$res[3].' * '.$res[5].'\\\\';
+	        echo 'det(M)= '.$res[1].' \times  '.$res[7].' - '.$res[3].' \times  '.$res[5].'\\\\';
 	        echo 'det(M)= '.gmp_mul($res[1], $res[7]).' - '.gmp_mul($res[3], $res[5]).'\\\\';
 	        echo 'det(M)= '.$nb;
 	        echo "\$\$";
 
-	       inverseModulaire(26, $nb, $res[1], $res[3], $res[5], $res[7]);
+	       inverseModulaire($_POST['modulo'], $nb, $res[1], $res[3], $res[5], $res[7]);
    		}
     }
     ?>

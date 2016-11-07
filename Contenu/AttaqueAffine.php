@@ -7,8 +7,8 @@
 		clée (optionnel pour décrypter) : <input type="text" name="clee"></br>
 		Attaque par dictionnaire <input type='radio' name='opt_attaque' value='Avec_dico'>
 		Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dico'></br>
-		paquet de n : <input type="text" name="paquet"></br>
-		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"></br>
+		paquet de n : <input type="text" name="paquet" value="2"></br>
+		alphabet : <input style="width:450px;" type="text" name="alphabet" value="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789"></br>
 		<!--ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. 0123456789-->
 		Message :</br>
 		Format Code <input type='radio' name='methode' value='code'>
@@ -16,6 +16,7 @@
 		<textarea name='message'></textarea></br>
 		<!--VALEUR DE TEST:
 			02-01-11-23-03-->
+		<!--reponse: quidam crypter: 1387−2024−427-->
 		<!--28-27-37-49-29-->
 		<!--cblxd-->
 		<!--nsaiakpmoeecuocrrapo-->
@@ -155,6 +156,8 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 	$AffL5=array();
 	$AffL6=array();
 
+
+
 	if($_POST['methode']=='alphabet'){ //convertir alphabet au format code
 		$alphabet=str_split($_POST['alphabet']);
         $tab_message=str_split($_POST['message']);
@@ -183,6 +186,7 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 	}
 	elseif($_POST['methode']=='code'){
 		$Amess = explode('-', $mess); //enlever les tiret du message et stocker dans le TABLEAU Amess
+		$Amess = explode('−', $mess);
 	}
 
 	if($_POST['msgcode']=='crypter' and isset($_POST['clee']) and trim($_POST['clee'])!=''){ //CRYPTER
@@ -206,8 +210,6 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			$decrypt = "";
 			$cmpt = 0;
 			for($j=0; $j<count($Amess); $j++){
-			/*foreach($Amess as $key => $x){	//On parcour le message
-				echo "clee=$key valeur=$x</br>";*/
 				$AffL2[$cmpt]=$Amess[$j];
 				
 
@@ -289,6 +291,7 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 			$test = true;
 			$decrypt = "";
 			$cmpt = 0;
+			$i=1;
 			foreach($Amess as $x){	//On parcour le message
 				$AffL2[$cmpt]=$x;
 				$y=(int)$x-$clefb;
@@ -339,6 +342,18 @@ if(isset($_POST['msgcode']) and isset($_POST['paquet']) and isset($_POST['alphab
 		$maxoccurence=0;
 
 		for($clefa=0 ; $clefa<$mod ; $clefa++){	//On cherche la clee a
+			if($clefa==100) echo "clefa= 100<br>";
+			if($clefa==200) echo "clefa= 200<br>"; 
+			if($clefa==300) echo "clefa= 300<br>"; 
+			if($clefa==400) echo "clefa= 400<br>"; 
+			if($clefa==500) echo "clefa= 500<br>";
+			if($clefa==1000) echo "clefa= 1000<br>";
+			if($clefa==2000) echo "clefa= 2000<br>"; 
+			if($clefa==3000) echo "clefa= 3000<br>"; 
+			if($clefa==4000) echo "clefa= 4000<br>"; 
+			if($clefa==5000) echo "clefa= 5000<br>";
+			if($clefa==6000) echo "clefa= 6000<br>";
+
 			if(PGCD($clefa, $mod)!=1) //Si $clefa et $mod n'est pas une clee valide on passe
 				continue;
 			$clefa1 = inverseModulaire($clefa, $mod);

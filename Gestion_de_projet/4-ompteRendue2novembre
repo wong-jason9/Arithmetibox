@@ -3,11 +3,12 @@ A FAIRE POUR LE PROCHAIN RENDEZ-VOUS:
 -Mettre un bouton à part pour Eratosthène
 -proposer plusieurs resolution pour les nombres premier
 -1 boutons attaque et propose le choix entre affine, Cesar et Hill
--Mettre des exemples de format de saisie
--/times pour changer le signe multiplication
+FAIT 08/10-Mettre des exemples de format de saisie
+FAIT 07/10-/times pour changer le signe multiplication
 -rajouter module inverse modulaire
 FAIT 07/10-rajouter des titres au fonction quand on est dedans
 FAIT 07/10-retirer lien vers ataraxy
+FAIT 07/10-changer quand le pcgd n'est pas égal a 1 on n'affiche pas u et v
 FAIT 07/10-ordonner par importance dans l'ordre:
 	-PGCD
 	-Euclide
