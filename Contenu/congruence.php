@@ -1,5 +1,6 @@
 <?php require('debut.php');
      ?>
+<h2 class="titreDansLaFonctions">Congruence</h2>
 <form action="Arithmetibox.php?outil=cong" method="post">
   <p>
   Entier :<input type="text" name='entierA'><br>

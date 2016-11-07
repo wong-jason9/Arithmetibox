@@ -1,5 +1,5 @@
 <?php require('debut.php');?>
-
+<h2 class="titreDansLaFonctions">Affine</h2>
 <form action="Arithmetibox.php?outil=affi" method="post">
 	<p>
 		Crypter : <input type="radio" name="msgcode" value="crypter"> 

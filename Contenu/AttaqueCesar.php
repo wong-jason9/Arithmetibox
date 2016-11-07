@@ -1,5 +1,5 @@
 <?php require('debut.php'); ?>
-
+<h2 class="titreDansLaFonctions">Cesar</h2>
 <form action='Arithmetibox.php?outil=cesa' method='post'>
 <label>Décryptage<input type='radio' name='fonction' value='decrypt' checked='checked'></label>
 <label>Cryptage<input type='radio' name='fonction' value='crypt'></label></p>

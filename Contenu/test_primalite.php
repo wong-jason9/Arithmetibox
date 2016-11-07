@@ -1,5 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php'); ?>
+<h2 class="titreDansLaFonctions">Test primalité</h2>
 <form action="Arithmetibox.php?outil=test_primalite" method="post">
 <p>
 Testez si un nombre est premier : <input type="text" name="test_primary"></br>

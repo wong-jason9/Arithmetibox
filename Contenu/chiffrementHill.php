@@ -1,4 +1,5 @@
 <?php require('debut.php');?>
+<h2 class="titreDansLaFonctions">Chiffrement de Hill</h2>
 <form action="Arithmetibox.php?outil=hill" method = "post">
 	<p>Crypter : <input type="radio" name="msgcode" value="optcode"/> Decrypter : <input type="radio" name="msgcode" value="optdcode"/></p>
 	<p>Message <input type="text" name="msg"/></p>

@@ -11,28 +11,29 @@ davidulle@gmail.com-->
     <header>
         <a href="Arithmetibox.php"><img id="logo_Arithmetibox" src="Contenu/logo.svg" alt="logo_Arithmetibox"/>
         <h1 id="titre">ArithmetiBox</h1></a>
-        <a href="http://www.ataraxy.info/Accueil">
-        <p>Lien vers Ataraxy<img id="img_ataraxy" src="Contenu/ataraxysvg.svg" alt="logo_ataraxy"/></a>
     </header>
     <main>
         <div id="MenuFonction">
-            <h2 id="titreFonctions">Fonctions</h2>
             <nav>
+                <h2 class="titreFonctions">Math</h2>
                 <ul>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=algo_factorisation">Algorithme de factorisation</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=algo_factorisation">Factorisation</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
                 </ul>
+                <h2 class="titreFonctions">Cryptanalyse</h2>
+                <ul> 
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>  
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
+                </ul>                
             </nav>
         </div>
         <div id="affichage">

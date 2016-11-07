@@ -1,5 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php');?>
+<h2 class="titreDansLaFonctions">Euclide</h2>
 <form action="Arithmetibox.php?outil=eucl" method="post">
   <p>
   Un nombre a :<input type="text" name="nbA" value=""/></br>

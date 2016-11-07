@@ -2,6 +2,7 @@
 	require("debut.php");
 	require("fonctions.php");
 ?> 	
+	<h2 class="titreDansLaFonctions">Exponentiation modulaire rapide</h2>
 	<form action="Arithmetibox.php?outil=expo_mod_rapide" method="post">
  		<p>
  			Entier : <input type="text" name="entier"><br>

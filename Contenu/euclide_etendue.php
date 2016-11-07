@@ -1,5 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php'); ?>
+<h2 class="titreDansLaFonctions">Euclide étendue</h2>
 <form action="Arithmetibox.php?outil=eucl_etendue" method="POST">
   <p>
   Un nombre a :<input type="text" name="nbA"/></br>

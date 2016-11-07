@@ -1,5 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php');?>
+<h2 class="titreDansLaFonctions">Inverse matrice modulaire</h2>
 <form action="Arithmetibox.php?outil=inverse_matrice_modulaire" method="POST">
 	<p>Saisir votre matrice: <textarea name='matrice' class="matrice"></textarea><br></p>
 	<input type='submit' value='Calculer'  class="boutton_matrice">

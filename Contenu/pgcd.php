@@ -1,5 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php'); ?>
+<h2 class="titreDansLaFonctions">PGCD</h2>
 <form action="Arithmetibox.php?outil=pgcd" method="post">
 <p>Pour calculer le PGCD nous avons besoin de : </br>
 Un nombre a :<input type="text" name="nbA"/></br>

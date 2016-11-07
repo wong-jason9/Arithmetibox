@@ -1,5 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php');?>
+<h2 class="titreDansLaFonctions">Valuation p-adique</h2>
 <form action="Arithmetibox.php?outil=val_p_adique" method="post">
     <p> 
     Entier n : <input type="text" name="entN"></br>

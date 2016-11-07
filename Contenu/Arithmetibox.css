@@ -9,7 +9,7 @@ header
 	color: rgba(139, 141, 141, 0.7);
 	width: 100%;
 	margin-left: -8px;
-	margin-top: -22px;
+	margin-top: -20px;
 }
 
 #logo_Arithmetibox
@@ -111,11 +111,18 @@ section
 	background-color: white;
 }
 
-#titreFonctions
+.titreFonctions
 {
 	margin-left: 40px;
 	margin-bottom: 5px;
 	color: white;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 500;
+}
+
+.titreDansLaFonctions
+{
+	color: black;
 	font-family: 'Lato', sans-serif; 
 	font-weight: 500;
 }

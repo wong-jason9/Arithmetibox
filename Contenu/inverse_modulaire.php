@@ -1,6 +1,7 @@
 <?php require('debut.php');
       require('fonctions.php');
 ?>
+<h2 class="titreDansLaFonctions">Inverse modulaire</h2>
 <form action="Arithmetibox.php?outil=inv_mod" method='post'>	<?php //A definir action ici + outil dans Arithmetibox.php?>
 <p>
 <p>Entier :<input type='text' name='entier'></br>
