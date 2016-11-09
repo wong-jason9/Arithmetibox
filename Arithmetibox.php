@@ -25,7 +25,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=algo_factorisation">Factorisation</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=algo_factorisation">Décomposition d'un nombre</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
                 </ul>
                 <h2 class="titreFonctions">Cryptanalyse</h2>
