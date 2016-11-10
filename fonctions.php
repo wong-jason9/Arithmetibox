@@ -31,7 +31,7 @@ function era($n){
             if((is_primary($i))==true){
                 echo $i.'&';
                 $sautDeLigne++;
-                $nb_premier[$i];
+                $nb_premier[$sautDeLigne]=$i; // Tab nb_premier commence a tab[1] !! 
             }   
             if(gmp_mod($sautDeLigne,20)==0) {
                 echo "\\\\";
