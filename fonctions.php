@@ -20,28 +20,18 @@
     
 function era($n){ 
         $nb_premier=array();
-        $sautDeLigne=1;
-        gmp_init($sautDeLigne);
-        echo "\$\$";
-        echo "\\text{Nombre premier jusqu'à ".$_POST['liste_primary']." :}\\\ " ;
-        echo "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}";
+        $nbLigne=0;
+        gmp_init($nbLigne);
         $i=1;
         gmp_init($i);
         $compare=gmp_cmp($i,$n);
         for($i; $compare<0;$i++){
             if((is_primary($i))==true){
-                echo $i.'&';
-                $sautDeLigne++;
-                $nb_premier[$sautDeLigne]=$i; // Tab nb_premier commence a tab[1] !! 
+                $nb_premier[$nbLigne]=$i; // Tab nb_premier commence a tab[1] !! 
+                $nbLigne++;
             }   
-            if(gmp_mod($sautDeLigne,20)==0) {
-                echo "\\\\";
-                $sautDeLigne++;
-            }
             $compare=gmp_cmp($i,$n);
        }
-        echo"\\end{array}";
-        echo "\$\$";
         return $nb_premier;
     }
     
