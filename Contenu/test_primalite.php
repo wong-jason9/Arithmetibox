@@ -19,7 +19,7 @@ Liste des nombres premiers jusqu'a n : <input type="text" name="liste_primary"><
         echo "\$\$";
     }
     if(isset($_POST['liste_primary'])&& !empty($_POST['liste_primary'])){
-        affera($_POST['liste_primary']);
+        era($_POST['liste_primary']);
         
     }
     ?>

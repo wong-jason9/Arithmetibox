@@ -1,9 +1,8 @@
 <?php
     //PGCD
-    function pgcd($a, $b) {
-        
+ function pgcd($a, $b) { 
         while ($b!=0){
-            $t=gmp_mod($a,$b);
+            $t=(gmp_mod($a , $b));
             $a=$b;
             $b=$t;
         }
@@ -11,67 +10,49 @@
     }
     
     //Test de primalité
-    function is_primary($n){
+   function is_primary($n){
         for($i=2;$i<$n;$i++){
-            if($n%$i==0) return false;
+            if(gmp_mod($n,$i)==0) return false;
         }
         return true;
     }
     
-    function era($n){
-        $sautDeLigne=0;
-        $tab=array();
-        $tabPremiers=array();
-        for($i=0;$i<=$n;$i++) $tab[$i]=true;
-        $tab[0]=false;
-        $tab[1]=false;
-        
-        for($i=2;$i<=$n;$i++){
-            if($tab[$i]){
-                for($j=$i+$i;$j<$n;$j=$j+$i){
-                    $tab[$j]=false;
-                }
-            }
-        }
-        for($i=1;$i<=$n;$i++){
-            if($tab[$i]){
-                $tabPremiers[]=$i;
-            }
-        }
-        return $tabPremiers;
-    }
-    
-    function affera($n){
-        $sautDeLigne=0;
-        $tabPrem=era($n);
+function era($n){ 
+        $sautDeLigne=1;
+        gmp_init($sautDeLigne);
         echo "\$\$";
-        echo "\\text{Nombre premier jusqu'à ".$_POST['liste_primary']."}\\\ " ;
-        echo "\\begin{array}{|c|c|c|c|c|c|c|c|c|c}";
-        for($i=1;$i<=$n;$i++){
-            $sautDeLigne++;
-            if(in_array($i,$tabPrem) && $sautDeLigne%10!=0){
-                echo '\boxed{'.$i.'}&';
-            }
-            elseif($sautDeLigne%10==0 ){
-                echo "$i&\\\\";
-            }
-            else
+        echo "\\text{Nombre premier jusqu'à ".$_POST['liste_primary']." :}\\\ " ;
+        echo "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}";
+        $i=1;
+        gmp_init($i);
+        $compare=gmp_cmp($i,$n);
+        for($i; $compare<0;$i++){
+            if((is_primary($i))==true){
                 echo $i.'&';
-        }
+                $sautDeLigne++;
+            }   
+            if(gmp_mod($sautDeLigne,20)==0) {
+                echo "\\\\";
+                $sautDeLigne++;
+            }
+            $compare=gmp_cmp($i,$n);
+       }
         echo"\\end{array}";
         echo "\$\$";
     }
     
+   
+    
     
     //Euclide
-    function euclide($a, $b) {
+  function euclide($a, $b) {
         while ($b!=0){
-            $t=$a%$b;
+            $t=(gmp_mod($a , $b));
             
             $res['0']=$a;
             $res['1']=$b;
             $res['2']=$t;
-            $res['3']=(int)($a/$b);
+            $res['3']=(int)(gmp_div_q($a,$b));
             $tab[]=$res;
             $a=$b;
             $b=$t;
