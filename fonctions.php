@@ -11,7 +11,8 @@
     
     //Test de primalité
    function is_primary($n){
-        for($i=2;$i<$n;$i++){
+        if($n==1) return false;
+        for($i=2;$i<$n;$i++){ 
             if(gmp_mod($n,$i)==0) return false;
         }
         return true;
