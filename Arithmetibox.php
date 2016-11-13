@@ -25,7 +25,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=algo_factorisation">Décomposition d'un nombre</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=deco">Décomposition d'un nombre</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
                 </ul>
                 <h2 class="titreFonctions">Cryptanalyse</h2>
@@ -33,6 +33,9 @@ davidulle@gmail.com-->
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>  
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
+					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=crypte">Crypter</a></li>
                 </ul>                
             </nav>
         </div>
@@ -72,9 +75,9 @@ davidulle@gmail.com-->
                     include("Contenu/congruence.php");
                     echo "</section>";
                     break;
-                case 'algo_factorisation':
+                case 'deco':
                     echo "<section>";
-                    include("Contenu/algo_factorisation.php");
+                    include("Contenu/Decomposition.php");
                     echo "</section>";
                     break;
                 case 'eucl':
@@ -105,6 +108,21 @@ davidulle@gmail.com-->
                 case 'expo_mod_rapide':
                     echo '<section>';
                     include("Contenu/exponentiation_modulaire_rapide.php");
+                    echo '</section>';
+                    break;
+				case 'attaque':
+                    echo '<section>';
+                    include("Contenu/Attaque.php");
+                    echo '</section>';
+                    break;
+				case 'decrypte':
+                    echo '<section>';
+                    include("Contenu/Decryptage.php");
+                    echo '</section>';
+                    break;
+				case 'crypte':
+                    echo '<section>';
+                    include("Contenu/Cryptage.php");
                     echo '</section>';
                     break;
                 default :

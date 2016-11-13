@@ -32,23 +32,24 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                 foreach($tab_message as $c => $v){
                     $tab_message[$c]=array_search($v,$alphabet);
                 }
-                $i=$_POST['paquet']-1;
+                $i=gmp_sub($_POST['paquet'],1);
                 $codeMessage=0;
                 foreach($tab_message as $v){
-                    $codeMessage+=$v*pow(10,(2*$i));
-                    $i--;
+				
+                    $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
+                    $i=gmp_sub($i,1);
                     if($i<0){
                         $Amess[]=$codeMessage;
                         $codeMessage=0;
-                        $i=$_POST['paquet']-1;
+                        $i=gmp_sub($_POST['paquet'],1);
                     }
                 }
             }
             
-            $nbcarac=strlen($_POST['alphabet'])-1;
+            $nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
             $mod = 0;
-            for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = 100*$mod + $nbcarac;
-            $mod=$mod+1;
+            for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
+            $mod=gmp_add($mod,1);
             if($_POST['fonction']=='decrypt'){
                 if($_POST['paquet']!='' and $_POST['message']!=''){
                     //Affichage pour toutes les clés
@@ -59,14 +60,14 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                             $test = true;
                             $decrypt = "";
                             foreach($Amess as $x){
-                                $y=(int)$x-$clef;
-                                $y=$y%$mod;
-                                if($y<0) $y=$y+$mod;
+                                $y=gmp_sub($x,$clef);
+                                $y=gmp_mod($y,$mod);
+                                if($y<0) $y=gmp_add($y,$mod);
                                 
                                 $Y=array();
                                 for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
-                                    $Y[$i] = $y%100;
-                                    $y=($y - $Y[$i])/100;
+                                    $Y[$i] = gmp_mod($y,100);
+                                    $y=gmp_div(gmp_sub($y,$Y[$i]),100);
                                     
                                     if($Y[$i]>$nbcarac) {
                                         $test=false;
@@ -76,6 +77,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                                 if($test==false) break;
                                 $Y=array_reverse($Y);
                                 foreach($Y as $c => $v){
+									$Y[$c]=gmp_intval($v);
                                     $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
                                 }
                             }
@@ -83,7 +85,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                             $occurence=0;
                             $text[$clef]=$decrypt;
                             foreach($dico as $v){
-                                $occurence+=substr_count(strtolower($decrypt),$v);
+                                $occurence=gmp_add($occurence,substr_count(strtolower($decrypt),$v));
                             }
                             if($occurence>$maxoccurence){
                                 $clefpossible= $clef;
@@ -91,9 +93,9 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                                 $maxoccurence=$occurence;
                             }
                         }
-                        echo "<p><br>Message le plus probable est celui de la clé : $clefpossible <br> $decryptpossible</p>";
+                        echo "<p class='message'><br>Message le plus probable est celui de la clé : $clefpossible <br> $decryptpossible</p>";
                         foreach($text as $cl => $te){
-                            echo "<p>".$cl." : <br>".$te."<br></p>";
+                            echo "<p class='message'>".$cl." : <br>".$te."<br></p>";
                         }
                     }
                     //Affichage pour une seule clé
@@ -102,16 +104,16 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                         $decrypt = "";
                         foreach($Amess as $x){
                             $res[]=$x;
-                            $y=(int)$x-$_POST['clef'];
+                            $y=gmp_sub($x,$_POST['clef']);
                             $res1[]=$y;
-                            $y=$y%$mod;
+                            $y=gmp_mod($y,$mod);
                             
-                            if($y<0) $y=$y+$mod;
+                            if($y<0) $y=gmp_add($y,$mod);
                             $res2[]=$y;
                             $Y=array();
                             for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
-                                $Y[$i] = $y%100;
-                                $y=($y - $Y[$i])/100;
+                                $Y[$i] = gmp_mod($y,100);
+                                $y=gmp_div(gmp_sub($y ,$Y[$i]),100);
                                 
                                 if($Y[$i]>$nbcarac) {
                                     $test=false;
@@ -123,12 +125,14 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
                             if($test==false) break;
                             $Y=array_reverse($Y);
                             foreach($Y as $c => $v){
+								$Y[$c]=gmp_intval($v);
                                 $res3[]=$v;
                                 $res4[]=$_POST['alphabet'][$Y[$c]];
                                 $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
                             }
                         }
                         if($test!=false){
+							echo "<p class='message'>".$decrypt."</p><br>";
                             $tab[]=$res;
                             $tab[]=$res1;
                             $tab[]=$res2;
@@ -141,25 +145,27 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
             }
             elseif($_POST['fonction']=='crypt'){
                 if($_POST['paquet']!='' and $_POST['message']!=''){
-                    
+                    $res=array();
+					
                     if($_POST['clef']==''){
                         echo "Clé nécessaire";
                     }
                     //Affichage pour une seule clé
                     elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
                         foreach($Amess as $x){
-                            $y=(int)$x+$_POST['clef'];
-                            $y=$y%$mod;
-                            $res1[]=$y;
+                            $y=gmp_add($x,$_POST['clef']);
+                            $y=gmp_mod($y,$mod);
+                            $res[]=$y;
                             
                         }
                         echo $_POST['message']."<br><br>";
 						echo "Après cryptage : <br>";
                         $i=0;
-                        foreach($res1 as $v){
+                        foreach($res as $v){
+							
                             echo $v;
                             $i++;
-                            if($i<count($res1))
+                            if($i<count($res))
                                 echo "-";
                         }
                         
@@ -175,7 +181,7 @@ Clef (optionnel pour le decryptage) : <input size='43' name='clef' type='text'><
     $cesa=cesar();
     if($cesa!=NULL){
         
-        echo "<p>\$\$";
+        echo "<p class='message'>\$\$";
         echo "\\begin{array}{c|c}";
         foreach($cesa as $c=>$v){
             switch($c){
