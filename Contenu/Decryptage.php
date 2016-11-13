@@ -35,7 +35,7 @@ Clef : <input size='43' name='clef' type='text'><br>
                 $i=gmp_sub($_POST['paquet'],1);
                 $codeMessage=0;
                 foreach($tab_message as $v){
-				
+                    
                     $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
                     $i=gmp_sub($i,1);
                     if($i<0){
@@ -49,101 +49,108 @@ Clef : <input size='43' name='clef' type='text'><br>
             $mod = 0;
             for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
             $mod=gmp_add($mod,1);
-			if($_POST['fonction']=='cesa'){
-				if($_POST['clef']>=0 and $_POST['clef']<$mod){
-                        $test = true;
-                        $decrypt = "";
-                        foreach($Amess as $x){
-                            $res[]=$x;
-                            $y=gmp_sub($x,$_POST['clef']);
-                            $res1[]=$y;
-                            $y=gmp_mod($y,$mod);
+            if($_POST['fonction']=='cesa'){
+                if($_POST['clef']>=0 and $_POST['clef']<$mod){
+                    $test = true;
+                    $decrypt = "";
+                    foreach($Amess as $x){
+                        $res[]=$x;
+                        $y=gmp_sub($x,$_POST['clef']);
+                        $res1[]=$y;
+                        $y=gmp_mod($y,$mod);
+                        
+                        if($y<0) $y=gmp_add($y,$mod);
+                        $res2[]=$y;
+                        $Y=array();
+                        for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
+                            $Y[$i] = gmp_mod($y,100);
+                            $y=gmp_div(gmp_sub($y ,$Y[$i]),100);
                             
-                            if($y<0) $y=gmp_add($y,$mod);
-                            $res2[]=$y;
-                            $Y=array();
-                            for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
-                                $Y[$i] = gmp_mod($y,100);
-                                $y=gmp_div(gmp_sub($y ,$Y[$i]),100);
-                                
-                                if($Y[$i]>$nbcarac) {
-                                    $test=false;
-                                    echo "clef incorrecte";
-                                    break;
-                                }
-                                
+                            if($Y[$i]>$nbcarac) {
+                                $test=false;
+                                echo "clef incorrecte";
+                                break;
                             }
-                            if($test==false) break;
-                            $Y=array_reverse($Y);
-                            foreach($Y as $c => $v){
-								$Y[$c]=gmp_intval($v);
-                                $res3[]=$v;
-                                $res4[]=$_POST['alphabet'][$Y[$c]];
-                                $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
-                            }
+                            
                         }
-                        if($test!=false){
-							echo "<p class='message'>".$decrypt."</p><br>";
-                            $tab[]=$res;
-                            $tab[]=$res1;
-                            $tab[]=$res2;
-                            $tab[]=$res3;
-                            $tab[]=$res4;
+                        if($test==false) break;
+                        $Y=array_reverse($Y);
+                        foreach($Y as $c => $v){
+                            $Y[$c]=gmp_intval($v);
+                            $res3[]=$v;
+                            $res4[]=$_POST['alphabet'][$Y[$c]];
+                            $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
                         }
                     }
-				
-			}
+                    if($test!=false){
+                        echo "<p class='message'>".$decrypt."</p><br>";
+                        $tab[]=$res;
+                        $tab[]=$res1;
+                        $tab[]=$res2;
+                        $tab[]=$res3;
+                        $tab[]=$res4;
+                    }
+                }
+                
+            }
         }
         if(isset($tab))
-			return $tab;
+            return $tab;
         
     }
     if($_POST['fonction']=='cesa'){
-    $cesa=cesar();
-    if($cesa!=NULL){
-        echo "<p class='message'>\$\$";
-        echo "\\begin{array}{c|c}";
-        foreach($cesa as $c=>$v){
-            switch($c){
-                case 0:
-                    echo " &";
-                    break;
-                case 1:
-                    echo " clef&";
-                    break;
-                case 2:
-                    echo " modulo&";
-                    break;
-                case 3:
-                    echo " paquetage&";
-                    break;
-                case 4:
-                    echo " résultat&";
-                    break;
-            }
-            if($c==0 or $c==1 or $c==2){
-                
-                if($_POST['paquet']%2==0){
-                    foreach($v as $r){
-                        for($i=0; $i<(int)($_POST['paquet']/2);$i++){
-                            echo "&";
-                        }
-                        echo $r.'&';
-                        for($i=0; $i<(int)($_POST['paquet']/2)-1;$i++){
-                            echo "&";
-                        }
-                    }
+        $cesa=cesar();
+        if($cesa!=NULL){
+            echo "<p class='message'>\$\$";
+            echo "\\begin{array}{c|c}";
+            foreach($cesa as $c=>$v){
+                switch($c){
+                    case 0:
+                        echo " &";
+                        break;
+                    case 1:
+                        echo " clef&";
+                        break;
+                    case 2:
+                        echo " modulo&";
+                        break;
+                    case 3:
+                        echo " paquetage&";
+                        break;
+                    case 4:
+                        echo " résultat&";
+                        break;
                 }
-                elseif($_POST['paquet']%2==1 and $_POST['paquet']!=1){
-                    foreach($v as $r){
-                        for($i=0; $i<(int)($_POST['paquet']/2);$i++){
-                            echo "&";
-                        }
-                        echo "$r&";
-                        for($i=0; $i<(int)($_POST['paquet']/2);$i++){
-                            echo "&";
+                if($c==0 or $c==1 or $c==2){
+                    
+                    if($_POST['paquet']%2==0){
+                        foreach($v as $r){
+                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+                                echo "&";
+                            }
+                            echo $r.'&';
+                            for($i=0; $i<(int)($_POST['paquet']/2)-1;$i++){
+                                echo "&";
+                            }
                         }
                     }
+                    elseif($_POST['paquet']%2==1 and $_POST['paquet']!=1){
+                        foreach($v as $r){
+                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+                                echo "&";
+                            }
+                            echo "$r&";
+                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+                                echo "&";
+                            }
+                        }
+                    }
+                    else{
+                        foreach($v as $r){
+                            echo "$r&";
+                        }
+                    }
+                    
                 }
                 else{
                     foreach($v as $r){
@@ -151,27 +158,20 @@ Clef : <input size='43' name='clef' type='text'><br>
                     }
                 }
                 
+                echo "\\\\\\hline";
             }
-            else{
-                foreach($v as $r){
-                    echo "$r&";
-                }
-            }
+            echo"\\end{array}";
+            echo "\$\$</p>";
             
-            echo "\\\\\\hline";
         }
-        echo"\\end{array}";
-        echo "\$\$</p>";
+    }
+    elseif($_POST['fonction']=='affi'){
         
     }
+    elseif($_POST['fonction']=='hill'){
+        
     }
-	elseif($_POST['fonction']=='affi'){
-		
-	}
-	elseif($_POST['fonction']=='hill'){
-		
-	}
-
+    
     ?>
 </body>
 </html>

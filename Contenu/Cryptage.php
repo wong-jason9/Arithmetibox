@@ -35,7 +35,7 @@ Clef : <input size='43' name='clef' type='text'><br>
                 $i=gmp_sub($_POST['paquet'],1);
                 $codeMessage=0;
                 foreach($tab_message as $v){
-				
+                    
                     $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
                     $i=gmp_sub($i,1);
                     if($i<0){
@@ -49,7 +49,7 @@ Clef : <input size='43' name='clef' type='text'><br>
             $mod = 0;
             for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
             $mod=gmp_add($mod,1);
-			if($_POST['fonction']=='cesa'){
+            if($_POST['fonction']=='cesa'){
                 if($_POST['clef']>=0 and $_POST['clef']<$mod){
                     $res=array();
                     if($_POST['clef']==''){
@@ -64,7 +64,7 @@ Clef : <input size='43' name='clef' type='text'><br>
                             
                         }
                         echo $_POST['message']."<br><br>";
-						echo "Après cryptage : <br>";
+                        echo "Après cryptage : <br>";
                         $i=0;
                         foreach($res as $v){
                             echo $v;
@@ -72,18 +72,18 @@ Clef : <input size='43' name='clef' type='text'><br>
                             if($i<count($res))
                                 echo "-";
                         }
-					}
+                    }
                 }
-            
-			}
+                
+            }
         }
-		else
-			echo "Saisie incorrecte";
+        else
+            echo "Saisie incorrecte";
     }
-	if(isset($_POST['fonction']))
-		if($_POST['fonction']=='cesa')
-			$cesa=cesar();
-		
+    if(isset($_POST['fonction']))
+    if($_POST['fonction']=='cesa')
+    $cesa=cesar();
+    
     ?>
 </body>
 </html>
