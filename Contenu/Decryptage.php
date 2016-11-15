@@ -411,7 +411,7 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
 
 
 
-    if($_POST['fonction']=='cesa'){
+    if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
         $cesa=cesar();
         if($cesa!=NULL){
             echo "<p class='message'>\$\$";
@@ -478,10 +478,10 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
             
         }
     }
-    elseif($_POST['fonction']=='affi'){
+    elseif(isset($_POST['fonction']) and $_POST['fonction']=='affi'){
         affine();
     }
-    elseif($_POST['fonction']=='hill'){
+    elseif(isset($_POST['fonction']) and $_POST['fonction']=='hill'){
         
     }
     
