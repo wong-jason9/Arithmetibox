@@ -1,6 +1,6 @@
 <?php
     //PGCD
- function pgcd($a, $b) { 
+ function pgcd($a, $b) {
         while ($b!=0){
             $t=(gmp_mod($a , $b));
             $a=$b;
