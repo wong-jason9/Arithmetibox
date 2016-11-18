@@ -90,9 +90,151 @@ Paquet : <input size='50' name='paquet' type='text' ><br>
             echo "<p class='message'><br>Message en César le plus probable est celui de la clé : $clefpossible <br> $decryptpossible</p>";
         }
     }
+	
+	/***********************************************
+    *****************ATQ DE HILL********************
+    ***********************************************/
+	
+	require('euclidehill.php');
+function PGCD($a, $b)
+{
+   if ($a == 0)
+      return $b;
+   if ($b == 0)
+      return $a;
+   return (PGCD($b, $a % $b));
+}
+function inverseModulaire($a, $n)
+{
+   if (PGCD($a, $n) != 1)
+      return 0;
+   $A     = array();
+   $B     = array();
+   $Q     = array();
+   $R     = array();
+   $U     = array();
+   $V     = array();
+   $i     = 0;
+   $A[$i] = $a;
+   $B[$i] = $n;
+   $Q[$i] = (int) ($A[$i] / $B[$i]);
+   $R[$i] = $A[$i] % $B[$i];
+   while ($R[$i] != 0) {
+      $i++;
+      $A[$i] = $B[$i - 1];
+      $B[$i] = $R[$i - 1];
+      $Q[$i] = (int) ($A[$i] / $B[$i]);
+      $R[$i] = $A[$i] % $B[$i];
+   }
+   $U[$i] = 0;
+   $V[$i] = 1;
+   for ($j = $i - 1; $j >= 0; $j--) {
+      $U[$j] = $V[$j + 1];
+      $V[$j] = -$Q[$j] * $U[$j] + $U[$j + 1];
+   }
+   $res = $U[0] % $n;
+   if ($res < 0)
+      return $res + $n;
+   return $res;
+}
+
+function ahill(){
+
+$alphabet = str_split($_POST['alphabet']);
+   $modulo   = count($alphabet); 
+ 
+   for ($a = 0; $a <$modulo ; $a++) {
+   	for ($b = 0; $b <$modulo ; $b++) {
+    		for ($c = 0; $c <$modulo ; $c++) {
+    			for ($d = 0; $d <$modulo ; $d++) {
+				
+				$melema   = $a; //Matrice element a 
+      			$melemb   = $b; //Matrice element b
+      			$melemc   = $c; //Matrice element c
+      			$melemd   = $d; //Matrice element d
+      
+      			$Gamma    = (($melema * $melemd) - ($melemc * $melemb)); //Calcul de det(A) avec Gamma
+      			//verifier si clé valide XO
+      			$mod      = $Gamma % $modulo; //Mod en fonction de lalphabet
+      
+      			if ($mod < 0) $mod = $mod + $modulo;
+      
+      			$pgcd = PGCD($modulo, $mod); // Calcul du PGCD
+				
+				
+				if ($pgcd == 1){ 
+      			$invmod = inverseModulaire($mod, $modulo);				
+				$imelema = ($invmod * $d) % $modulo; //Matrice Inverse element a 
+				$imelemb = ($invmod * (-$b)) % $modulo; //Matrice Inverse element b
+				$imelemc = ($invmod * (-$c)) % $modulo; //Matrice Inverse element c
+				$imelemd = ($invmod * $a) % $modulo; //Matrice Inverse element d
+				$msgdc   = $_POST['message'];
+				$Amdccod = str_split($msgdc);
+				$dcompt  = count($Amdccod);
+            
+				if ($dcompt % 2 != 0) {
+					$Amdcod   = $Amdccod;
+					$Amdcod[] = 'A';
+					$dcompt++;
+				} else
+					$Amdcod = $Amdccod;
+				
+				foreach ($Amdcod as $cle => $v) {
+					$Amdcod[$cle] = array_search($v, $alphabet);
+				}
+				$codeMessage = 0;
+				foreach ($Amdcod as $v) {
+					$codeMessage += $v;
+				}
+            
+				if ($dcompt % 2 == 0) { //Decrypte le msg
+					for ($i = 0; $i < $dcompt; $i++) {
+						if ($i % 2 == 0) {
+							$val        = $Amdcod[$i];
+							$Amdcod[$i] = (($Amdcod[$i] * $imelema) + ($Amdcod[$i + 1] * $imelemb)) % $modulo;
+							if ($Amdcod[$i] < 0) {
+								$Amdcod[$i] = $Amdcod[$i] + $modulo;
+							}
+						} else {
+							$Amdcod[$i] = (($val * $imelemc) + ($Amdcod[$i] * $imelemd)) % $modulo;
+							if ($Amdcod[$i] < 0) {
+								$Amdcod[$i] = $Amdcod[$i] + $modulo;
+							}
+						}
+					}
+				}	
+            
+				$decrypt         = "";
+				foreach ($Amdcod as $val) {
+					$decrypt = $decrypt . $alphabet[$val];
+				}
+				echo "Clef $a $b $c $d : $decrypt<br>";
+				
+				
+				
+         		
+				
+				} //Fin if pgcd==1
+				
+				} //Fin boucle for d
+   			} //Fin boucle for c
+   		} //Fin boucle for b		 
+   	} //Fin boucle for a 
+
+}
+	
+	
+	
+	/***********************************************
+    *****************FIN DE HILL********************
+    ***********************************************/
+	
     if(isset($_POST['fonction'])){
         if(in_array('cesa',$_POST['fonction'])){
             cesar();
+        }
+		if(in_array('hill',$_POST['fonction'])){
+            ahill();
         }
     }
     

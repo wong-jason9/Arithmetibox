@@ -304,13 +304,13 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
                         $Y[$i] = gmp_mod($y, 100);
                         $y= gmp_div_q(gmp_sub($y, $Y[$i]), 100);
                                     
-                        /*if($Y[$i]>$nbcarac) {
+                        if($Y[$i]>$nbcarac) {
                             $test=false;
                             echo "clef incorrecte";
                             break;
-                         }*/             
+                         }             
                     }
-                    /*if($test==false) break;*/
+                    if($test==false) break;
                         $Y=array_reverse($Y);
                         foreach($Y as $c => $v){
                             $Y[$c]=gmp_intval($v);
@@ -318,8 +318,8 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
                         }
                     $cmpt++;
                 }//Fin for sur le message       
-               /* if($test==false) 
-                    continue;*/
+                if($test==false) 
+                    continue;
                 $AffL6=str_split($decrypt);
 
                 echo "\$\$ \\textrm{clee= ($clefa, $clefb)} \$\$";
@@ -410,6 +410,153 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
 }//FIN DE LA FUNCTION
 
 
+	/***********************************************
+    ********************HILL************************
+    ***********************************************/
+	require('euclidehill.php');
+	
+	function dhill(){
+	
+	$tab_res_dcode = array();
+   
+	$ccod          = $_POST['clef'];
+   
+   if (preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#', $_POST['clef'], $Accod)) {
+      
+	  $melema   = $Accod[1]; //Matrice element a 
+      $melemb   = $Accod[3]; //Matrice element b
+      $melemc   = $Accod[5]; //Matrice element c
+      $melemd   = $Accod[7]; //Matrice element d
+      //$alphabet = array();
+	  $alphabet = str_split($_POST['alphabet']);
+      $modulo   = count($alphabet);
+      $Gamma    = (($melema * $melemd) - ($melemc * $melemb)); //Calcul de det(A) avec Gamma
+      //verifier si cle valide XO
+      $mod      = $Gamma % $modulo; //Mod en fonction de lalphabet
+      
+      if ($mod < 0)
+         $mod = $mod + $modulo;
+         
+      echo "\$\$ \\Large det(A) = (($melema \\times $melemd)-($melemc \\times $melemb)) <br>\$\$";
+      echo "\$\$ \\Large det(A) = $Gamma <br>\$\$";
+      echo "\$\$ \\Large det(A) \\equiv_{ $modulo } $mod <br>\$\$";
+      
+      if ($Gamma != 0)
+         euclid($modulo, $mod);
+      $pgcd = PGCD($modulo, $mod); // Calcul du PGCD
+      
+      echo "\$\$ \\Large PGCD($modulo,$mod) = $pgcd <br>\$\$";
+      
+      if ($pgcd == 1) {
+         $invmod = inverseModulaire($mod, $modulo);
+         echo "\$\$ \\Large \\text{Cle valide} <br>\$\$";
+      }
+   }
+   
+   if ($pgcd != 1)
+      echo "\$\$ \\Large \\text{Cle non valide} <br>\$\$";
+      
+   if ($pgcd == 1) {
+      
+      if (isset($_POST['message']) and trim($_POST['message']) != '') { //Pour decoder 
+      
+         
+            $imelema = ($invmod * $Accod[7]) % $modulo; //Matrice Inverse element a 
+            $imelemb = ($invmod * (-$Accod[3])) % $modulo; //Matrice Inverse element b
+            $imelemc = ($invmod * (-$Accod[5])) % $modulo; //Matrice Inverse element c
+            $imelemd = ($invmod * $Accod[1]) % $modulo; //Matrice Inverse element d
+            $msgdc   = $_POST['message'];
+            $Amdccod = str_split($msgdc);
+            $dcompt  = count($Amdccod);
+            echo "\$\$    \\Large A^{-1} \\equiv_{ $modulo } \\begin{pmatrix}";
+            echo "$imelema&$imelemb \\\\ $imelemc&$imelemd \\end{pmatrix} \$\$";
+            
+            if ($dcompt % 2 != 0) {
+               $Amdcod   = $Amdccod;
+               $Amdcod[] = 'A';
+               $dcompt++;
+            } else
+               $Amdcod = $Amdccod;
+            echo '<br>';
+            $tab_res_dcode[] = $Amdccod;
+            foreach ($Amdcod as $c => $v) {
+               $Amdcod[$c] = array_search($v, $alphabet);
+            }
+            $codeMessage = 0;
+            foreach ($Amdcod as $v) {
+               $codeMessage += $v;
+            }
+            echo '<br>';
+            $tab_res_dcode[] = $Amdcod;
+            
+            if ($dcompt % 2 == 0) { //Decrypte le msg
+               for ($i = 0; $i < $dcompt; $i++) {
+                  if ($i % 2 == 0) {
+                     $val        = $Amdcod[$i];
+                     $Amdcod[$i] = (($Amdcod[$i] * $imelema) + ($Amdcod[$i + 1] * $imelemb)) % $modulo;
+                     if ($Amdcod[$i] < 0) {
+                        $Amdcod[$i] = $Amdcod[$i] + $modulo;
+                     }
+                  } else {
+                     $Amdcod[$i] = (($val * $imelemc) + ($Amdcod[$i] * $imelemd)) % $modulo;
+                     if ($Amdcod[$i] < 0) {
+                        $Amdcod[$i] = $Amdcod[$i] + $modulo;
+                     }
+                  }
+               }
+            }
+            
+            $tab_res_dcode[] = $Amdcod;
+            $decrypt         = "";
+            foreach ($Amdcod as $cle => $val) {
+               $decrypt = $decrypt.$_POST['alphabet'][$Amdcod[$cle]];
+            }
+            $Amdcod          = str_split($decrypt);
+            $tab_res_dcode[] = $Amdcod;
+            
+            //Affichage LateX pour DCoder
+            echo "<p>\$\$";
+            echo "\\begin{array}{c||c}"; // collone //
+            foreach ($tab_res_dcode as $c => $v) {
+               switch ($c) {
+                  case 0:
+                     echo " Texte& ";
+                     foreach ($tab_res_dcode[$c] as $val) {
+                        echo " $val& ";
+                     }
+                     break;
+                  case 1:
+                     echo " Codage&";
+                     foreach ($tab_res_dcode[$c] as $val) {
+                        echo " $val& ";
+                     }
+                     break;
+                  case 2:
+                     echo " A^{-1}.X&";
+                     foreach ($tab_res_dcode[$c] as $val) {
+                        echo " $val& ";
+                     }
+                     break;
+                  case 3:
+                     echo " Decodage&";
+                     foreach ($tab_res_dcode[$c] as $val) {
+                        echo " $val& ";
+                     }
+                     break;
+               }
+               echo "\\\\\\hline";
+            }
+            echo "\\end{array}";
+            echo "\$\$</p>";
+            echo "<br>Decodage : $decrypt "; //Affiche le message coder
+                
+         }
+      }
+   }
+	
+	/***********************************************
+    *****************FIN DE HILL********************
+    ***********************************************/
 
     if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
         $cesa=cesar();
@@ -482,7 +629,7 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
         affine();
     }
     elseif(isset($_POST['fonction']) and $_POST['fonction']=='hill'){
-        
+        dhill();
     }
     
     ?>
