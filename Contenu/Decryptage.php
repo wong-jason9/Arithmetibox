@@ -304,13 +304,13 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
                         $Y[$i] = gmp_mod($y, 100);
                         $y= gmp_div_q(gmp_sub($y, $Y[$i]), 100);
                                     
-                        if($Y[$i]>$nbcarac) {
+                        /*if($Y[$i]>$nbcarac) {
                             $test=false;
                             echo "clef incorrecte";
                             break;
-                         }             
+                         }*/             
                     }
-                    if($test==false) break;
+                    /*if($test==false) break;*/
                         $Y=array_reverse($Y);
                         foreach($Y as $c => $v){
                             $Y[$c]=gmp_intval($v);
@@ -318,8 +318,8 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
                         }
                     $cmpt++;
                 }//Fin for sur le message       
-                if($test==false) 
-                    continue;
+                /*if($test==false) 
+                    continue;*/
                 $AffL6=str_split($decrypt);
 
                 echo "\$\$ \\textrm{clee= ($clefa, $clefb)} \$\$";
@@ -413,7 +413,7 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
 	/***********************************************
     ********************HILL************************
     ***********************************************/
-	require('euclidehill.php');
+	/*require('euclidehill.php');
 	
 	function dhill(){
 	
@@ -552,13 +552,13 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
                 
          }
       }
-   }
+   }*/
 	
 	/***********************************************
     *****************FIN DE HILL********************
     ***********************************************/
 
-    if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
+   /* if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
         $cesa=cesar();
         if($cesa!=NULL){
             echo "<p class='message'>\$\$";
@@ -630,7 +630,7 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
     }
     elseif(isset($_POST['fonction']) and $_POST['fonction']=='hill'){
         dhill();
-    }
+    }*/
     
     ?>
 </body>
