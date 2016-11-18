@@ -1,6 +1,6 @@
 <?php
 
-function euclide($a, $b) {
+function euclid($a, $b) {
 while ($b!=0){
 $t=$a%$b;
 $res['0']=$a;
