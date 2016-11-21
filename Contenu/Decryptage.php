@@ -1,8 +1,8 @@
 <?php require('debut.php');
     require('fonctions.php') ?>
 <h2 class="titreDansLaFonctions">Décryptage</h2>
-<form action='Arithmetibox.php?outil=decrypte' method='post'>
-
+<form action='Arithmetibox.php?outil=decrypte' method='post' enctype="multipart/form-data">
+<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 <p><label>Cesar<input type='radio' name='fonction' value='cesa' checked='checked'></label>
 <label>Affine<input type='radio' name='fonction' value='affi'></label>
 <label>Hill<input type='radio' name='fonction' value='hill'></label></p>
@@ -11,16 +11,28 @@ Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef : <input size='43' name='clef' type='text'><br>
 <p>Message :<br>
 <label>Format Alphabet<input type='radio' name='methode' value='alpha' checked='checked'></label><label>Format Code<input type='radio' name='methode' value='code'></label></p>
-Attaque par dictionnaire <input type='radio' name='opt_attaque' value='Avec_dico'>
+Attaque par dictionnaire <input type='radio' name='opt_attaque' value='Avec_dico'> <?php // a enlever ?>
 Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dico'></br>
 <textarea name='message'></textarea><br>
+Ou choisir un fichier contenant le message codé : <input type="file" name="messagecode"><br>
 <input type='submit' value='Déchiffrer'  class="boutton">
 </form>
 
 <?php
-    
     function cesar(){
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and isset($_POST['methode'])){
+		$extensions_valides = array('txt');
+		$extension_upload = strtolower(  substr(  strrchr($_FILES['messagecode']['name'], '.')  ,1)  );
+		if(isset($_FILES['messagecode'])){
+			if ($_FILES['messagecode']['error'] > 0) echo "Erreur lors du transfert";
+			elseif($_FILES['messagecode']['size'] > $_POST['MAX_FILE_SIZE']) echo "Le fichier est trop gros";
+			elseif( !in_array($extension_upload,$extensions_valides)) echo "Extension incorrecte";
+			else{
+				$fichiercode=fopen($_FILES['messagecode']['tmp_name'],"r+");
+				$messagefichier=fgets($fichiercode);
+				$_POST['message']=$messagefichier;
+			}
+		}
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#[0-9]*#',$_POST['clef']) and isset($_POST['methode'])){
             $Amess=array();
             $text=array();
             $alphabet=str_split($_POST['alphabet']);
@@ -558,7 +570,7 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
     *****************FIN DE HILL********************
     ***********************************************/
 
-   /* if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
+    if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
         $cesa=cesar();
         if($cesa!=NULL){
             echo "<p class='message'>\$\$";
@@ -630,7 +642,7 @@ Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dic
     }
     elseif(isset($_POST['fonction']) and $_POST['fonction']=='hill'){
         dhill();
-    }*/
+    }
     
     ?>
 </body>
