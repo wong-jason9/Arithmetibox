@@ -15,6 +15,14 @@ davidulle@gmail.com-->
     <main>
         <div id="MenuFonction">
             <nav>
+				<h2 class="titreFonctions">Cryptanalyse</h2>
+                <ul> 
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>  
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
+					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=crypte">Crypter</a></li>
+                </ul>   
                 <h2 class="titreFonctions">Math</h2>
                 <ul>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
@@ -27,16 +35,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=deco">Décomposition d'un nombre</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
-                </ul>
-                <h2 class="titreFonctions">Cryptanalyse</h2>
-                <ul> 
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cesa">Cesar</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>  
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
-					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=crypte">Crypter</a></li>
-                </ul>                
+                </ul>            
             </nav>
         </div>
         <div id="affichage">
