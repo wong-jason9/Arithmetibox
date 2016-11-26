@@ -16,33 +16,9 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 </form>
 
 <?php
-    
-    function cesar(){
-		$extensions_valides = array('txt');
-		$extension_upload = strtolower(  substr(  strrchr($_FILES['messagecode']['name'], '.')  ,1)  );
-		if(isset($_FILES['messagecode'])){
-			if ($_FILES['messagecode']['error'] > 0) echo "Erreur lors du transfert";
-			elseif($_FILES['messagecode']['size'] > $_POST['MAX_FILE_SIZE']) echo "Le fichier est trop gros";
-			elseif( !in_array($extension_upload,$extensions_valides)) echo "Extension incorrecte";
-			else{
-				$fichiercode=fopen($_FILES['messagecode']['tmp_name'],"r+");
-				$messagefichier=fgets($fichiercode);
-				$_POST['message']=$messagefichier;
-			}
-		}
-
-        /*
-		$dico=array();
-		$monfichier=fopen("Contenu/Dictionnaire.txt","r+");
-		while(FALSE !== ($ligne = fgets($monfichier)))
-			$dico[]=trim($ligne);
-		fclose($monfichier);
-		*/
-        $dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
-            $maxoccurence=0;
+    function RenvoyerMessage(){
+		if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
             $Amess=array();
-            $text=array();
             $alphabet=str_split($_POST['alphabet']);
             if($_POST['methode']=='code'){
                 if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
@@ -68,6 +44,36 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                     }
                 }
             }
+		}
+		return $Amess;
+	}
+    function cesar(){
+		$extensions_valides = array('txt');
+		$extension_upload = strtolower(  substr(  strrchr($_FILES['messagecode']['name'], '.')  ,1)  );
+		if(isset($_FILES['messagecode'])){
+			if ($_FILES['messagecode']['error'] > 0) echo "Erreur lors du transfert";
+			elseif($_FILES['messagecode']['size'] > $_POST['MAX_FILE_SIZE']) echo "Le fichier est trop gros";
+			elseif( !in_array($extension_upload,$extensions_valides)) echo "Extension incorrecte";
+			else{
+				$fichiercode=fopen($_FILES['messagecode']['tmp_name'],"r+");
+				$messagefichier=fgets($fichiercode);
+				$_POST['message']=$messagefichier;
+			}
+		}
+
+        /*
+		$dico=array();
+		$monfichier=fopen("Contenu/Dictionnaire.txt","r+");
+		while(FALSE !== ($ligne = fgets($monfichier)))
+			$dico[]=trim($ligne);
+		fclose($monfichier);
+		*/
+        $dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
+            $Amess=RenvoyerMessage();
+			$maxoccurence=0;
+          //  $text=array();
+            $alphabet=str_split($_POST['alphabet']);
             $nbcarac=strlen($_POST['alphabet'])-1;
             $mod = 0;
             for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
@@ -99,7 +105,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 }
                 if($test==false) continue;
                 $occurence=0;
-                $text[$clef]=$decrypt;
+               // $text[$clef]=$decrypt;
                 foreach($dico as $v){
                     $occurence=gmp_add($occurence,substr_count(strtolower($decrypt),$v));
                 }
