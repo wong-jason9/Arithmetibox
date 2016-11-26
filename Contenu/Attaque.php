@@ -1,4 +1,5 @@
-<?php require('debut.php'); ?>
+<?php require('debut.php');
+require('fonctions.php'); ?>
 
 <h2 class="titreDansLaFonctions">Attaque</h2>
 <form action='Arithmetibox.php?outil=attaque' method='post' enctype="multipart/form-data">
@@ -16,63 +17,14 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 </form>
 
 <?php
-    function RenvoyerMessage(){
-		if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
-            $Amess=array();
-            $alphabet=str_split($_POST['alphabet']);
-            if($_POST['methode']=='code'){
-                if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
-                    preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
-                    $Amess = explode($caract[2], $_POST['message']);
-                }
-            }
-            elseif($_POST['methode']=='alpha'){
-                $tab_message=str_split($_POST['message']);
-                foreach($tab_message as $c => $v){
-                    $tab_message[$c]=array_search($v,$alphabet);
-                }
-                $i=$_POST['paquet']-1;
-                $codeMessage=0;
-                foreach($tab_message as $v){
-                    
-                    $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
-                    $i=$i-1;
-                    if($i<0){
-                        $Amess[]=$codeMessage;
-                        $codeMessage=0;
-                        $i=$_POST['paquet']-1;
-                    }
-                }
-            }
-		}
-		return $Amess;
-	}
-    function cesar(){
-		$extensions_valides = array('txt');
-		$extension_upload = strtolower(  substr(  strrchr($_FILES['messagecode']['name'], '.')  ,1)  );
-		if(isset($_FILES['messagecode'])){
-			if ($_FILES['messagecode']['error'] > 0) echo "Erreur lors du transfert";
-			elseif($_FILES['messagecode']['size'] > $_POST['MAX_FILE_SIZE']) echo "Le fichier est trop gros";
-			elseif( !in_array($extension_upload,$extensions_valides)) echo "Extension incorrecte";
-			else{
-				$fichiercode=fopen($_FILES['messagecode']['tmp_name'],"r+");
-				$messagefichier=fgets($fichiercode);
-				$_POST['message']=$messagefichier;
-			}
-		}
 
-        /*
-		$dico=array();
-		$monfichier=fopen("Contenu/Dictionnaire.txt","r+");
-		while(FALSE !== ($ligne = fgets($monfichier)))
-			$dico[]=trim($ligne);
-		fclose($monfichier);
-		*/
-        $dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
+    function cesar(){
+		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+			MessageDansFichier();
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
             $Amess=RenvoyerMessage();
+			$dico=Dictionnaire();
 			$maxoccurence=0;
-          //  $text=array();
             $alphabet=str_split($_POST['alphabet']);
             $nbcarac=strlen($_POST['alphabet'])-1;
             $mod = 0;
@@ -124,14 +76,14 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     ***********************************************/
 	
 	require('euclidehill.php');
-function PGCD($a, $b)
+/*function PGCD($a, $b)
 {
    if ($a == 0)
       return $b;
    if ($b == 0)
       return $a;
    return (PGCD($b, $a % $b));
-}
+}*/
 function inverseModulaire($a, $n)
 {
    if (PGCD($a, $n) != 1)
