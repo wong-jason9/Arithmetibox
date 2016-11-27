@@ -5,10 +5,11 @@
             $Amess=array();
             $alphabet=str_split($_POST['alphabet']);
             if($_POST['methode']=='code'){
-                if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
-                    preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
+                if(preg_match('#^([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
+                    preg_match('#^([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
                     $Amess = explode($caract[2], $_POST['message']);
                 }
+				else return null;
             }
             elseif($_POST['methode']=='alpha'){
                 $tab_message=str_split($_POST['message']);

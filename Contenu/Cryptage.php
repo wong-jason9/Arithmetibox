@@ -21,40 +21,53 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     function cesar(){
 		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
 			MessageDansFichier();
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and preg_match('#[0-9]*#',$_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#[0-9]*#',$_POST['clef']) and isset($_POST['methode'])){
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and preg_match('#^[0-9]*$#',$_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#^[0-9]*$#',$_POST['clef']) and isset($_POST['methode'])){
             $Amess=RenvoyerMessage();
-            $alphabet=str_split($_POST['alphabet']);
-            $nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
-            $mod = 0;
-            for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
-            $mod=gmp_add($mod,1);
-            if($_POST['fonction']=='cesa'){
-                if($_POST['clef']>=0 and $_POST['clef']<$mod){
-                    $res=array();
-                    if($_POST['clef']==''){
-                        echo "Clé nécessaire";
-                    }
-                    //Affichage pour une seule clé
-                    elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
-                        foreach($Amess as $x){
-                            $y=gmp_add($x,$_POST['clef']);
-                            $y=gmp_mod($y,$mod);
-                            $res[]=$y;
+			if($Amess!=null){
+				$alphabet=str_split($_POST['alphabet']);
+				$nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
+				$mod = 0;
+				for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
+				$mod=gmp_add($mod,1);
+				if($_POST['fonction']=='cesa'){
+					if($_POST['clef']>=0 and $_POST['clef']<$mod){
+						$res=array();
+						if($_POST['clef']==''){
+							echo "Clé nécessaire";
+						}
+						//Affichage pour une seule clé
+						elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
+							foreach($Amess as $x){
+								$y=gmp_add($x,$_POST['clef']);
+								$y=gmp_mod($y,$mod);
+								$res[]=$y;
                             
-                        }
-                        echo $_POST['message']."<br><br>";
-                        echo "Après cryptage : <br>";
-                        $i=0;
-                        foreach($res as $v){
-                            echo $v;
-                            $i++;
-                            if($i<count($res))
-                                echo "-";
-                        }
-                    }
-                }
+							}
+							echo $_POST['message']."<br><br>";
+							echo "Après cryptage : <br>";
+							$i=0;
+							$test=true;
+							$decrypte="";
+							foreach($res as $c => $v){
+								$res[$c]=gmp_intval($v);
+								echo $v;
+								$i++;
+							
+								if($i<count($res))
+									echo "-";
+								if($v>$nbcarac)
+									$test=false;
+								else $decrypte=$decrypte.$_POST['alphabet'][$res[$c]];
+							}
+							if($test!=false){
+								echo "<br><br> ou <br><br>";
+								echo $decrypte;
+							}
+						}
+					}
                 
-            }
+				}
+			}
         }
         else
             echo "Saisie incorrecte";
