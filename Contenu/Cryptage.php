@@ -153,23 +153,12 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 if(($i+1)!=$cmpt) echo '&';
             }
 
-            if($_POST['paquet']==1 or ($_POST['paquet']>1 and $_POST['msgcode']!="crypter")) //Test pour savoir si on inclue la ligne
-                echo "\\\\\\hline ";
-            for($i=0; $i<count($AffL6); $i++) {
-
-                if($_POST['paquet']==1){
-                    echo $AffL6[$i];
-                    if(($i+1)!=$cmpt) echo '&';
-                }
-                elseif($_POST['paquet']>1 and $_POST['msgcode']!="crypter"){
-                    $j=0;
-                    while($j!=($_POST['paquet'])){ //A MODIFIER POUR D'AUTRE PAQUET (SUPERIEUR à 2)
-                        echo $AffL6[$j+$i];
-                        $j++;
-                    }
-                    $i=$i+$j-1;
-                    echo '&';
-                }
+            if($_POST['paquet']==1){
+              echo "\\\\\\hline ";
+              for($i=0; $i<count($AffL6); $i++){  
+                  echo $AffL6[$i];
+                  if(($i+1)!=$cmpt) echo '&';
+              }
             }
             echo"\\end{array}".'\\\\';
             echo "\$\$";
@@ -190,50 +179,77 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
 
             if($_POST['methode']=='alpha'){ //convertir alphabet au format code
-                $alphabet=str_split($_POST['alphabet']);
-                $tab_message=str_split($_POST['message']);
+                  $alphabet=str_split($_POST['alphabet']);  //convertir string en tableau
+                  $tab_message=str_split($_POST['message']);
 
-                $i=0;
-                foreach ($tab_message as $key => $value){
-                    $AffL1[$i]=$value;
-                    $i++;
+                  //Test si le message est contituer uniquement de caractère saisie dans l'alphabet
+                foreach ($tab_message as $v) {
+                  $test = false;
+                  foreach($alphabet as $alphab){
+                    if($v == $alphab)
+                      $test = true;
+                  }
+                  if($test == false){
+                    echo "Erreur: Le message saisie contient des caractères non présent dans l'alphabet saisie";
+                    return 0;
+                  }
+                  $test = true;
                 }
 
-                foreach($tab_message as $c => $v){
-                    $tab_message[$c]=array_search($v,$alphabet);
-                }
-                
-                $i=gmp_sub($_POST['paquet'],1);
-                $codeMessage=0;
-                foreach($tab_message as $v){    
-                    $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
-                    $i=gmp_sub($i,1);
-                    if($i<0){
-                        $Amess[]=$codeMessage;
-                        $codeMessage=0;
-                        $i=gmp_sub($_POST['paquet'],1);
-                    }
-                }
-            }
-            elseif($_POST['methode']=='code'){
+                  $i=0;
+                  foreach ($tab_message as $key => $value){
+                      $AffL1[$i]=$value;
+                      $i++;
+                  }
+
+                  foreach($tab_message as $c => $v){
+                      $tab_message[$c]=array_search($v,$alphabet);
+                  }
+                  
+                  $i=$_POST['paquet']-1;
+                  $codeMessage=0;
+                  foreach($tab_message as $v){    
+                      $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
+                      $i=gmp_sub($i,1);
+                      if($i<0){
+                          $Amess[]=$codeMessage;
+                          $codeMessage=0;
+                          $i=$_POST['paquet']-1;
+                      }
+                  }
+              }
+              elseif($_POST['methode']=='code'){
                 //enlever les tiret du message et stocker dans le TABLEAU Amess
-                $Amess = explode('-', $mess); 
-                $mess = implode("−", $Amess);
-                $Amess = explode('−', $mess);
-            }
-            if(preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)){
+                  $Amess = explode('-', $mess); 
+                  $mess = implode("−", $Amess);
+                  $Amess = explode('−', $mess);
+
+                $messageCode = true;
+                //Test si le message code est contituer uniquement de nombre
+                foreach($Amess as $v){
+                  if(!(preg_match('#^([-]?[0-9]*)$#' , $v)))
+                    $messageCode = false;
+                  echo $v.'</br>';
+                }
+                if($messageCode == false){
+                  echo "Erreur: se que vous avez saisie n'est pas au format code";
+                  return 0;
+                }
+              }
+
+            if((preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)) and (preg_match('#^([0-9]*)$#', $_POST['paquet']))){
                 $clefa=$res[1];
                 $clefb=$res[3];
 
                 $mod = calculeModulo($paquet, $nbcarac);
 
                 if(PGCD($clefa, $mod)!=1){ //Si $clefa et $mod n'est pas une clee valide on passe
-                    echo "clee ($clefa, $clefb) non valide (pgcd n'est pas égal à 1)";
+                    echo "Erreur: clee ($clefa, $clefb) non valide (le pgcd n'est pas égal à 1)";
                     return 0;
                 }
                 $clefa1 = inverseModulaire($clefa, $mod);
                 if($clefa1==0){  //Si $clefa1 est égal à 0 on passe
-                    echo "clee ($clefa, $clefb) non valide";
+                    echo "Erreur: clee ($clefa, $clefb) non valide";
                     return 0;
                 }
 
@@ -286,9 +302,10 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 echo "\$\$ \\textrm{par paquet de $paquet} \$\$";
                 
                 affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
-            }
-        }
-    }
+            }//FIN IF PREGMATCH
+            else echo "Saisie incorrecte";
+      }//FIN DU PREMIER IF ISSET TRIM...
+  }//FIN DE LA FUNCTION
 
 	
 	/***********************************************

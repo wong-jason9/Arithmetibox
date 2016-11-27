@@ -11,8 +11,6 @@ Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef : <input size='43' name='clef' type='text'><br>
 <p>Message :<br>
 <label>Format Alphabet<input type='radio' name='methode' value='alpha' checked='checked'></label><label>Format Code<input type='radio' name='methode' value='code'></label></p>
-Attaque par dictionnaire <input type='radio' name='opt_attaque' value='Avec_dico'> <?php // a enlever ?>
-Attaque sans dictionnaire <input type='radio' name='opt_attaque' value='Sans_dico'></br>
 <textarea name='message'></textarea><br>
 Ou choisir un fichier contenant le message codé : <input type="file" name="messagecode"><br>
 <input type='submit' value='Déchiffrer'  class="boutton">
@@ -174,15 +172,13 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 if(($i+1)!=$cmpt) echo '&';
             }
 
-            if($_POST['paquet']==1 or ($_POST['paquet']>1 and $_POST['msgcode']!="crypter")) //Test pour savoir si on inclue la ligne
-                echo "\\\\\\hline ";
-            for($i=0; $i<count($AffL6); $i++) {
-
+            echo "\\\\\\hline ";
+            for($i=0; $i<count($AffL6); $i++){
                 if($_POST['paquet']==1){
                     echo $AffL6[$i];
                     if(($i+1)!=$cmpt) echo '&';
                 }
-                elseif($_POST['paquet']>1 and $_POST['msgcode']!="crypter"){
+                else{ //si les paquet sont supérieur à 1
                     $j=0;
                     while($j!=($_POST['paquet'])){ //A MODIFIER POUR D'AUTRE PAQUET (SUPERIEUR à 2)
                         echo $AffL6[$j+$i];
@@ -197,66 +193,91 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     }
 
     function affine(){
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
-            $mess = $_POST['message'];
-            $paquet = $_POST['paquet'];
-            $XYZ = $_POST['alphabet'];
-            $nbcarac=gmp_sub(strlen($_POST['alphabet']), 1);
-            $AffL1=array(); //Pour stocker les valeurs et afficher le tableau après
-            $AffL2=array();  
-            $AffL3=array();
-            $AffL4=array();
-            $AffL5=array();
-            $AffL6=array();
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and isset($_POST['methode'])){
+        	
+        	if((preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)) and (preg_match('#^([0-9]*)$#', $_POST['paquet']))){
+	            $mess = $_POST['message'];
+	            $paquet = $_POST['paquet'];
+	            $XYZ = $_POST['alphabet'];
+	            $nbcarac=gmp_sub(strlen($_POST['alphabet']), 1);
+	            $AffL1=array(); //Pour stocker les valeurs et afficher le tableau après
+	            $AffL2=array();  
+	            $AffL3=array();
+	            $AffL4=array();
+	            $AffL5=array();
+	            $AffL6=array();
 
-            if($_POST['methode']=='alpha'){ //convertir alphabet au format code
-                $alphabet=str_split($_POST['alphabet']);
-                $tab_message=str_split($_POST['message']);
+	            if($_POST['methode']=='alpha'){ //convertir alphabet au format code
+	                $alphabet=str_split($_POST['alphabet']);	//convertir string en tableau
+	                $tab_message=str_split($_POST['message']);
 
-                $i=0;
-                foreach ($tab_message as $key => $value){
-                    $AffL1[$i]=$value;
-                    $i++;
-                }
+	                //Test si le message est contituer uniquement de caractère saisie dans l'alphabet
+	            	foreach ($tab_message as $v) {
+	            		$test = false;
+	            		foreach($alphabet as $alphab){
+	            			if($v == $alphab)
+	            				$test = true;
+	            		}
+	            		if($test == false){
+	            			echo "Erreur: Le message saisie contient des caractères non présent dans l'alphabet saisie";
+	            			return 0;
+	            		}
+	            		$test = true;
+	            	}
 
-                foreach($tab_message as $c => $v){
-                    $tab_message[$c]=array_search($v,$alphabet);
-                }
-                
-                $i=gmp_sub($_POST['paquet'],1);
-                $codeMessage=0;
-                foreach($tab_message as $v){    
-                    $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
-                    $i=gmp_sub($i,1);
-                    if($i<0){
-                        $Amess[]=$codeMessage;
-                        $codeMessage=0;
-                        $i=gmp_sub($_POST['paquet'],1);
-                    }
-                }
-            }
-            elseif($_POST['methode']=='code'){
-                //enlever les tiret du message et stocker dans le TABLEAU Amess
-                $Amess = explode('-', $mess); 
-                $mess = implode("−", $Amess);
-                $Amess = explode('−', $mess);
-            }
+	                $i=0;
+	                foreach ($tab_message as $key => $value){
+	                    $AffL1[$i]=$value;
+	                    $i++;
+	                }
+
+	                foreach($tab_message as $c => $v){
+	                    $tab_message[$c]=array_search($v,$alphabet);
+	                }
+	                
+	                $i=gmp_sub($_POST['paquet'],1);
+	                $codeMessage=0;
+	                foreach($tab_message as $v){    
+	                    $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
+	                    $i=gmp_sub($i,1);
+	                    if($i<0){
+	                        $Amess[]=$codeMessage;
+	                        $codeMessage=0;
+	                        $i=gmp_sub($_POST['paquet'],1);
+	                    }
+	                }
+	            }
+	            elseif($_POST['methode']=='code'){
+	            	//enlever les tiret du message et stocker dans le TABLEAU Amess
+	                $Amess = explode('-', $mess); 
+	                $mess = implode("−", $Amess);
+	                $Amess = explode('−', $mess);
+
+	            	$messageCode = true;
+	            	//Test si le message code est contituer uniquement de nombre
+	            	foreach($Amess as $v){
+	            		 if(!(preg_match('#^([-]?[0-9]*)$#' , $v)))
+	            			$messageCode = false;
+	            	}
+	            	if($messageCode == false){
+	            		echo "Erreur: se que vous avez saisie n'est pas au format code";
+	            		return 0;
+	            	}
+	            }
         
-        if(trim($_POST['clef'])!=''){
-            if(preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)){
                 $clefa=$res[1];
                 $clefb=$res[3];
 
                 $mod = calculeModulo($paquet, $nbcarac);
 
                 if(PGCD($clefa, $mod)!=1){ //Si $clefa et $mod n'est pas une clee valide on passe
-                    echo "clee ($clefa, $clefb) non valide (pgcd n'est pas égal à 1)";
+                    echo "Erreur: clee ($clefa, $clefb) non valide (le pgcd n'est pas égal à 1)";
                     return 0;
                 }
 
                 $clefa1 = inverseModulaire($clefa, $mod);
                 if($clefa1==0){  //Si $clefa1 est égal à 0 on passe
-                    echo "clee ($clefa, $clefb) non valide";
+                    echo "Erreur: clee ($clefa, $clefb) non valide";
                     return 0;
                 }
 
@@ -281,15 +302,8 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                     $Y=array();
                     for($i=0 ; $i<$paquet and $test==true; $i++){
                         $Y[$i] = gmp_mod($y, 100);
-                        $y= gmp_div_q(gmp_sub($y, $Y[$i]), 100);
-                                    
-                        /*if($Y[$i]>$nbcarac) {
-                            $test=false;
-                            echo "clef incorrecte";
-                            break;
-                         }*/             
+                        $y= gmp_div_q(gmp_sub($y, $Y[$i]), 100);    
                     }
-                    /*if($test==false) break;*/
                         $Y=array_reverse($Y);
                         foreach($Y as $c => $v){
                             $Y[$c]=gmp_intval($v);
@@ -297,96 +311,16 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                         }
                     $cmpt++;
                 }//Fin for sur le message       
-                /*if($test==false) 
-                    continue;*/
                 $AffL6=str_split($decrypt);
 
                 echo "\$\$ \\textrm{clee= ($clefa, $clefb)} \$\$";
                 echo "\$\$ \\textrm{par paquet de $paquet} \$\$";
 
                 affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
-            }//FIN DU IF DU PREG MATCH
-        }
-        elseif(isset($_POST['opt_attaque']) and trim($_POST['opt_attaque'])!=''){
-        $dico=[' le ','de ','des ',' que ',' elle ',' je ',' tu ',' il ',' un ',' ou ',' la ',' les ',' une ',' et ',' pour ',' par ', 'VOICI', 'voici'];
-        $mod = calculeModulo($paquet, $nbcarac);
-        $maxoccurence=0;
-        $clefpossiblea= null;
-        $clefpossiblea1= null;
-        $clefpossibleb= null;
-        $decryptpossible= null;
-        $maxoccurence= null;
-
-        for($clefa=0 ; $clefa<$mod ; $clefa++){ //On cherche la clee a
-            if(PGCD($clefa, $mod)!=1) //Si $clefa et $mod n'est pas une clee valide on passe
-                continue;
-            $clefa1 = inverseModulaire($clefa, $mod);
-            if($clefa1==0)  //Si $clefa1 est égal à 0 on passe
-                continue;
-            
-            for($clefb = 0 ; $clefb<$mod ; $clefb++){   //On cherche la clee b
-                
-                $test = true;
-                $decrypt = "";
-                
-                foreach($Amess as $x){  //On parcour le message
-                    $y=gmp_mul($clefa1, (gmp_sub((int)$x, $clefb))); //clee a * (valeur - clee b)
-                    $y=gmp_mod($y, $mod);
-                    if($y<0) //si modulo negatif on le met en positif
-                        $y=gmp_add($y, $mod);
-                    
-                    $Y=array();
-                    for($i=0 ; $i<$paquet and $test==true; $i++){
-                        $Y[$i] = gmp_mod($y, 100);
-                        $y=gmp_div_q(gmp_sub($y, $Y[$i]), 100);
-                        if($Y[$i]>$nbcarac) {
-                            $test=false;
-                            break;
-                        }
-                    }//Fin for sur les paquet
-                    if($test==false) 
-                        break;
-                    $Y=array_reverse($Y);
-                    foreach($Y as $c => $v){
-                        $Y[$c]=gmp_intval($v);
-                        $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
-                    }
-                }//Fin for sur le message
-                if($test==false) 
-                    continue;
-                
-                if($_POST['opt_attaque']=='Sans_dico'){
-                    echo "<strong>a = ".$clefa."<br>a-&sup1 = ".$clefa1."<br>b = ".$clefb."</strong></br>";
-                    echo '<p class=\'message\'>'.$decrypt.'</p></br>';
-                    echo "<hr>";
-                }
-                else{
-                    $occurence=0;
-                    /*$text[$clef]=$decrypt;*/
-                    foreach($dico as $v){
-                         $occurence=gmp_add($occurence,substr_count(strtolower($decrypt),$v));
-                    }
-                    if($occurence>$maxoccurence){
-                        $clefpossiblea= $clefa;
-                        $clefpossiblea1= $clefa1;
-                        $clefpossibleb= $clefb;
-                        $decryptpossible= $decrypt;
-                        $maxoccurence= $occurence;
-                    }
-                }
-            }//Fin for sur clefb
-
-            }//Fin for sur clefa
-            if($_POST['opt_attaque']=='Avec_dico'){
-                echo "<p class='message' ><br>Message le plus probable est celui de la clé :<br> <strong>a =$clefpossiblea <br> a-&sup1 =$clefpossiblea1 <br> b =$clefpossibleb <br></strong><br> $decryptpossible</p>";
-            }
-            /*foreach($text as $cl => $te){
-                echo "<p>".$cl." : <br>".$te."<br></p>";
-            }*/
-
-        }
-    }
-}//FIN DE LA FUNCTION
+            }//FIN IF PREGMATCH
+            else echo "Saisie incorrecte";
+    	}//FIN DU PREMIER IF ISSET TRIM...
+	}//FIN DE LA FUNCTION
 
 
 	/***********************************************
