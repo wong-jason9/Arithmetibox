@@ -16,8 +16,7 @@ davidulle@gmail.com-->
         <div id="MenuFonction">
             <nav>
 				<h2 class="titreFonctions">Cryptanalyse</h2>
-                <ul> 
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=affi">Affine</a></li>  
+                <ul>  
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
 					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
@@ -62,11 +61,6 @@ davidulle@gmail.com-->
                 case 'cesa':
                     echo "<section>";
                     include("Contenu/AttaqueCesar.php");
-                    echo "</section>";
-                    break;
-                case 'affi':
-                    echo "<section>";
-                    include("Contenu/AttaqueAffine.php");
                     echo "</section>";
                     break;
                 case 'cong':
