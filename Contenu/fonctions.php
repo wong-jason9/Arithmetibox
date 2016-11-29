@@ -34,14 +34,14 @@
 	}
 	
 	function Dictionnaire(){
-		/*        
+      
 		$dico=array();
 		$monfichier=fopen("Contenu/Dictionnaire.txt","r+");
 		while(FALSE !== ($ligne = fgets($monfichier)))
 			$dico[]=trim($ligne);
 		fclose($monfichier);
-		*/
-		$dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
+		
+		//$dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
 		return $dico;
 	}
 	
