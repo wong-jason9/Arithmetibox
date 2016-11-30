@@ -77,28 +77,21 @@
         return true;
     }
     
-function era($n){ 
-        $sautDeLigne=1;
-        gmp_init($sautDeLigne);
-        echo "\$\$";
-        echo "\\text{Nombre premier jusqu'à ".$_POST['liste_primary']." :}\\\ " ;
-        echo "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}";
+function era($n){
+        $res=array(); 
+        $indice=0;
+        gmp_init($indice);
         $i=1;
         gmp_init($i);
         $compare=gmp_cmp($i,$n);
         for($i; $compare<0;$i++){
             if((is_primary($i))==true){
-                echo $i.'&';
-                $sautDeLigne++;
-            }   
-            if(gmp_mod($sautDeLigne,20)==0) {
-                echo "\\\\";
-                $sautDeLigne++;
+                $res[$indice]=$i;
+                $indice++;
             }
             $compare=gmp_cmp($i,$n);
        }
-        echo"\\end{array}";
-        echo "\$\$";
+        return $res;
     }
     
    
