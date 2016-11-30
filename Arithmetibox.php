@@ -16,7 +16,8 @@ davidulle@gmail.com-->
         <div id="MenuFonction">
             <nav>
 				<h2 class="titreFonctions">Cryptanalyse</h2>
-                <ul>  
+                <ul> 
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=rsa">RSA</a></li> 
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
 					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
@@ -77,6 +78,11 @@ davidulle@gmail.com-->
                     echo "<section>";
                     include("Contenu/euclide.php");
                     echo "</section>";
+                    break;
+                case 'rsa':
+                    echo '<section>';
+                    include("Contenu/rsa.php");
+                    echo '</section>';
                     break;
                 case 'inverse_matrice_modulaire':
                     echo "<section>";
