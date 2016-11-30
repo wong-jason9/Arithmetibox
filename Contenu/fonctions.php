@@ -174,4 +174,24 @@ function era($n){
     function carre($x){
         return $x*$x;
     }
+    
+    //Decomposition
+    function decomposition($nb){
+        echo "Décomposition en produits de nombres premiers : </br>";
+        $tabPremiers=era($nb);
+        $nombre =$nb;
+        $tab=array();
+
+        while($nombre!=1){
+            foreach($tabPremiers as $v){
+                if(gmp_mod($nombre,$v)==0){
+                    $diviseur=val_p($nombre,$v,"1");
+                    $nombre=gmp_div($nombre,gmp_pow($v,gmp_intval($diviseur)));
+                    $tab[]=$nombre;
+                    break;
+                }
+            }
+        }
+        return $tab;
+    }
 ?>
