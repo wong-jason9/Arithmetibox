@@ -32,6 +32,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=era">Erathostène</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=deco">Décomposition d'un nombre</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
@@ -82,6 +83,11 @@ davidulle@gmail.com-->
                 case 'rsa':
                     echo '<section>';
                     include("Contenu/rsa.php");
+                    echo '</section>';
+                    break;
+                case 'era':
+                    echo '<section>';
+                    include("Contenu/era.php");
                     echo '</section>';
                     break;
                 case 'inverse_matrice_modulaire':
