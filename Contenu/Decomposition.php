@@ -20,7 +20,6 @@ Nombre : <input size='30' name='nombre' type='text'><br>
             echo "Décomposition en produits de nombres premiers : </br>";
             $tabPremiers=era($_POST['nombre']);
             $nombre = $_POST['nombre'];
-            $tab=array();
             echo "\$\$";
             while($nombre!=1){
                 foreach($tabPremiers as $v){
@@ -31,17 +30,15 @@ Nombre : <input size='30' name='nombre' type='text'><br>
                         $nombre=gmp_div($nombre,gmp_pow($v,gmp_intval($diviseur)));
                         if($diviseur>1) echo "^{ $diviseur }";
                         if($nombre!=1) echo "\\times";
-                        $tab[]=$nombre;
+                        
                         break;
                     }
                 }
             }
             echo "\$\$";
-            
         }
         else
             echo "Saisie incorrecte.";
-        return $tab;
     }
     
     ?>

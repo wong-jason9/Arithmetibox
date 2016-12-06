@@ -177,7 +177,6 @@ function era($n){
     
     //Decomposition
     function decomposition($nb){
-        echo "Décomposition en produits de nombres premiers : </br>";
         $tabPremiers=era($nb);
         $nombre =$nb;
         $tab=array();
