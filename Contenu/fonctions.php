@@ -81,7 +81,7 @@ function era($n){
         $res=array(); 
         $indice=0;
         gmp_init($indice);
-        $i=1;
+        $i=2;
         gmp_init($i);
         $compare=gmp_cmp($i,$n);
         for($i; $compare<0;$i++){
