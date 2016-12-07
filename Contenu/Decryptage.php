@@ -574,6 +574,8 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 exit();
         }
 
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+            MessageDansFichier();
 
         $AlphabetCustom = strtoupper($_POST['alphabet']);
         $message = mb_strtoupper($_POST['message'], "utf-8");

@@ -480,6 +480,9 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
       $Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       $_alphabet = str_split($Alphabet);
       
+      if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+        MessageDansFichier();
+
       if( empty($_POST['message']) or trim($_POST['message'])=='' )
         exit();
       else{
