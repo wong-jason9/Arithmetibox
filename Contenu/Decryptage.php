@@ -563,6 +563,9 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
     function substitution(){
         $AlphabetNorm = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+            MessageDansFichier();
         
         if(empty($_POST['alphabet']) or empty($_POST['message']) or trim($_POST['alphabet'])=='' or trim($_POST['message'])=='' )
         {
@@ -573,10 +576,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
             if( !preg_match("#^[A-Za-z]+$#", $_POST['message']) or !alphabetOK($_POST['alphabet']) )
                 exit();
         }
-
-        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
-            MessageDansFichier();
-
+        
         $AlphabetCustom = strtoupper($_POST['alphabet']);
         $message = mb_strtoupper($_POST['message'], "utf-8");
 
@@ -595,7 +595,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
         $messageDecrypt = implode($_messageDecrypt);
         echo "Message décrypté : <br>";
-        echo $messageDecrypt;
+        echo '<p class="message">'.$messageDecrypt.'</p>';
     }
 
     /**********************************************

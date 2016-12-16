@@ -526,7 +526,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
       $MessageCrypt = implode($_MessageCrypt);
       echo "Votre message crypté: <br>";
-      echo $MessageCrypt;
+      echo '<p class="message">'.$MessageCrypt.'</p>';
     }
     
 
