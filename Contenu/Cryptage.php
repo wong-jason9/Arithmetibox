@@ -492,17 +492,16 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
           $_POST['alphabet'] = strtoupper($_POST['alphabet']); 
       }
 
-      $_POST['message'] = mb_strtolower($_POST['message'], "utf-8");
+      $_POST['message'] = mb_strtoupper($_POST['message'], "utf-8");
 
-      $_POST['message'] = preg_replace("#é|è|ë|ê|É|È|Ë|Ê#", "E", $_POST['message']);
-      $_POST['message'] = preg_replace("#î|ï|Î|Ï#", "I", $_POST['message']);
-      $_POST['message'] = preg_replace("#ô|Ô#", "O", $_POST['message']);
-      $_POST['message'] = preg_replace("#à|À|â|Â#", "A", $_POST['message']);
-      $_POST['message'] = preg_replace("#ù|Ù#", "U", $_POST['message']);
-      $_POST['message'] = preg_replace("#ç|Ç#", "C", $_POST['message']);
+      $_POST['message'] = preg_replace("#É|È|Ë|Ê#", "E", $_POST['message']);
+      $_POST['message'] = preg_replace("#Î|Ï#", "I", $_POST['message']);
+      $_POST['message'] = preg_replace("#Ô#", "O", $_POST['message']);
+      $_POST['message'] = preg_replace("#À|Â#", "A", $_POST['message']);
+      $_POST['message'] = preg_replace("#Ù#", "U", $_POST['message']);
+      $_POST['message'] = preg_replace("#Ç#", "C", $_POST['message']);
 
-
-      $Message = strtoupper($_POST['message']);
+      $Message = $_POST['message'];
       $_Message = str_split($Message);
     
       unset($_POST['message']);
