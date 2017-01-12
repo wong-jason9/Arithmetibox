@@ -488,15 +488,8 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
       else{
         if(empty($_POST['alphabet']) or trim($_POST['alphabet'])=='' or !preg_match("#^[A-Za-z]{26}$#", $_POST['alphabet']))
           exit();
-        else{
-
-          $_POST['alphabet'] = strtoupper($_POST['alphabet']);
-          
-          foreach($_alphabet as $v){
-            if( substr_count($_POST['alphabet'], $v)!=1 )
-              exit();
-          }
-        }
+        else
+          $_POST['alphabet'] = strtoupper($_POST['alphabet']); 
       }
 
       $_POST['message'] = mb_strtolower($_POST['message'], "utf-8");
