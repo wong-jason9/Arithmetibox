@@ -503,8 +503,6 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
       $Message = $_POST['message'];
       $_Message = str_split($Message);
-    
-      unset($_POST['message']);
       
       $_customAlphabet = str_split($_POST['alphabet']);
 
