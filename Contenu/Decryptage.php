@@ -594,7 +594,11 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                     echo "Message décrypté : <br>";
                     echo '<p class="message">'.$messageDecrypt.'</p>';
                 }
+                else
+                    echo "Saisie incorrecte";
             }
+            else
+                echo "Saisie incorrecte";
         }
     }
 
