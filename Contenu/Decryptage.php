@@ -5,7 +5,8 @@
 <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 <p><label>Cesar<input type='radio' name='fonction' value='cesa' checked='checked'></label>
 <label>Affine<input type='radio' name='fonction' value='affi'></label>
-<label>Hill<input type='radio' name='fonction' value='hill'></label></p>
+<label>Hill<input type='radio' name='fonction' value='hill'></label>
+<label>Substitution<input type="radio" name="fonction" value="subs"></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef : <input size='43' name='clef' type='text'><br>
@@ -18,66 +19,134 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
 <?php
 
-	
+    
     function cesar(){
-		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
-			MessageDansFichier();
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#[0-9]*#',$_POST['clef']) and isset($_POST['methode'])){
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+            MessageDansFichier();
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#^[0-9]*$#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#^[0-9]*$#',$_POST['clef']) and isset($_POST['methode'])){
             $Amess=RenvoyerMessage();
-            $alphabet=str_split($_POST['alphabet']);
-            $nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
-            $mod = 0;
-            for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
-            $mod=gmp_add($mod,1);
-            if($_POST['fonction']=='cesa'){
-                if($_POST['clef']>=0 and $_POST['clef']<$mod){
-                    $test = true;
-                    $decrypt = "";
-                    foreach($Amess as $x){
-                        $res[]=$x;
-                        $y=gmp_sub($x,$_POST['clef']);
-                        $res1[]=$y;
-                        $y=gmp_mod($y,$mod);
+            if($Amess!=null){
+                $alphabet=str_split($_POST['alphabet']);
+                $nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
+                $mod = 0;
+                for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
+                $mod=gmp_add($mod,1);
+                if($_POST['fonction']=='cesa'){
+                    if($_POST['clef']>=0 and $_POST['clef']<$mod){
+                        $test = true;
+                        $decrypt = "";
+                        foreach($Amess as $x){
+                            $res[]=$x;
+                            $y=gmp_sub($x,$_POST['clef']);
+                            $res1[]=$y;
+                            $y=gmp_mod($y,$mod);
                         
-                        if($y<0) $y=gmp_add($y,$mod);
-                        $res2[]=$y;
-                        $Y=array();
-                        for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
-                            $Y[$i] = gmp_mod($y,100);
-                            $y=gmp_div(gmp_sub($y ,$Y[$i]),100);
+                            if($y<0) $y=gmp_add($y,$mod);
+                            $res2[]=$y;
+                            $Y=array();
+                            for($i=0 ; $i<$_POST['paquet'] and $test==true; $i++){
+                                $Y[$i] = gmp_mod($y,100);
+                                $y=gmp_div(gmp_sub($y ,$Y[$i]),100);
                             
-                            if($Y[$i]>$nbcarac) {
-                                $test=false;
-                                echo "clef incorrecte";
-                                break;
+                                if($Y[$i]>$nbcarac) {
+                                    $test=false;
+                                    echo "Données incorrectes";
+                                    break;
+                                }
+                            
                             }
-                            
+                            if($test==false) break;
+                            $Y=array_reverse($Y);
+                            foreach($Y as $c => $v){
+                                $Y[$c]=gmp_intval($v);
+                                $res3[]=$v;
+                                $res4[]=$_POST['alphabet'][$Y[$c]];
+                                $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                            }
                         }
-                        if($test==false) break;
-                        $Y=array_reverse($Y);
-                        foreach($Y as $c => $v){
-                            $Y[$c]=gmp_intval($v);
-                            $res3[]=$v;
-                            $res4[]=$_POST['alphabet'][$Y[$c]];
-                            $decrypt = $decrypt.$_POST['alphabet'][$Y[$c]];
+                        if($test!=false){
+                            echo "<p class='message'>".$decrypt."</p><br>";
+                            if(isset($res) and isset($res1) and isset($res2) and isset($res3) and isset($res4) ){
+                                $tab[]=$res;
+                                $tab[]=$res1;
+                                $tab[]=$res2;
+                                $tab[]=$res3;
+                                $tab[]=$res4;
+                            }
                         }
                     }
-                    if($test!=false){
-                        echo "<p class='message'>".$decrypt."</p><br>";
-                        $tab[]=$res;
-                        $tab[]=$res1;
-                        $tab[]=$res2;
-                        $tab[]=$res3;
-                        $tab[]=$res4;
-                    }
+                    
                 }
-                
             }
         }
         if(isset($tab))
             return $tab;
         
     }
+    
+    function affichageCesar($tab){
+            echo "<p class='message'>\$\$";
+            echo "\\begin{array}{c|c}";
+            foreach($tab as $c=>$v){
+                switch($c){
+                    case 0:
+                        echo " &";
+                        break;
+                    case 1:
+                        echo " clef&";
+                        break;
+                    case 2:
+                        echo " modulo&";
+                        break;
+                    case 3:
+                        echo " paquetage&";
+                        break;
+                    case 4:
+                        echo " résultat&";
+                        break;
+                }
+                if($c==0 or $c==1 or $c==2){
+                    
+                    if($_POST['paquet']%2==0){
+                        foreach($v as $r){
+                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+                                echo "&";
+                            }
+                            echo $r.'&';
+                            for($i=0; $i<(int)($_POST['paquet']/2)-1;$i++){
+                                echo "&";
+                            }
+                        }
+                    }
+                    elseif($_POST['paquet']%2==1 and $_POST['paquet']!=1){
+                        foreach($v as $r){
+                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+                                echo "&";
+                            }
+                            echo "$r&";
+                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
+                                echo "&";
+                            }
+                        }
+                    }
+                    else{
+                        foreach($v as $r){
+                            echo "$r&";
+                        }
+                    }
+                    
+                }
+                else{
+                    foreach($v as $r){
+                        echo "$r&";
+                    }
+                }
+                
+                echo "\\\\\\hline";
+            }
+            echo"\\end{array}";
+            echo "\$\$</p>";
+            }
 
     /***********************************************
     ********************AFFINE**********************
@@ -194,76 +263,76 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
     function affine(){
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and isset($_POST['methode'])){
-        	
-        	if((preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)) and (preg_match('#^([0-9]*)$#', $_POST['paquet']))){
-	            $mess = $_POST['message'];
-	            $paquet = $_POST['paquet'];
-	            $XYZ = $_POST['alphabet'];
-	            $nbcarac=gmp_sub(strlen($_POST['alphabet']), 1);
-	            $AffL1=array(); //Pour stocker les valeurs et afficher le tableau après
-	            $AffL2=array();  
-	            $AffL3=array();
-	            $AffL4=array();
-	            $AffL5=array();
-	            $AffL6=array();
+            
+            if((preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)) and (preg_match('#^([0-9]*)$#', $_POST['paquet']))){
+                $mess = $_POST['message'];
+                $paquet = $_POST['paquet'];
+                $XYZ = $_POST['alphabet'];
+                $nbcarac=gmp_sub(strlen($_POST['alphabet']), 1);
+                $AffL1=array(); //Pour stocker les valeurs et afficher le tableau après
+                $AffL2=array();  
+                $AffL3=array();
+                $AffL4=array();
+                $AffL5=array();
+                $AffL6=array();
 
-	            if($_POST['methode']=='alpha'){ //convertir alphabet au format code
-	                $alphabet=str_split($_POST['alphabet']);	//convertir string en tableau
-	                $tab_message=str_split($_POST['message']);
+                if($_POST['methode']=='alpha'){ //convertir alphabet au format code
+                    $alphabet=str_split($_POST['alphabet']);    //convertir string en tableau
+                    $tab_message=str_split($_POST['message']);
 
-	                //Test si le message est contituer uniquement de caractère saisie dans l'alphabet
-	            	foreach ($tab_message as $v) {
-	            		$test = false;
-	            		foreach($alphabet as $alphab){
-	            			if($v == $alphab)
-	            				$test = true;
-	            		}
-	            		if($test == false){
-	            			echo "Erreur: Le message saisie contient des caractères non présent dans l'alphabet saisie";
-	            			return 0;
-	            		}
-	            		$test = true;
-	            	}
+                    //Test si le message est contituer uniquement de caractère saisie dans l'alphabet
+                    foreach ($tab_message as $v) {
+                        $test = false;
+                        foreach($alphabet as $alphab){
+                            if($v == $alphab)
+                                $test = true;
+                        }
+                        if($test == false){
+                            echo "Erreur: Le message saisie contient des caractères non présent dans l'alphabet saisie";
+                            return 0;
+                        }
+                        $test = true;
+                    }
 
-	                $i=0;
-	                foreach ($tab_message as $key => $value){
-	                    $AffL1[$i]=$value;
-	                    $i++;
-	                }
+                    $i=0;
+                    foreach ($tab_message as $key => $value){
+                        $AffL1[$i]=$value;
+                        $i++;
+                    }
 
-	                foreach($tab_message as $c => $v){
-	                    $tab_message[$c]=array_search($v,$alphabet);
-	                }
-	                
-	                $i=gmp_sub($_POST['paquet'],1);
-	                $codeMessage=0;
-	                foreach($tab_message as $v){    
-	                    $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
-	                    $i=gmp_sub($i,1);
-	                    if($i<0){
-	                        $Amess[]=$codeMessage;
-	                        $codeMessage=0;
-	                        $i=gmp_sub($_POST['paquet'],1);
-	                    }
-	                }
-	            }
-	            elseif($_POST['methode']=='code'){
-	            	//enlever les tiret du message et stocker dans le TABLEAU Amess
-	                $Amess = explode('-', $mess); 
-	                $mess = implode("−", $Amess);
-	                $Amess = explode('−', $mess);
+                    foreach($tab_message as $c => $v){
+                        $tab_message[$c]=array_search($v,$alphabet);
+                    }
+                    
+                    $i=gmp_sub($_POST['paquet'],1);
+                    $codeMessage=0;
+                    foreach($tab_message as $v){    
+                        $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
+                        $i=gmp_sub($i,1);
+                        if($i<0){
+                            $Amess[]=$codeMessage;
+                            $codeMessage=0;
+                            $i=gmp_sub($_POST['paquet'],1);
+                        }
+                    }
+                }
+                elseif($_POST['methode']=='code'){
+                    //enlever les tiret du message et stocker dans le TABLEAU Amess
+                    $Amess = explode('-', $mess); 
+                    $mess = implode("−", $Amess);
+                    $Amess = explode('−', $mess);
 
-	            	$messageCode = true;
-	            	//Test si le message code est contituer uniquement de nombre
-	            	foreach($Amess as $v){
-	            		 if(!(preg_match('#^([-]?[0-9]*)$#' , $v)))
-	            			$messageCode = false;
-	            	}
-	            	if($messageCode == false){
-	            		echo "Erreur: se que vous avez saisie n'est pas au format code";
-	            		return 0;
-	            	}
-	            }
+                    $messageCode = true;
+                    //Test si le message code est contituer uniquement de nombre
+                    foreach($Amess as $v){
+                         if(!(preg_match('#^([-]?[0-9]*)$#' , $v)))
+                            $messageCode = false;
+                    }
+                    if($messageCode == false){
+                        echo "Erreur: se que vous avez saisie n'est pas au format code";
+                        return 0;
+                    }
+                }
         
                 $clefa=$res[1];
                 $clefb=$res[3];
@@ -319,29 +388,29 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
             }//FIN IF PREGMATCH
             else echo "Saisie incorrecte";
-    	}//FIN DU PREMIER IF ISSET TRIM...
-	}//FIN DE LA FUNCTION
+        }//FIN DU PREMIER IF ISSET TRIM...
+    }//FIN DE LA FUNCTION
 
 
-	/***********************************************
+    /***********************************************
     ********************HILL************************
     ***********************************************/
-	/*require('euclidehill.php');
-	
-	function dhill(){
-	
-	$tab_res_dcode = array();
+    /*require('euclidehill.php');
+    
+    function dhill(){
+    
+    $tab_res_dcode = array();
    
-	$ccod          = $_POST['clef'];
+    $ccod          = $_POST['clef'];
    
    if (preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#', $_POST['clef'], $Accod)) {
       
-	  $melema   = $Accod[1]; //Matrice element a 
+      $melema   = $Accod[1]; //Matrice element a 
       $melemb   = $Accod[3]; //Matrice element b
       $melemc   = $Accod[5]; //Matrice element c
       $melemd   = $Accod[7]; //Matrice element d
       //$alphabet = array();
-	  $alphabet = str_split($_POST['alphabet']);
+      $alphabet = str_split($_POST['alphabet']);
       $modulo   = count($alphabet);
       $Gamma    = (($melema * $melemd) - ($melemc * $melemb)); //Calcul de det(A) avec Gamma
       //verifier si cle valide XO
@@ -466,83 +535,88 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
          }
       }
    }*/
-	
-	/***********************************************
+    
+    /***********************************************
     *****************FIN DE HILL********************
     ***********************************************/
 
-    if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
-        $cesa=cesar();
-        if($cesa!=NULL){
-            echo "<p class='message'>\$\$";
-            echo "\\begin{array}{c|c}";
-            foreach($cesa as $c=>$v){
-                switch($c){
-                    case 0:
-                        echo " &";
-                        break;
-                    case 1:
-                        echo " clef&";
-                        break;
-                    case 2:
-                        echo " modulo&";
-                        break;
-                    case 3:
-                        echo " paquetage&";
-                        break;
-                    case 4:
-                        echo " résultat&";
-                        break;
-                }
-                if($c==0 or $c==1 or $c==2){
-                    
-                    if($_POST['paquet']%2==0){
-                        foreach($v as $r){
-                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
-                                echo "&";
-                            }
-                            echo $r.'&';
-                            for($i=0; $i<(int)($_POST['paquet']/2)-1;$i++){
-                                echo "&";
-                            }
-                        }
-                    }
-                    elseif($_POST['paquet']%2==1 and $_POST['paquet']!=1){
-                        foreach($v as $r){
-                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
-                                echo "&";
-                            }
-                            echo "$r&";
-                            for($i=0; $i<(int)($_POST['paquet']/2);$i++){
-                                echo "&";
-                            }
-                        }
-                    }
-                    else{
-                        foreach($v as $r){
-                            echo "$r&";
-                        }
-                    }
-                    
-                }
-                else{
-                    foreach($v as $r){
-                        echo "$r&";
-                    }
-                }
-                
-                echo "\\\\\\hline";
-            }
-            echo"\\end{array}";
-            echo "\$\$</p>";
-            
+    /*********************************************
+
+                    SUBSTITUTION
+
+    **********************************************/
+
+    function alphabetOK($abc){
+        $_alphabet = str_split($abc);
+
+        if(!preg_match("#^[A-Za-z]{26}$#", $abc)){
+            return false;
         }
+        else{
+            foreach($_alphabet as $v){
+                if(substr_count($abc, $v) != 1)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    function substitution(){
+        $AlphabetNorm = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+            MessageDansFichier();
+        
+        if(empty($_POST['alphabet']) or empty($_POST['message']) or trim($_POST['alphabet'])=='' or trim($_POST['message'])=='' )
+        {
+            exit();
+        }
+        else{
+            $_POST['message'] = preg_replace("#\n|\r|\t|\040#", "", $_POST['message']);
+            if( !preg_match("#^[A-Za-z]+$#", $_POST['message']) or !alphabetOK($_POST['alphabet']) )
+                exit();
+        }
+        
+        $AlphabetCustom = strtoupper($_POST['alphabet']);
+        $message = mb_strtoupper($_POST['message'], "utf-8");
+
+        $_AlphabetCustom = str_split($AlphabetCustom);
+        $_AlphabetNorm = str_split($AlphabetNorm);
+
+        $_message = str_split($message);
+
+        foreach($_message as $v){
+            for($i=0; $i<26; $i++){
+                if($v == $_AlphabetCustom[$i]){
+                    $_messageDecrypt[] = $_AlphabetNorm[$i];
+                }
+            }
+        }
+
+        $messageDecrypt = implode($_messageDecrypt);
+        echo "Message décrypté : <br>";
+        echo '<p class="message">'.$messageDecrypt.'</p>';
+    }
+
+    /**********************************************
+
+                FIN DE SUBSTITUTION
+
+    **********************************************/
+
+    if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
+        $tab=cesar();
+        if(isset($tab))
+            affichageCesar($tab);
     }
     elseif(isset($_POST['fonction']) and $_POST['fonction']=='affi'){
         affine();
     }
     elseif(isset($_POST['fonction']) and $_POST['fonction']=='hill'){
         dhill();
+    }
+    elseif(isset($_POST['fonction']) and $_POST['fonction']=='subs'){
+        substitution();
     }
     
     ?>

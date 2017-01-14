@@ -5,7 +5,8 @@
 <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 <p><label>Cesar<input type='radio' name='fonction' value='cesa' checked='checked'></label>
 <label>Affine<input type='radio' name='fonction' value='affi'></label>
-<label>Hill<input type='radio' name='fonction' value='hill'></label></p>
+<label>Hill<input type='radio' name='fonction' value='hill'></label>
+<label>Substitution<input type="radio" name="fonction" value="subs"></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef : <input size='43' name='clef' type='text'><br>
@@ -19,42 +20,55 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 <?php
     
     function cesar(){
-		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
-			MessageDansFichier();
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and preg_match('#[0-9]*#',$_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#[0-9]*#',$_POST['clef']) and isset($_POST['methode'])){
+    if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+      MessageDansFichier();
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and preg_match('#^[0-9]*$#',$_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and preg_match('#^[0-9]*$#',$_POST['clef']) and isset($_POST['methode'])){
             $Amess=RenvoyerMessage();
-            $alphabet=str_split($_POST['alphabet']);
-            $nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
-            $mod = 0;
-            for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
-            $mod=gmp_add($mod,1);
-            if($_POST['fonction']=='cesa'){
-                if($_POST['clef']>=0 and $_POST['clef']<$mod){
-                    $res=array();
-                    if($_POST['clef']==''){
-                        echo "Clé nécessaire";
-                    }
-                    //Affichage pour une seule clé
-                    elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
-                        foreach($Amess as $x){
-                            $y=gmp_add($x,$_POST['clef']);
-                            $y=gmp_mod($y,$mod);
-                            $res[]=$y;
-                            
-                        }
-                        echo $_POST['message']."<br><br>";
-                        echo "Après cryptage : <br>";
-                        $i=0;
-                        foreach($res as $v){
-                            echo $v;
-                            $i++;
-                            if($i<count($res))
-                                echo "-";
-                        }
-                    }
-                }
-                
+      if($Amess!=null){
+        $alphabet=str_split($_POST['alphabet']);
+        $nbcarac=gmp_sub(strlen($_POST['alphabet']),1);
+        $mod = 0;
+        for($i=0 ; $i<$_POST['paquet'] ; $i++) $mod = gmp_add(gmp_mul(100,$mod),$nbcarac);
+        $mod=gmp_add($mod,1);
+        if($_POST['fonction']=='cesa'){
+          if($_POST['clef']>=0 and $_POST['clef']<$mod){
+            $res=array();
+            if($_POST['clef']==''){
+              echo "Clé nécessaire";
             }
+            //Affichage pour une seule clé
+            elseif($_POST['clef']>=0 and $_POST['clef']<$mod){
+              foreach($Amess as $x){
+                $y=gmp_add($x,$_POST['clef']);
+                $y=gmp_mod($y,$mod);
+                $res[]=$y;
+                            
+              }
+              echo $_POST['message']."<br><br>";
+              echo "Après cryptage : <br>";
+              $i=0;
+              $test=true;
+              $decrypte="";
+              foreach($res as $c => $v){
+                $res[$c]=gmp_intval($v);
+                echo $v;
+                $i++;
+              
+                if($i<count($res))
+                  echo "-";
+                if($v>$nbcarac)
+                  $test=false;
+                else $decrypte=$decrypte.$_POST['alphabet'][$res[$c]];
+              }
+              if($test!=false){
+                echo "<br><br> ou <br><br>";
+                echo $decrypte;
+              }
+            }
+          }
+                
+        }
+      }
         }
         else
             echo "Saisie incorrecte";
@@ -307,26 +321,26 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
       }//FIN DU PREMIER IF ISSET TRIM...
   }//FIN DE LA FUNCTION
 
-	
-	/***********************************************
+  
+  /***********************************************
     ********************HILL************************
     ***********************************************/
-	require('euclidehill.php');
-	
-	function chill(){
-	
-	$tab_res_code = array();
+  require('euclidehill.php');
+  
+  function chill(){
+  
+  $tab_res_code = array();
    
-	$ccod          = $_POST['clef'];
+  $ccod          = $_POST['clef'];
    
    if (preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#', $_POST['clef'], $Accod)) {
       
-	  $melema   = $Accod[1]; //Matrice element a 
+    $melema   = $Accod[1]; //Matrice element a 
       $melemb   = $Accod[3]; //Matrice element b
       $melemc   = $Accod[5]; //Matrice element c
       $melemd   = $Accod[7]; //Matrice element d
       //$alphabet = array();
-	  $alphabet = str_split($_POST['alphabet']);
+    $alphabet = str_split($_POST['alphabet']);
       $modulo   = count($alphabet);
       $Gamma    = (($melema * $melemd) - ($melemc * $melemb)); //Calcul de det(A) avec Gamma
       //verifier si cle valide XO
@@ -401,11 +415,11 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
             
             $tab_res_code[] = $Amcod;
             $decrypte       = "";
-			
-			foreach ($Amcod as $cle => $val) {
+      
+      foreach ($Amcod as $cle => $val) {
                $decrypte = $decrypte.$_POST['alphabet'][$Amcod[$cle]];
             }
-			
+      
             $Amcod          = str_split($decrypte);
             $tab_res_code[] = $Amcod;
             
@@ -451,18 +465,79 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     }
       
    
-	
-	/***********************************************
+  
+  /***********************************************
     *****************FIN DE HILL********************
     ***********************************************/
-	
+
+  /*****************************
+
+          SUBSTITUTION
+
+  ******************************/
+
+    function substitution(){
+      $Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      $_alphabet = str_split($Alphabet);
+      
+      if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+        MessageDansFichier();
+
+      if( empty($_POST['message']) or trim($_POST['message'])=='' )
+        exit();
+      else{
+        if(empty($_POST['alphabet']) or trim($_POST['alphabet'])=='' or !preg_match("#^[A-Za-z]{26}$#", $_POST['alphabet']))
+          exit();
+        else
+          $_POST['alphabet'] = strtoupper($_POST['alphabet']); 
+      }
+
+      $_POST['message'] = mb_strtoupper($_POST['message'], "utf-8");
+
+      $_POST['message'] = preg_replace("#É|È|Ë|Ê#", "E", $_POST['message']);
+      $_POST['message'] = preg_replace("#Î|Ï#", "I", $_POST['message']);
+      $_POST['message'] = preg_replace("#Ô#", "O", $_POST['message']);
+      $_POST['message'] = preg_replace("#À|Â#", "A", $_POST['message']);
+      $_POST['message'] = preg_replace("#Ù#", "U", $_POST['message']);
+      $_POST['message'] = preg_replace("#Ç#", "C", $_POST['message']);
+
+      $Message = $_POST['message'];
+      $_Message = str_split($Message);
+      
+      $_customAlphabet = str_split($_POST['alphabet']);
+
+      foreach($_Message as $v){
+        for($i=0; $i<26; $i++){
+          if($v == $_alphabet[$i]){
+            $_MessageCrypt[] = $_customAlphabet[$i];
+          }
+        }
+      }
+
+      $MessageCrypt = implode($_MessageCrypt);
+      echo "Votre message crypté: <br>";
+      echo '<p class="message">'.$MessageCrypt.'</p>';
+    }
+    
+
+  /*****************************
+  
+        FIN DE SUBSTITUTION
+
+  ******************************/        
+
+
+  
     if(isset($_POST['fonction'])){
-    if($_POST['fonction']=='cesa')
+      if($_POST['fonction']=='cesa')
         $cesa=cesar();
-    if($_POST['fonction']=='affi')
+      if($_POST['fonction']=='affi')
         affine();
-	if($_POST['fonction']=='hill')
-        chill();	
+      if($_POST['fonction']=='hill')
+        chill();
+      if($_POST['fonction']=='subs')
+        substitution();
+
     }
     ?>
 </body>

@@ -16,7 +16,8 @@ davidulle@gmail.com-->
         <div id="MenuFonction">
             <nav>
 				<h2 class="titreFonctions">Cryptanalyse</h2>
-                <ul>  
+                <ul> 
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=rsa">RSA</a></li> 
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
 					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
@@ -31,6 +32,7 @@ davidulle@gmail.com-->
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=era">Erathostène</a></li>
                     <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=deco">Décomposition d'un nombre</a></li>
                     <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
@@ -77,6 +79,16 @@ davidulle@gmail.com-->
                     echo "<section>";
                     include("Contenu/euclide.php");
                     echo "</section>";
+                    break;
+                case 'rsa':
+                    echo '<section>';
+                    include("Contenu/rsa.php");
+                    echo '</section>';
+                    break;
+                case 'era':
+                    echo '<section>';
+                    include("Contenu/era.php");
+                    echo '</section>';
                     break;
                 case 'inverse_matrice_modulaire':
                     echo "<section>";

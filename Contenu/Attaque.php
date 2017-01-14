@@ -21,7 +21,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     function cesar(){
 		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
 			MessageDansFichier();
-        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#[0-9]*#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
+        if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#^[0-9]*$#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
             $Amess=RenvoyerMessage();
 			$dico=Dictionnaire();
 			$maxoccurence=0;

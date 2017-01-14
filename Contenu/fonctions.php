@@ -5,10 +5,11 @@
             $Amess=array();
             $alphabet=str_split($_POST['alphabet']);
             if($_POST['methode']=='code'){
-                if(preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
-                    preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
+                if(preg_match('#^([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
+                    preg_match('#^([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
                     $Amess = explode($caract[2], $_POST['message']);
                 }
+				else return null;
             }
             elseif($_POST['methode']=='alpha'){
                 $tab_message=str_split($_POST['message']);
@@ -33,14 +34,14 @@
 	}
 	
 	function Dictionnaire(){
-		/*        
+      
 		$dico=array();
 		$monfichier=fopen("Contenu/Dictionnaire.txt","r+");
 		while(FALSE !== ($ligne = fgets($monfichier)))
 			$dico[]=trim($ligne);
 		fclose($monfichier);
-		*/
-		$dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
+		
+		//$dico=['le','de','des','que','elle','je','tu','il','un','ou','la','les','une','et','pour','par'];
 		return $dico;
 	}
 	
@@ -76,28 +77,21 @@
         return true;
     }
     
-function era($n){ 
-        $sautDeLigne=1;
-        gmp_init($sautDeLigne);
-        echo "\$\$";
-        echo "\\text{Nombre premier jusqu'à ".$_POST['liste_primary']." :}\\\ " ;
-        echo "\\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}";
-        $i=1;
+function era($n){
+        $res=array(); 
+        $indice=0;
+        gmp_init($indice);
+        $i=2;
         gmp_init($i);
         $compare=gmp_cmp($i,$n);
         for($i; $compare<0;$i++){
             if((is_primary($i))==true){
-                echo $i.'&';
-                $sautDeLigne++;
-            }   
-            if(gmp_mod($sautDeLigne,20)==0) {
-                echo "\\\\";
-                $sautDeLigne++;
+                $res[$indice]=$i;
+                $indice++;
             }
             $compare=gmp_cmp($i,$n);
        }
-        echo"\\end{array}";
-        echo "\$\$";
+        return $res;
     }
     
    
@@ -181,5 +175,24 @@ function era($n){
 
     function carre($x){
         return $x*$x;
+    }
+    
+    //Decomposition
+    function decomposition($nb){
+        $tabPremiers=era($nb);
+        $nombre =$nb;
+        $tab=array();
+
+        while($nombre!=1){
+            foreach($tabPremiers as $v){
+                if(gmp_mod($nombre,$v)==0){
+                    $diviseur=val_p($nombre,$v,"1");
+                    $nombre=gmp_div($nombre,gmp_pow($v,gmp_intval($diviseur)));
+                    $tab[]=$nombre;
+                    break;
+                }
+            }
+        }
+        return $tab;
     }
 ?>
