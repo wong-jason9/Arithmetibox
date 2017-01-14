@@ -132,6 +132,8 @@ function era($n){
             $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i]));
             $R[$i]=gmp_mod($A[$i], $B[$i]);
         }
+        if($R[$i-1]!=1)   return 0;
+
         $U[$i] = 0;
         $V[$i] = 1;
         for($j = $i-1; $j>=0; $j--){
