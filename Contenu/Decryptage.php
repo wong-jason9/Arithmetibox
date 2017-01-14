@@ -566,36 +566,40 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
         if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
             MessageDansFichier();
+
+        if(isset($_POST['clef']) and isset($_POST['message'])){
+
+            if(trim($_POST['clef'])!='' and trim($_POST['message'])!=''){
+
+                $_POST['message'] = preg_replace("#\n|\r|\t|\040#", "", $_POST['message']);
+                if(preg_match("#^[A-Za-z]+$#", $_POST['message']) and alphabetOK($_POST['clef']) ){
         
-        if(empty($_POST['alphabet']) or empty($_POST['message']) or trim($_POST['alphabet'])=='' or trim($_POST['message'])=='' )
-        {
-            exit();
-        }
-        else{
-            $_POST['message'] = preg_replace("#\n|\r|\t|\040#", "", $_POST['message']);
-            if( !preg_match("#^[A-Za-z]+$#", $_POST['message']) or !alphabetOK($_POST['alphabet']) )
-                exit();
-        }
-        
-        $AlphabetCustom = strtoupper($_POST['alphabet']);
-        $message = mb_strtoupper($_POST['message'], "utf-8");
+                    $AlphabetCustom = strtoupper($_POST['clef']);
+                    $message = mb_strtoupper($_POST['message'], "utf-8");
 
-        $_AlphabetCustom = str_split($AlphabetCustom);
-        $_AlphabetNorm = str_split($AlphabetNorm);
+                    $_AlphabetCustom = str_split($AlphabetCustom);
+                    $_AlphabetNorm = str_split($AlphabetNorm);
 
-        $_message = str_split($message);
+                    $_message = str_split($message);
 
-        foreach($_message as $v){
-            for($i=0; $i<26; $i++){
-                if($v == $_AlphabetCustom[$i]){
-                    $_messageDecrypt[] = $_AlphabetNorm[$i];
+                    foreach($_message as $v){
+                        for($i=0; $i<26; $i++){
+                            if($v == $_AlphabetCustom[$i]){
+                                $_messageDecrypt[] = $_AlphabetNorm[$i];
+                            }
+                        }
+                    }
+
+                    $messageDecrypt = implode($_messageDecrypt);
+                    echo "Message décrypté : <br>";
+                    echo '<p class="message">'.$messageDecrypt.'</p>';
                 }
+                else
+                    echo "Saisie incorrecte";
             }
+            else
+                echo "Saisie incorrecte";
         }
-
-        $messageDecrypt = implode($_messageDecrypt);
-        echo "Message décrypté : <br>";
-        echo '<p class="message">'.$messageDecrypt.'</p>';
     }
 
     /**********************************************

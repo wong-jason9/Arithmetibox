@@ -476,48 +476,60 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
   ******************************/
 
-    function substitution(){
-      $Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      $_alphabet = str_split($Alphabet);
+  function substitution(){
+    $Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $_alphabet = str_split($Alphabet);
       
-      if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
-        MessageDansFichier();
+    if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+      MessageDansFichier();
 
-      if( empty($_POST['message']) or trim($_POST['message'])=='' )
-        exit();
-      else{
-        if(empty($_POST['alphabet']) or trim($_POST['alphabet'])=='' or !preg_match("#^[A-Za-z]{26}$#", $_POST['alphabet']))
-          exit();
-        else
-          $_POST['alphabet'] = strtoupper($_POST['alphabet']); 
-      }
+    if( isset($_POST['message']) and isset($_POST['clef']) ){
 
-      $_POST['message'] = mb_strtoupper($_POST['message'], "utf-8");
+      if( trim($_POST['message'])!='' and trim($_POST['clef'])!='' and preg_match("#^[A-Za-z]{26}$#", $_POST['clef']) ){
 
-      $_POST['message'] = preg_replace("#É|È|Ë|Ê#", "E", $_POST['message']);
-      $_POST['message'] = preg_replace("#Î|Ï#", "I", $_POST['message']);
-      $_POST['message'] = preg_replace("#Ô#", "O", $_POST['message']);
-      $_POST['message'] = preg_replace("#À|Â#", "A", $_POST['message']);
-      $_POST['message'] = preg_replace("#Ù#", "U", $_POST['message']);
-      $_POST['message'] = preg_replace("#Ç#", "C", $_POST['message']);
-
-      $Message = $_POST['message'];
-      $_Message = str_split($Message);
-      
-      $_customAlphabet = str_split($_POST['alphabet']);
-
-      foreach($_Message as $v){
-        for($i=0; $i<26; $i++){
-          if($v == $_alphabet[$i]){
-            $_MessageCrypt[] = $_customAlphabet[$i];
+        $estCorrecte = true;
+        $_clef = strtoupper($_POST['clef']);
+        foreach($_alphabet as $v){
+          if(substr_count($_clef, $v)!=1){
+            $estCorrecte = false;
+            break;
           }
         }
-      }
+        if($estCorrecte){
+            $_POST['message'] = mb_strtoupper($_POST['message'], "utf-8");
 
-      $MessageCrypt = implode($_MessageCrypt);
-      echo "Votre message crypté: <br>";
-      echo '<p class="message">'.$MessageCrypt.'</p>';
-    }
+              $_POST['message'] = preg_replace("#É|È|Ë|Ê#", "E", $_POST['message']);
+              $_POST['message'] = preg_replace("#Î|Ï#", "I", $_POST['message']);
+              $_POST['message'] = preg_replace("#Ô#", "O", $_POST['message']);
+              $_POST['message'] = preg_replace("#À|Â#", "A", $_POST['message']);
+              $_POST['message'] = preg_replace("#Ù#", "U", $_POST['message']);
+              $_POST['message'] = preg_replace("#Ç#", "C", $_POST['message']);
+
+              $Message = $_POST['message'];
+              $_Message = str_split($Message);
+            
+              $_POST['clef'] = strtoupper($_POST['clef']);
+              $_customAlphabet = str_split($_POST['clef']);
+
+              foreach($_Message as $v){
+                for($i=0; $i<26; $i++){
+                    if($v == $_alphabet[$i]){
+                      $_MessageCrypt[] = $_customAlphabet[$i];
+                    }
+                }
+              }
+
+              $MessageCrypt = implode($_MessageCrypt);
+              echo "Votre message crypté: <br>";
+              echo '<p class="message">'.$MessageCrypt.'</p>';
+          }
+          else
+            echo "Vérifiez la clef";
+      }
+      else
+        echo "Vérifiez la clef";
+    }  
+  }
     
 
   /*****************************
