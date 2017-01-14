@@ -5,24 +5,36 @@
             $Amess=array();
             $alphabet=str_split($_POST['alphabet']);
             if($_POST['methode']=='code'){
-                if(preg_match('#^([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'])){
-                    preg_match('#^([0-9]*)(\-|\,|\.)([0-9]*)#',$_POST['message'],$caract);
+
+                if(preg_match('#^([0-9]+)((\-|\,|\.)([0-9]+))+$#',$_POST['message'])){
+                    preg_match('#([0-9]*)(\-|\,|\.)([0-9]*)$#',$_POST['message'],$caract);
                     $Amess = explode($caract[2], $_POST['message']);
                 }
-				else return null;
+				elseif(preg_match('#^([0-9]+)$#',$_POST['message'])){
+					$Amess[0]=$_POST['message'];
+				}
+				else{
+					echo "Données incorrectes";
+					return null;}
             }
             elseif($_POST['methode']=='alpha'){
                 $tab_message=str_split($_POST['message']);
+				foreach($tab_message as $v){
+					if(!in_array($v,$alphabet)){
+						echo "Données incorrectes";
+						return null;
+					}
+				}
                 foreach($tab_message as $c => $v){
                     $tab_message[$c]=array_search($v,$alphabet);
                 }
                 $i=$_POST['paquet']-1;
                 $codeMessage=0;
-                foreach($tab_message as $v){
+                foreach($tab_message as $c => $v){
                     
                     $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
                     $i=$i-1;
-                    if($i<0){
+                    if($i<0 || !isset($tab_message[$c+1])){
                         $Amess[]=$codeMessage;
                         $codeMessage=0;
                         $i=$_POST['paquet']-1;

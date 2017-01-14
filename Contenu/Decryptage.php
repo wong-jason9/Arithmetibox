@@ -65,7 +65,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                             }
                         }
                         if($test!=false){
-                            echo "<p class='message'>".$decrypt."</p><br>";
+                            echo "Le message décrypté est :<br><p class='message'>".$decrypt."</p><br>";
                             if(isset($res) and isset($res1) and isset($res2) and isset($res3) and isset($res4) ){
                                 $tab[]=$res;
                                 $tab[]=$res1;
