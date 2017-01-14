@@ -12,7 +12,7 @@
 <?php
   if(isset($_POST['nbA']) and isset($_POST['nbB'])){
       $tab=euclEtendu($_POST['nbA'],$_POST['nbB']);
-      if($tab==-1) return 0;
+      if($tab==0) return 0;
       echo "\$\$";
       echo "\\begin{array}{c|c|c|c|c|c c}";
       echo "a&b&r&q&u&v\\\\\\hline";
