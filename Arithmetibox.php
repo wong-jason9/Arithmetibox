@@ -141,7 +141,7 @@
     </main>
     <section id="texte_a_propos">
         <h2>À propos</h2>
-        <p> Ce site a été développé dans le cadre d'un projet universitaire du semestre 3 du DUT informatique. Il est réalisé par cinq étudiants du groupa A1 de l'année 2016/2017. La page web est développée dans les languages HTML, CSS, PHP et LaTeX, elle a pour but de créer une boîte à outils d’arithmétiques qui est intégrée à Ataraxy, les différents outils développés sont des algorithmes étudiés en cours de S3 d'arithmétique et de cryptanalyse, cours qui est encadré par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII Villetaneuse.
+        <p> Ce site a été développé dans le cadre d'un projet universitaire du semestre 3 du DUT informatique. Il est réalisé par cinq étudiants du groupe A1 de l'année 2016/2017. La page web est développée dans les langages HTML, CSS, PHP et LaTeX, elle a pour but de créer une boîte à outils d’arithmétique qui est intégrée à Ataraxy, les différents outils développés sont des algorithmes étudiés en cours de S3 d'arithmétique et de cryptanalyse, cours qui est encadré par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII Villetaneuse.
         </p>
     </section>
 </body>
