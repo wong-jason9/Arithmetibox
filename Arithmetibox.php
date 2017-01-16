@@ -1,5 +1,3 @@
-<!--hebert.iut@gmail.com
-davidulle@gmail.com-->
 <!DOCTYPE html>
 <html>
 <head>

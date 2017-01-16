@@ -11,15 +11,20 @@
 
 <?php
 if(!empty($_POST['mod'])&&!empty($_POST['entN'])&&!empty($_POST['puissance'])){
-    echo "\$\$";
-    echo "\\text{V}";
-    echo "_{".$_POST['mod'];
-    echo "}("; 
-    echo $_POST['entN']."^{".$_POST['puissance']."}";
-    echo ")=";
-    echo val_p($_POST['entN'],$_POST['mod'],$_POST['puissance']);
-    echo "</br>";
-    echo "\$\$";
+    if(preg_match('#^([-]?[0-9]*)$#' , $_POST['mod']) && preg_match('#^([-]?[0-9]*)$#' , $_POST['entN']) && preg_match('#^([-]?[0-9]*)$#' , $_POST['puissance'])){
+        echo "\$\$";
+        echo "\\text{V}";
+        echo "_{".$_POST['mod'];
+        echo "}("; 
+        echo $_POST['entN']."^{".$_POST['puissance']."}";
+        echo ")=";
+        echo val_p($_POST['entN'],$_POST['mod'],$_POST['puissance']);
+        echo "</br>";
+        echo "\$\$";
+    }
+    else{
+        echo "Erreur de saisie";
+    }
 }
 ?>
 </body>

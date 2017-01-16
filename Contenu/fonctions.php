@@ -130,7 +130,8 @@ function era($n){
         $A[$i] = $a;
         $B[$i] = $b;
         $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i])); //calcul du quotient
-         $R[$i]=gmp_mod($A[$i], $B[$i]);         //calcul du reste
+        $R[$i]=gmp_mod($A[$i], $B[$i]);         //calcul du reste
+        
         while($R[$i]!=0){
             $i++;
             $A[$i] = $B[$i-1];

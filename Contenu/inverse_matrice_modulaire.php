@@ -116,6 +116,9 @@
 
 	       inverseModulaire($_POST['modulo'], $nb, $res[1], $res[3], $res[5], $res[7]);
    		}
+   		else{
+   			echo "Erreur de saisie";
+   		}
     }
     ?>
 </body>

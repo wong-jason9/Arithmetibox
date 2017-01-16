@@ -9,7 +9,7 @@ require('fonctions.php'); ?>
 <label>Hill<input type='checkbox' name='fonction[]' value='hill' checked='checked'></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
-<p>Message :<br>
+<p>Message (en entrée):<br>
 <label>Format Alphabet<input type='radio' name='methode' value='alpha' checked='checked'></label><label>Format Code<input type='radio' name='methode' value='code'></label></p>
 <textarea name='message'></textarea><br>
 Ou choisir un fichier contenant le message codé : <input type="file" name="messagecode"><br>
@@ -17,8 +17,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 </form>
 
 <?php
-
-    function cesar(){
+  function cesar(){
 		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
 			MessageDansFichier();
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and preg_match('#^[0-9]*$#',$_POST['paquet']) and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
@@ -122,6 +121,8 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
 
     function affine(){
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+          MessageDansFichier();
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['methode'])){
           
           if(preg_match('#^([0-9]*)$#', $_POST['paquet'])){
@@ -140,7 +141,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                   $alphabet=str_split($_POST['alphabet']);  //convertir string en tableau
                   $tab_message=str_split($_POST['message']);
 
-                  //Test si le message est contituer uniquement de caractère saisie dans l'alphabet
+                //Test si le message est contituer uniquement de caractère saisie dans l'alphabet
                 foreach ($tab_message as $v) {
                   $test = false;
                   foreach($alphabet as $alphab){
@@ -194,7 +195,13 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 }
               }//FIN DU ELSEIF si methode = code
         
-              $dico=[' le ','de ','des ',' que ',' elle ',' je ',' tu ',' il ',' un ',' ou ',' la ',' les ',' une ',' et ',' pour ',' par ', 'VOICI', 'voici'];
+              
+              //petit dictionnaire
+              //$dico=[' le ','de ','des ',' que ',' elle ',' je ',' tu ',' il ',' un ',' ou ',' la ',' les ',' une ',' et ',' pour ',' par ', 'VOICI', 'voici'];
+              //gros dictionnaire
+              $dico=Dictionnaire();
+
+
               $mod = calculeModulo($paquet, $nbcarac);
               $maxoccurence=0;
               $clefpossiblea= null;

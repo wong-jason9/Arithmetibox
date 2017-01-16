@@ -1,6 +1,6 @@
 <?php require('debut.php');
     require('fonctions.php');?>
-<h2>Décomposition d'un nombre</h2>
+<h2 class="titreDansLaFonctions">Décomposition d'un nombre</h2>
 <form action="Arithmetibox.php?outil=deco" method="POST">
 Nombre : <input size='30' name='nombre' type='text'><br>
 <input type='submit' value='Calculer'  class="boutton">

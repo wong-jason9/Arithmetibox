@@ -10,7 +10,7 @@
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef : <input size='43' name='clef' type='text'><br>
-<p>Message :<br>
+<p>Message (en entrée):<br>
 <label>Format Alphabet<input type='radio' name='methode' value='alpha' checked='checked'></label><label>Format Code<input type='radio' name='methode' value='code'></label></p>
 <textarea name='message'></textarea><br>
 Ou choisir un fichier contenant le message codé : <input type="file" name="messagecode"><br>
@@ -262,6 +262,8 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     }
 
     function affine(){
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+            MessageDansFichier();
         if(isset($_POST['alphabet']) and trim($_POST['alphabet'])!='' and isset($_POST['paquet']) and trim($_POST['paquet'])!='' and isset($_POST['message']) and trim($_POST['message'])!='' and isset($_POST['clef']) and trim($_POST['clef'])!='' and isset($_POST['methode'])){
             
             if((preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)$#' , $_POST['clef'], $res)) and (preg_match('#^([0-9]*)$#', $_POST['paquet']))){

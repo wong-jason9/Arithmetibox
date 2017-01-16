@@ -11,20 +11,25 @@
 
 <?php
   if(isset($_POST['nbA']) and isset($_POST['nbB'])){
-      $tab=euclEtendu($_POST['nbA'],$_POST['nbB']);
-      if($tab==0) return 0;
-      echo "\$\$";
-      echo "\\begin{array}{c|c|c|c|c|c c}";
-      echo "a&b&r&q&u&v\\\\\\hline";
-      foreach($tab as $tab2){
-          foreach($tab2 as $v){
-            echo $v.'&';
-              
-          }
-          echo '</br>';
-          echo "\\\\";
-      }
-      echo"\\end{array}".'\\\\';
-      echo "\$\$";
+    if(preg_match('#^([-]?[0-9]*)$#' , $_POST['nbA']) && preg_match('#^([-]?[0-9]*)$#' , $_POST['nbB']) && $_POST['nbA']!=$_POST['nbB']){
+        $tab=euclEtendu($_POST['nbA'],$_POST['nbB']);
+        if($tab==0) return 0;
+        echo "\$\$";
+        echo "\\begin{array}{c|c|c|c|c|c c}";
+        echo "a&b&r&q&u&v\\\\\\hline";
+        foreach($tab as $tab2){
+            foreach($tab2 as $v){
+              echo $v.'&';
+                
+            }
+            echo '</br>';
+            echo "\\\\";
+        }
+        echo"\\end{array}".'\\\\';
+        echo "\$\$";
+    }
+    else{
+      echo "Erreur de saisie";
+    }
   }
 ?>
