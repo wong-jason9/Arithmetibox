@@ -8,23 +8,13 @@ Un nombre b :<input type="text" name="nbB"/></br>
 <input type="submit" value="Calculer" class="boutton"></p>
 </form>
 <?php
-    if(isset($_POST['nbA'])and preg_match('#^[0-9]*$#',$_POST['nbA'])==true){
-        $testNba=true;
-    }
-    
-    elseif(isset($_POST['nbB'])and preg_match('#^[0-9]*$#',$_POST['nbB'])==true){
-        $testNbb=true;
-    }
-    else{
-        $testNba=false;
-        $testNbb=false;
-    }
-    if(isset($_POST['nbB']) and isset($_POST['nbA'])){
-        if($testNba!=true and $testNbb!=true) echo "Problème de saisies les valeurs, ne sont pas numériques.</br>";
-        
-        else {
+    if(isset($_POST['nbA']) and isset($_POST['nbB']) and trim($_POST['nbB']) and trim($_POST['nbA'])){
+        if(preg_match('#^([-]?[0-9]*)$#' , $_POST['nbA']) && preg_match('#^([-]?[0-9]*)$#' , $_POST['nbB'])){
             echo 'PGCD('.$_POST['nbA'].','.$_POST['nbB'].')=';
             echo pgcd($_POST['nbA'],$_POST['nbB']);
+        }
+        else{
+            echo "Erreur de saisie";
         }
     }
     ?>
