@@ -6,7 +6,9 @@ require('fonctions.php'); ?>
 <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 <p><label>Cesar<input type='checkbox' name='fonction[]' value='cesa' checked='checked'></label>
 <label>Affine<input type='checkbox' name='fonction[]' value='affi' checked='checked'></label>
-<label>Hill<input type='checkbox' name='fonction[]' value='hill' checked='checked'></label></p>
+<label>Hill<input type='checkbox' name='fonction[]' value='hill' checked='checked'></label>
+<label>Substitution<input type='checkbox' name='fonction[]' value='subst' checked='checked'></label>
+</p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 <p>Message (en entrée):<br>
@@ -373,6 +375,89 @@ $alphabet = str_split($_POST['alphabet']);
 	/***********************************************
     *****************FIN DE HILL********************
     ***********************************************/
+
+  /****************************************
+                SUBSTITUTION
+  ****************************************/
+
+  function substitution(){
+    $tabFrequences = array( 'a'=>8.122, 'b'=>0.901, 'c'=>3.345, 'd'=>3.669, 'e'=>17.115, 'f'=>1.066, 'g'=>0.866, 'h'=>0.737, 'i'=>7.580, 'j'=>0.545, 'k'=>0.049, 'l'=>5.456, 'm'=>2.968, 'n'=>7.095, 'o'=>5.378, 'p'=>3.021, 'q'=>1.362, 'r'=>6.553, 's'=>7.948, 't'=>7.244, 'u'=>6.311, 'v'=>1.628,'w'=>0.114, 'x'=>0.387, 'y'=>0.308, 'z'=>0.136);
+
+    //L'alphabet de travail :
+    $Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $_alphabet = str_split($Alphabet);
+
+    if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+          MessageDansFichier();
+
+    //Supprime retour chariot, tabulation, espace, tirets, virgule
+    if(!empty($_POST['message']))
+      $_POST['message'] = preg_replace("#\n|\r|\t|\040|\.|,|'|-#", "", $_POST['message']);
+    else
+      exit();
+    
+    if(trim($_POST['message'])=='' or !preg_match("#^[A-Za-z]+$#", $_POST['message']) )
+      exit();
+    
+    //Message crypté en maj   
+    $Message = mb_strtoupper($_POST['message'], "utf-8");   
+    //$Message = strtoupper($_POST['message']);
+          
+    $_Message = str_split($Message);
+
+    $_stats = array();
+
+    for($i=0; $i<strlen($Alphabet); $i++)
+      $_stats[$_alphabet[$i]] = substr_count($Message, $_alphabet[$i])/count($_Message)*100;
+    
+    arsort($tabFrequences);
+    arsort($_stats);
+
+    /*Tableau des fréquences de chaque lettre*/
+    //print_r($_stats); echo '<br><br>';
+
+    
+    foreach($tabFrequences as $c=>$v){
+      $_ordDescNorm[] = $c;
+    }
+
+    foreach($_stats as $c=>$v)
+      $_ordDescCustom[] = $c;
+    /*
+    print_r($_ordDescNorm); echo '<br><br>';
+    print_r($_ordDescCustom); echo '<br><br>';
+    
+      
+    echo '\[ \\begin{array}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}';
+    foreach ($_ordDescCustom as $key => $value) {
+      echo $value."&";
+    }
+    echo '\\\\';
+    
+    foreach ($_ordDescNorm as $key => $value) {
+      echo $value."&";
+    }
+    echo "\\\\";
+    echo "\\hline";
+    echo "\\end{array}";
+    echo '\]';
+    */
+
+
+    //Affiche message sans decryptage
+    //echo $Message; echo '<br>';
+    //echo strlen($Message); echo '<br>';
+    
+    for($i=0; $i<26; $i++)
+      $Message = preg_replace("#".$_ordDescCustom[$i]."#", $_ordDescNorm[$i], $Message);
+
+    echo '<p class="message">'.$Message.'</p>'; echo '<br>';
+    //echo strlen($Message);
+  }
+
+  /****************************************
+            FIN SUBSTITUTION
+  ****************************************/
 	
     if(isset($_POST['fonction'])){
         if(in_array('cesa',$_POST['fonction'])){
@@ -383,6 +468,9 @@ $alphabet = str_split($_POST['alphabet']);
         }
         if(in_array('affi',$_POST['fonction'])){
             affine();
+        }
+        if(in_array('subst', $_POST['fonction'])){
+          substitution();
         }
     }
     
