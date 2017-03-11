@@ -16,6 +16,7 @@ Paquet : <input size='50' name='paquet' type='text' ><br>
 <textarea name='message'></textarea><br>
 Ou choisir un fichier contenant le message codé : <input type="file" name="messagecode"><br>
 <input type='submit' value='Attaquer'  class="boutton">
+<button class="boutton">Changer</button>
 </form>
 
 <?php
@@ -414,6 +415,8 @@ $alphabet = str_split($_POST['alphabet']);
     arsort($_stats);
 
     /*Tableau des fréquences de chaque lettre*/
+    foreach($_stats as $key => $v)
+      echo $key."=".$v."<br>";
     //print_r($_stats); echo '<br><br>';
 
     
@@ -423,7 +426,7 @@ $alphabet = str_split($_POST['alphabet']);
 
     foreach($_stats as $c=>$v)
       $_ordDescCustom[] = $c;
-    /*
+    
     print_r($_ordDescNorm); echo '<br><br>';
     print_r($_ordDescCustom); echo '<br><br>';
     
@@ -441,7 +444,7 @@ $alphabet = str_split($_POST['alphabet']);
     echo "\\hline";
     echo "\\end{array}";
     echo '\]';
-    */
+    
 
 
     //Affiche message sans decryptage
