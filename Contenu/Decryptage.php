@@ -6,7 +6,8 @@
 <p><label>Cesar<input type='radio' name='fonction' value='cesa' checked='checked'></label>
 <label>Affine<input type='radio' name='fonction' value='affi'></label>
 <label>Hill<input type='radio' name='fonction' value='hill'></label>
-<label>Substitution<input type="radio" name="fonction" value="subs"></label></p>
+<label>Substitution<input type="radio" name="fonction" value="subs"></label>
+<label>Vigenere<input type="radio" name="fonction" value="vige"></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
 Clef : <input size='43' name='clef' type='text'><br>
@@ -610,6 +611,67 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
     **********************************************/
 
+    /*********************************************
+
+                    VIGENERE
+
+    **********************************************/
+
+    function indexAlpha($tabAlphabet, $char){
+        return array_search($char, $tabAlphabet);
+    }
+
+    function vigenere(){
+
+        if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
+            MessageDansFichier();
+
+        if(isset($_POST['clef']) and isset($_POST['message'])){
+            if(trim($_POST['clef'])!='' and trim($_POST['message'])!=''){
+
+                $_POST['message'] = preg_replace("#\n|\r|\t|\040#", "", $_POST['message']);
+
+                $upperletterA = mb_strtoupper($_POST['alphabet'], "utf-8");
+                $upperletterC = mb_strtoupper($_POST['clef'], "utf-8");
+                $upperletterM = mb_strtoupper($_POST['message'], "utf-8");
+
+                $alphabet=str_split($upperletterA);
+                $cle=str_split($upperletterC);
+                $message=str_split($upperletterM);
+
+                $i=0;
+                $moduloC=sizeof($cle);
+                foreach($message as $value){
+                    $motCrypt = indexAlpha($alphabet, $value);
+                    $cleDecrypt = indexAlpha($alphabet, $cle[$i%$moduloC]);
+                    $i++;
+                    $_decrypt = $motCrypt - $cleDecrypt;
+                    if ($_decrypt < 0){
+                        $decrypt = sizeof($alphabet)+$_decrypt;
+                    }
+                    else
+                        $decrypt = $_decrypt%sizeof($alphabet);
+                    
+                    $_messageDecrypt[] = $alphabet[$decrypt];
+                }
+
+                $messageDecrypt = implode($_messageDecrypt);
+                echo "Message décrypté : <br>";
+                echo '<p class="message">'.$messageDecrypt.'</p>';
+                }
+            else
+                echo "<p> Il y a une erreur de saisie </p>";
+        }
+        else
+            echo "<p>Il y a une erreur de saisie</p>";
+    }
+
+    /**********************************************
+
+                FIN DE VIGENERE
+
+    **********************************************/
+
     if(isset($_POST['fonction']) and $_POST['fonction']=='cesa'){
         $tab=cesar();
         if(isset($tab))
@@ -623,6 +685,9 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     }
     elseif(isset($_POST['fonction']) and $_POST['fonction']=='subs'){
         substitution();
+    }
+    elseif(isset($_POST['fonction']) and $_POST['fonction']=='vige'){
+        vigenere();
     }
     
     ?>
