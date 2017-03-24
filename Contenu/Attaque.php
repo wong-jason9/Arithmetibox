@@ -19,6 +19,9 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 <button id="change" class="boutton" type="button">Changer</button>
 </form>
 
+<div id="message_subtitution">
+</div>
+
 <?php
   function cesar(){
 		if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')

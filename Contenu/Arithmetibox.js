@@ -10,7 +10,8 @@ $(document).ready(function(){
 			},
 			function(reponse){
 				console.log(reponse);
-				$(".message").text(reponse);
+				var mes = $('<p>'+reponse+'</p>');
+				$("#message_subtitution").append(mes);
 			});
 
 	});
