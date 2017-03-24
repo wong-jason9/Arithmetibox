@@ -16,7 +16,7 @@ Paquet : <input size='50' name='paquet' type='text' ><br>
 <textarea name='message'></textarea><br>
 Ou choisir un fichier contenant le message codé : <input type="file" name="messagecode"><br>
 <input type='submit' value='Attaquer'  class="boutton">
-<button class="boutton">Changer</button>
+<button id="change" class="boutton" type="button">Changer</button>
 </form>
 
 <?php
