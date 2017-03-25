@@ -10,17 +10,19 @@ $(document).ready(function(){
 			tab[i] = $('table tr').children().eq(i).text();
 			i = i + 1;
 		}
+		console.log('tab avant requete');
 		console.log(tab);
 
 		$.post("Contenu/changerSubstitution.php",
 			{
 				ok: true,
 				message: message,
-				tab: tab
+				tab: tab,
 			},
 			function(reponse){
-				console.log(reponse);
-				var mes = $('<p>'+reponse+'</p>');
+				console.log('reponse', reponse);
+				var mes = $('<p>'+reponse.message+'</p>');
+				console.log(reponse.tab);
 				$(".message").html(mes);
 			});
 
