@@ -462,6 +462,7 @@ $alphabet = str_split($_POST['alphabet']);
         echo '<td>'.$value.'</td>';
       echo '</tr>';
     echo '</table>';*/
+    
     echo '<table class="freq_alphabet" style="border-collapse: collapse">';
       for($i=0; $i<26; $i++){
         echo '<tr>';
