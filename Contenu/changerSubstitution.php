@@ -6,5 +6,5 @@ $tab = $_POST['tab'];			//tableau de l'alphabet (fréquence d'apparition et alph
 
 if($req){
 	json_encode($message);
-	echo "test".$message;
+	echo 'test'.$message;
 }
