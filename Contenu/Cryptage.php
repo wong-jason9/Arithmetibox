@@ -558,15 +558,11 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
         if(isset($_POST['clef']) and isset($_POST['message'])){
             if(trim($_POST['clef'])!='' and trim($_POST['message'])!=''){
 
-                $_POST['message'] = preg_replace("#\n|\r|\t|\040#", "", $_POST['message']);
+                $_POST['message'] = preg_replace("#\n|\r|\t#", "", $_POST['message']);
 
-                $upperletterA = mb_strtoupper($_POST['alphabet'], "utf-8");
-                $upperletterC = mb_strtoupper($_POST['clef'], "utf-8");
-                $upperletterM = mb_strtoupper($_POST['message'], "utf-8");
-
-                $alphabet=str_split($upperletterA);
-                $cle=str_split($upperletterC);
-                $message=str_split($upperletterM);
+				$alphabet=str_split($_POST['alphabet']);
+                $cle=str_split($_POST['clef']);
+                $message=str_split($_POST['message']);
 
                 $i=0;
                 $moduloC=sizeof($cle);
