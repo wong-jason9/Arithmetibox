@@ -8,8 +8,8 @@ Un nombre b :<input type="text" name="nbB"/></br>
 <input type="submit" value="Calculer" class="boutton"></p>
 </form>
 <?php
-    if(isset($_POST['nbA']) and isset($_POST['nbB']) and trim($_POST['nbB']) and trim($_POST['nbA'])){
-        if(preg_match('#^([-]?[0-9]*)$#' , $_POST['nbA']) && preg_match('#^([-]?[0-9]*)$#' , $_POST['nbB'])){
+    if(isset($_POST['nbA']) and isset($_POST['nbB']) and (trim($_POST['nbB']) or trim($_POST['nbA']))){
+        if(preg_match('#^([-]?[0-9]*)$#' , $_POST['nbA']) && preg_match('#^([-]?[0-9]*)$#' , $_POST['nbB']) && (trim($_POST['nbB']) && trim($_POST['nbA']))){
             echo 'PGCD('.$_POST['nbA'].','.$_POST['nbB'].')=';
             echo pgcd($_POST['nbA'],$_POST['nbB']);
         }

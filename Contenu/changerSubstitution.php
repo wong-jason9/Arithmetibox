@@ -2,7 +2,9 @@
 
 $req = $_POST['ok'];
 $message = $_POST['message'];
+$tab = $_POST['tab'];			//tableau de l'alphabet (fréquence d'apparition et alphabet normal)
 
 if($req){
-	echo "J'ai reçu votre requête";
+	json_encode($message);
+	echo "test".$message;
 }

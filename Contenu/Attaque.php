@@ -418,8 +418,8 @@ $alphabet = str_split($_POST['alphabet']);
     arsort($_stats);
 
     /*Tableau des fréquences de chaque lettre*/
-    foreach($_stats as $key => $v)
-      echo $key."=".$v."<br>";
+    /*foreach($_stats as $key => $v)
+      echo $key."=".$v."<br>";*/
     //print_r($_stats); echo '<br><br>';
 
     
@@ -430,11 +430,11 @@ $alphabet = str_split($_POST['alphabet']);
     foreach($_stats as $c=>$v)
       $_ordDescCustom[] = $c;
     
-    print_r($_ordDescNorm); echo '<br><br>';
-    print_r($_ordDescCustom); echo '<br><br>';
+    /*print_r($_ordDescNorm); echo '<br><br>';
+    print_r($_ordDescCustom); echo '<br><br>';*/
     
       
-    echo '\[ \\begin{array}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}';
+    /*echo '\[ \\begin{array}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}';
     foreach ($_ordDescCustom as $key => $value) {
       echo $value."&";
     }
@@ -446,7 +446,34 @@ $alphabet = str_split($_POST['alphabet']);
     echo "\\\\";
     echo "\\hline";
     echo "\\end{array}";
-    echo '\]';
+    echo '\]';*/
+
+    /*echo '<table class="freq_alphabet">';
+      echo '<tr>';
+     foreach($_ordDescCustom as $key => $value){
+        echo '<td>'.$value.'</td>';
+     }
+      echo '</tr>';
+      echo '<tr>';
+     foreach($_stats as $key => $value){
+        echo '<td>'.$value.'</td>';
+     }
+      echo '</tr>';
+
+      echo '<tr>';
+      foreach($_ordDescNorm as $key => $value)
+        echo '<td>'.$value.'</td>';
+      echo '</tr>';
+    echo '</table>';*/
+    echo '<table class="freq_alphabet" style="border-collapse: collapse">';
+      for($i=0; $i<26; $i++){
+        echo '<tr>';
+        echo '<td  style="border:1px solid black; padding: 5px">'.$_ordDescCustom[$i].'</td>';
+        echo '<td  style="border:1px solid black; padding: 5px">'.$_stats[$_ordDescCustom[$i]].'</td>';
+        echo '<td  style="border:1px solid black; padding: 5px">'.$_ordDescNorm[$i].'</td>';
+        echo '</tr>';
+      }
+    echo '</table>';
     
 
 
