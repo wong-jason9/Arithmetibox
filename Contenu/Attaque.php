@@ -1,6 +1,5 @@
 <?php require('debut.php');
 require('fonctions.php'); ?>
-
 <h2 class="titreDansLaFonctions">Attaque</h2>
 <form action='Arithmetibox.php?outil=attaque' method='post' enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />

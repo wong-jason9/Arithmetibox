@@ -1,9 +1,8 @@
 <?php
-
-$req = $_POST['ok'];
 $message = $_POST['message'];
 $tab = $_POST['tab'];			//tableau de l'alphabet (fréquence d'apparition et alphabet normal)
-$alphabet = $_POST['alphabet_freq'];
+$alphabet = array_reverse($_POST['alphabet_freq']);
+$repeter_n = $_POST['repeter_n'];
 
 	function generate($factoriel, $k, $list_E, &$listResults){
 		$rank = sizeof($list_E);
@@ -32,7 +31,7 @@ $alphabet = $_POST['alphabet_freq'];
 	}
 
 		// l'ensemble de départ
-		$list = str_split($alphabet);
+		$list = $alphabet;
 		// n = longueur de l'ensemble
 		$n = sizeof($list);
 		// variable global: précalcul des factoriels
@@ -53,7 +52,7 @@ $alphabet = $_POST['alphabet_freq'];
 
 		$res_permutations = array();
 		// genere toutes les permutations
-		for($k=0; $k<$max; $k++){
+		for($k=0; $k<$repeter_n; $k++){
 			// copie de travail de la liste originale
 			$original = $list;	//Pas sûr
 			// initialise la liste qui contiendra le resultat
@@ -61,21 +60,51 @@ $alphabet = $_POST['alphabet_freq'];
 			// construit la permutation #k;
 			generate($factoriel, $k, $original, $result);
 
-			if($max-1 == $k)
-				$res_permutations = $result;
+			$res_permutations = $result;
 		}
 
+		$res_permutations = array_reverse($res_permutations);
+
+
+		$test1 = array();
+		for($i=0; $i<3*26; $i++){
+			$i = $i + 2;
+			array_push($test1, $tab[$i]);
+		}
+
+		$aInverser = array();
+		$aInverserAvec = array();
+		for($i=0; $i<26; $i++){
+			if($tab[$i*3+2] != $res_permutations[$i]){
+				array_push($aInverser, $res_permutations[$i]);
+				array_push($aInverserAvec, $tab[$i*3+2]);
+			}
+		}
+
+		//$message = str_split($message);
+		$bool = false;
+		for($i=0; $i<sizeof($message); $i++){	//parcoure chaque cractère du message
+			for($j=0; $j<sizeof($aInverser); $j++){
+				if($aInverser[$j] == $message[$i]){
+					$message[$i] == $aInverser[$j];
+					$bool =true;
+				}
+			}
+		}
 
 
 
 
 $reponse = array(
 				"message" => $message,
-				"tab" => $tab,
-				"test" => $res_permutations
+				//"tab" => $tab,
+				"bool" => $bool,
+				"test1" => $aInverser,						//Pour tester
+				"alphabet_actuel" => $test1,				//Pour tester
+				"test2" => $aInverserAvec,					//Pour tester
+				"resultat_alphabet" => $res_permutations	
 				);
 
-if($req){
-	header('Content-type: application/json');
-	echo json_encode($reponse);
-}
+
+header('Content-type: application/json');
+echo json_encode($reponse);
