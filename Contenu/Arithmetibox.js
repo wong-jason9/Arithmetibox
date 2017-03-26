@@ -1,7 +1,20 @@
+console.log("test");
 $(document).ready(function(){
+	var n = 1;	//n represente le nombre de fois ou l'utilisateur a cliquer sur changer, cela nous sera utile pour faire après les permutations
+	var alphabet_freq_depart = [];
+	var i = 0;
+	while(i < 26){
+		alphabet_freq_depart[i] = $(".freq_alphabet").children().children('tr').eq(i).children('td').eq(2).text();
+		i = i + 1;
+	}
+
+	console.log(alphabet_freq_depart);
+
+
 	//Gestionnaire lorsqu'on clique sur le bouton changer
 	$('#change').click(function(){
-		//console.log("appuie sur le bouton changer");
+		n = n + 1;
+		console.log("test");
 		var message = $('.message').text();
 		
 		var tab = [];
@@ -10,22 +23,20 @@ $(document).ready(function(){
 			tab[i] = $('table tr').children().eq(i).text();
 			i = i + 1;
 		}
-		//console.log('tab avant requete');
-		//console.log(tab);
 
 		$.post("Contenu/changerSubstitution.php",
 			{
 				ok: true,
 				message: message,
 				tab: tab,
+				alphabet_freq: alphabet_freq_depart,
 			},
 			function(reponse){
-				//console.log('reponse', reponse);
 				var mes = $('<p>'+reponse.message+'</p>');
 				$(".message").html(mes);
-				//console.log(reponse.tab);
 				MAJ_tab_alphabet(reponse.tab);
-				
+
+				console.log("test"+reponse.test);
 			});
 
 	});
