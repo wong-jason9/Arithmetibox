@@ -37,7 +37,7 @@ if(isset($_POST['alphabet']) and isset($_POST['message']) and isset($_POST['clef
     echo "le nombre ".$clef[0]." est compose de ".$res[0]." x ".$res[1]."<br/>";
     // calcul de phi
     $phi=($res[0]-1)*($res[1]-1);
-    if(($res[0]-1)<($res[1]-1) && pgcd($phi,clef[1]==1)) echo "Clef de cryptage valide";
+    if(($res[0]-1)<($res[1]-1) && pgcd($phi,$clef[1]==1)) echo "Clef de cryptage valide";
     echo "phi=".$phi."</br>";
     echo "Le message crypter est : ";
     // Expo rapide + affichage
@@ -99,7 +99,7 @@ elseif(isset($_POST['alphabet']) and isset($_POST['message']) and isset($_POST['
     // Calcul d'inverse pour clé privée
     $invClef=gmp_gcdext($phi,$clef[1]);
     var_dump($invClef);
-    if(($res[0]-1)<($res[1]-1) && pgcd($phi,clef[1]==1)) echo "Clef de cryptage valide";
+    if(($res[0]-1)<($res[1]-1) && pgcd($phi,$clef[1]==1)) echo "Clef de cryptage valide";
     echo "phi=".$phi."</br>";
     echo "Le message decrypter est : </br>";
     // Expo rapide
