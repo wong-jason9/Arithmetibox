@@ -21,7 +21,6 @@ $(document).ready(function(){
 			tab[i] = $('table tr').children().eq(i).text();
 			i = i + 1;
 		}
-
 		$.post("Contenu/changerSubstitution.php",
 			{
 				//ok: true,

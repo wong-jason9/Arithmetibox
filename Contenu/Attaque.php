@@ -400,11 +400,8 @@ $alphabet = str_split($_POST['alphabet']);
       exit();
     
     //Message crypté en maj   
-    $Message = mb_strtoupper($_POST['message'], "utf-8");   
-    //$Message = strtoupper($_POST['message']);
-          
+    $Message = mb_strtoupper($_POST['message'], "utf-8");
     $_Message = str_split($Message);
-
     $_stats = array();
 
     for($i=0; $i<strlen($Alphabet); $i++)

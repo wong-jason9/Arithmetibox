@@ -81,16 +81,28 @@ $repeter_n = $_POST['repeter_n'];
 			}
 		}
 
-		//$message = str_split($message);
+		$message = str_split($message);
 		$bool = false;
 		for($i=0; $i<sizeof($message); $i++){	//parcoure chaque cractère du message
 			for($j=0; $j<sizeof($aInverser); $j++){
-				if($aInverser[$j] == $message[$i]){
-					$message[$i] == $aInverser[$j];
+				if($aInverser[$j] === $message[$i]){
+					$message[$i] = strtoupper($aInverserAvec[$j]);
 					$bool =true;
 				}
+				/*if('a' === $message[$i]){
+					$message[$i] = 'e';
+					$bool =true;
+				}*/
 			}
+			//preg_replace($res_permutations, $test1, $message);
 		}
+
+		for($i=0; $i<sizeof($message); $i++)
+			$message[$i] = strtolower($message[$i]);
+		
+		$message = implode($message);
+
+		//$message = preg_replace($aInverser, $aInverserAvec, $message);
 
 
 
@@ -98,7 +110,7 @@ $repeter_n = $_POST['repeter_n'];
 $reponse = array(
 				"message" => $message,
 				//"tab" => $tab,
-				"bool" => $bool,
+				"bool" => $bool,							//Pour tester
 				"test1" => $aInverser,						//Pour tester
 				"alphabet_actuel" => $test1,				//Pour tester
 				"test2" => $aInverserAvec,					//Pour tester
