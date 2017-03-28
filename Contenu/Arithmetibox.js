@@ -1,4 +1,3 @@
-console.log('document près');
 $(document).ready(function(){
 	var n = 1;	//n represente le nombre de fois ou l'utilisateur a cliquer sur changer, cela nous sera utile pour faire après les permutations
 	var alphabet_freq_depart = [];
@@ -7,10 +6,7 @@ $(document).ready(function(){
 		alphabet_freq_depart[i] = $(".freq_alphabet").children().children('tr').eq(i).children('td').eq(2).text();
 		i = i + 1;
 	}
-
-	console.log(alphabet_freq_depart);
-
-
+	
 	//Gestionnaire lorsqu'on clique sur le bouton changer
 	$('#change').click(function(){
 		n = n + 1;
@@ -22,10 +18,8 @@ $(document).ready(function(){
 			tab[i] = $('table tr').children().eq(i).text();
 			i = i + 1;
 		}
-
 		$.post("Contenu/changerSubstitution.php",
 			{
-				//ok: true,
 				message: message,
 				tab: tab,
 				alphabet_freq: alphabet_freq_depart,
@@ -35,18 +29,16 @@ $(document).ready(function(){
 				var mes = $('<p>'+reponse.message+'</p>');
 				$(".message").html(mes);
 				MAJ_tab_alphabet(reponse.resultat_alphabet);
-	
-				console.log("test: "+reponse.resultat_alphabet);
-			});
 
+				console.log('message:'+reponse.message);
+				console.log('alphabet permuter:'+reponse.resultat_alphabet);
+			});
 	});
 
 	function MAJ_tab_alphabet(tab_alphabet){
-		console.log("test");
 		var i = 0;
 		while(i < 26){	//26 car le tableau est composer de 26 ligne
-			//$(".freq_alphabet").children().children('tr').eq(i).children('td').eq(2).text(tab_alphabet[i]);
-			console.log($(".freq_alphabet").children().children('tr').eq(i).children('td').eq(2).text());
+			$(".freq_alphabet").children().children('tr').eq(i).children('td').eq(2).text(tab_alphabet[i]);
 			i = i + 1;	//y permet de parcourir les 26 ligne du tableau
 		}
 	}

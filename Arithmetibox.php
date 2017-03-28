@@ -4,7 +4,7 @@
     <link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
     <meta charset="utf-8"/>
     <title> Arithmetibox </title>
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
     <header>

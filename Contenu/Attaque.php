@@ -3,10 +3,10 @@ require('fonctions.php'); ?>
 <h2 class="titreDansLaFonctions">Attaque</h2>
 <form action='Arithmetibox.php?outil=attaque' method='post' enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-<p><label>Cesar<input type='checkbox' name='fonction[]' value='cesa' checked='checked'></label>
-<label>Affine<input type='checkbox' name='fonction[]' value='affi' checked='checked'></label>
-<label>Hill<input type='checkbox' name='fonction[]' value='hill' checked='checked'></label>
-<label>Substitution<input type='checkbox' name='fonction[]' value='subst' checked='checked'></label>
+<p><label>Cesar<input type='checkbox' name='fonction[]' value='cesa'></label>
+<label>Affine<input type='checkbox' name='fonction[]' value='affi'></label>
+<label>Hill<input type='checkbox' name='fonction[]' value='hill'></label>
+<label>Substitution<input type='checkbox' name='fonction[]' value='subst'></label>
 </p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 Paquet : <input size='50' name='paquet' type='text' ><br>
