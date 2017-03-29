@@ -8,7 +8,6 @@
 </head>
 <body>
     <header>
-     <img src="Contenu/Enigma.jpg" id="img_fond">
         <div id="haut_page">
             <a href="Arithmetibox.php">
             <h1 id="titre">ArithmetiBox</h1></a>
@@ -17,11 +16,10 @@
             <center>
                     <h1 id="debut_titre"> Arithmeti</h1>
                     <h1 id="fin_du_titre">Box</h1>
-                    <img id="logo_Arithmetibox" src="Contenu/logo2.svg" alt="logo_Arithmetibox"/>
+                    <img id="logo_Arithmetibox" src="Contenu/logo_Arithmetibox.svg" alt="logo_Arithmetibox"/>
                     <br/><br/><p>Boîte à outils d’arithmétique</p>
-                    <p>Cette page web rassemble différents outils mathématiques comme par exemple le calcul de pgcd ou de la congruense mais aussi des outils de cryptanalyse comme par exemple le codage Cesar, Affine, Subtitution ou encore Hill</p>
+                    <p style="color: #9D9D9D">Cette page web rassemble différents outils mathématiques comme par exemple le calcul de pgcd ou de la congruense mais aussi des outils de cryptanalyse comme par exemple le codage Cesar, Affine, Substitution ou encore Hill</p>
             </center>
-            <br/><br/><br/><br/>
         </div>
     </header>
     <main>
