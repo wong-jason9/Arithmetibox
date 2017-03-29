@@ -18,7 +18,7 @@
                     <h1 id="fin_du_titre">Box</h1>
                     <img id="logo_Arithmetibox" src="Contenu/logo_Arithmetibox.svg" alt="logo_Arithmetibox"/>
                     <br/><br/><p>Boîte à outils d’arithmétique</p>
-                    <p style="color: #9D9D9D" id="description">Cette page web rassemble différents outils mathématiques comme par exemple le calcul de pgcd ou de la congruense mais aussi des outils de cryptanalyse comme par exemple le codage Cesar, Affine, Substitution ou encore Hill</p>
+                    <p id="description">Cette page web rassemble différents outils mathématiques comme par exemple le calcul de pgcd ou de la congruense mais aussi des outils de cryptanalyse comme par exemple le codage Cesar, Affine, Substitution ou encore Hill</p>
             </center>
         </div>
     </header>
