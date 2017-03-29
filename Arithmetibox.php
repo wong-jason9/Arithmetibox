@@ -1,40 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="Contenu/Arithmetibox.css"/>
+    <link type="text/css" rel="stylesheet" href="Arithmetibox.css"/>
     <meta charset="utf-8"/>
     <title> Arithmetibox </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
-        <a href="Arithmetibox.php"><img id="logo_Arithmetibox" src="Contenu/logo.svg" alt="logo_Arithmetibox"/>
-        <h1 id="titre">ArithmetiBox</h1></a>
+     <img src="Contenu/Enigma.jpg" id="img_fond">
+        <div id="haut_page">
+            <a href="Arithmetibox.php">
+            <h1 id="titre">ArithmetiBox</h1></a>
+        </div>
+        <div id="presentation_debut_page">
+            <center>
+                    <h1 id="debut_titre"> Arithmeti</h1>
+                    <h1 id="fin_du_titre">Box</h1>
+                    <img id="logo_Arithmetibox" src="Contenu/logo2.svg" alt="logo_Arithmetibox"/>
+                    <br/><br/><p>Boîte à outils d’arithmétique</p>
+                    <p>Cette page web rassemble différents outils mathématiques comme par exemple le calcul de pgcd ou de la congruense mais aussi des outils de cryptanalyse comme par exemple le codage Cesar, Affine, Subtitution ou encore Hill</p>
+            </center>
+            <br/><br/><br/><br/>
+        </div>
     </header>
     <main>
         <div id="MenuFonction">
             <nav>
 				<h2 class="titreFonctions">Cryptanalyse</h2>
                 <ul> 
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=rsa">RSA</a></li> 
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill</a></li>
-					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter</a></li>  
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=crypte">Crypter</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=rsa">RSA »</a></li> 
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=hill">Chiffrement de Hill »</a></li>
+					<li><a class="listeF texte_court" href="Arithmetibox.php?outil=attaque">Attaquer »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=decrypte">Décrypter »</a></li>  
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=crypte">Crypter »</a></li>
                 </ul>   
                 <h2 class="titreFonctions">Math</h2>
                 <ul>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=era">Erathostène</a></li>
-                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=deco">Décomposition d'un nombre</a></li>
-                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=pgcd">PGCD »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=eucl">Euclide »</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=eucl_etendue">Algorithme d'Euclide étendu »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=cong">Congruence »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=inv_mod">Inverse modulaire »</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=inverse_matrice_modulaire">Inverse matrice modulaire »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=test_primalite">Test de primalité »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=era">Erathostène »</a></li>
+                    <li><a class="listeF texte_court" href="Arithmetibox.php?outil=val_p_adique">Valuation p-adique »</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=deco">Décomposition d'un nombre »</a></li>
+                    <li><a class="listeF" href="Arithmetibox.php?outil=expo_mod_rapide">Exponentiation modulaire rapide »</a></li>
                 </ul>            
             </nav>
         </div>
@@ -142,11 +155,11 @@
     </main>
     <section id="texte_a_propos">
         <h2>À propos</h2>
-        <p> Ce site a été développé dans le cadre d'un projet universitaire du semestre 3 du DUT informatique. Il est réalisé par cinq étudiants du groupe A1 de l'année 2016/2017. La page web est développée dans les langages HTML, CSS, PHP et LaTeX, elle a pour but de créer une boîte à outils d’arithmétique qui est intégrée à Ataraxy, les différents outils développés sont des algorithmes étudiés en cours de S3 d'arithmétique et de cryptanalyse, cours qui est encadré par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII Villetaneuse.
+        <p> Ce site a été développé dans le cadre d'un projet universitaire du semestre 3 et 4 du DUT informatique. Il est réalisé par sept étudiants de l'année 2016/2017. La page web est développée dans les langages HTML, CSS, PHP, JavaScript et LaTeX, elle a pour but de créer une boîte à outils d’arithmétique qui est intégrée à Ataraxy, les différents outils développés sont des algorithmes étudiés en cours de S3 d'arithmétique et de cryptanalyse, cours qui est encadré par David Hébert, Docteur et professeur agrégé de mathématiques à l'université de Paris XIII Villetaneuse.
         </p>
     </section>
 </body>
 <footer>
-    <p id="texte_footer"> Projet réalisé par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou || Copyright © 2016/2017</p>
+    <p class="texte_footer"> Projet réalisé par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou, Sena Roith, Adrien Cavalieri</p><p class="texte_footer"> #TeamArithmetiBox © 2016-2017</p>
 </footer>
 </html>

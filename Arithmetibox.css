@@ -1,0 +1,308 @@
+/***************************************************
+*****************     header 		****************
+***************************************************/
+
+header
+{
+	width: 100%;
+	margin-left: -8px;
+	margin-top: -21px;
+	height: 7%;
+}
+
+#haut_page{
+	position: fixed;
+	background-color: rgba(00, 00, 00, 0.8);
+	width: 120%;
+}
+
+#logo_Arithmetibox
+{
+	width: 70px;
+	height: 70px;
+	margin-bottom: -12px;
+}
+
+#titre
+{
+	margin-left: 20px;
+	color: #9d9d9d;
+	display: inline-block;
+	font-family: 'Lato', sans-serif;
+	font-weight: normal;
+	font-size: 22px;
+	margin-top: 23px;
+}
+
+#fin_du_titre
+{
+	font-family: 'Lato', sans-serif;
+	color: #555555;
+	display:inline;
+	font-size: 63px;
+}
+
+center
+{
+	margin-top: 80px;
+}
+
+#debut_titre
+{
+	font-family: 'Lato', sans-serif;
+	color: #2E9F40;
+	display: inline;
+	font-size: 63px;
+	z-index: 1;
+}
+
+#presentation_debut_page
+{
+	padding-top: 90px;
+	color: white;
+	width: 100%;
+	/*background-image: url("Contenu/Enigma.jpg");
+	background-position:100% 0px 100% 100%;
+	background-size: 100% 1200px;
+	background-repeat:no-repeat;
+	background-image: rgba(0,0,0,0.1);
+	background-size: 100%;*/
+	padding-left: 18px;
+}
+
+#img_fond
+{
+	position: absolute;
+	width: 100%;
+	height: 50%;
+	z-index: -1;
+}
+
+header p
+{
+	font-family: 'Lato', sans-serif; 
+	font-weight: normal;
+	width: 50%;
+}
+
+/***************************************************
+*****************     main 		********************
+***************************************************/
+
+main
+{
+	padding-top: 10px; /*Ligne provisoire*/
+	/* les marges à gauche et droite "auto" permettent de centrer */
+	margin-left: auto;
+	margin-right: auto;
+	/* largeur de la partie centrale principale de l'affichage */
+	width: 100%;
+	/* Forcer à ce que tout le contenu de cette partie reste à l'intérieur de cette partie */
+	/* Par exemple: les marges ne débordent pas */
+	/* Par exemple: les float ne débordent pas */
+	overflow: hidden;
+	display: flex;
+}
+
+a
+{
+	text-decoration: none;
+	color:inherit;
+	font-weight: 50;
+}
+
+li
+{
+	list-style-type:none;
+}
+
+#MenuFonction
+{
+	background-color: #EEEEEE;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 400;
+
+}
+
+#affichage
+{
+	background-color: white;
+	width: 100%;
+	margin-left: 20px;
+}
+
+nav
+{
+	display: inline-block;
+}
+
+section
+{
+	background-color: white;
+}
+
+.titreFonctions
+{
+	margin-left: 40px;
+	margin-bottom: 5px;
+	color: #333333;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 500;
+}
+
+.titreDansLaFonctions
+{
+	color: black;
+	font-family: 'Lato', sans-serif; 
+	font-weight: 500;
+}
+
+.listeF
+{
+	padding-top: 7px;
+	padding-bottom: 12px;
+	margin-bottom: 10px;
+	display: block;
+
+	margin-top: 15px;
+
+	width : 180px;
+	height : 30px;
+
+	color : white;
+	background-color: #5CB85C;
+
+	font-size: 16px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+/*Pour centrer le boutton bien au milieu de la 
+case quand le texte n'est pas sur deux lignes*/
+.texte_court 
+{
+	margin-top: 15px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+ul :hover
+{
+	background-color: #449D44;
+	border-radius: 4px;
+}
+
+#texte_a_propos
+{
+	background-color: #EEEEEE;
+	color: #333333;
+	text-align: center;
+	padding-right: 10%;
+	padding-left: 10%;
+
+	margin-bottom: -16px;
+	margin-right: -13px;
+	margin-left: -13px;
+	padding-bottom: 50px;
+	padding-top: 30px;
+    font-style: italic;
+}
+
+.exemple_saisie_matrice
+{
+	width: 80px;
+	height: 42px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+
+/***************************************************
+********** MISE EN PAGE DES FONCTIONALITE **********
+***************************************************/
+
+#msg_fonctionnalité /*msg = mise en page*/
+{
+	margin: 20px;
+}
+
+input
+{
+	margin: 8px;
+}
+
+.boutton
+{
+	color: white;
+	background-color: black;
+	text-decoration:none;
+	border-radius:1px;
+	border-radius:1px;
+	border:1px solid #dbdbdb;
+	width: 120px;
+	height: 25px;
+	font-weight: 40px;
+	margin-top: 18px;
+	margin-left: 100px;
+}
+
+.boutton_matrice
+{
+	color: white;
+	background-color: black;
+	text-decoration:none;
+	border-radius:1px;
+	border-radius:1px;
+	border:1px solid #dbdbdb;
+	width: 120px;
+	height: 25px;
+	font-weight: 40px;
+	margin-top: 40px;
+	margin-left: 100px;
+}
+
+textarea
+{
+	width: 500px;
+	height: 200px;
+}
+
+.matrice
+{
+	width: 150px;
+	height: 75px;
+	margin-bottom: -32px;
+}
+
+.message 
+/*Pour que le message afficher au
+ décryptage passe à la ligne tout seul*/
+{
+	width: 43%;
+	word-wrap: break-word;
+}
+
+/***************************************************
+*****************     FOOTER 		****************
+***************************************************/
+
+footer
+{
+	background-color: #FFFFFF;
+	width: 100%;
+	padding: 1px;
+	padding-right: 20px;
+	margin-left: -8px;
+	margin-top: 10px;
+}
+
+.texte_footer
+{
+	text-align: center;
+	color: #333333;
+	width: 100%;
+	font-size: 14px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 200;
+}
