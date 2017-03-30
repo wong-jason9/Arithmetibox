@@ -1,4 +1,4 @@
- <?php
+<?php
 require('debut.php');
 ?>
 <h2 class="titreDansLaFonctions">Chiffrement de Hill</h2>
@@ -6,14 +6,13 @@ require('debut.php');
 <p>Crypter : <input type="radio" name="msgcode" value="optcode"/> Decrypter : <input type="radio" name="msgcode" value="optdcode"/></p>
 <p>Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
 <p>Message :</br><textarea name='msg'></textarea></p>
-
-<p>Cle : <textarea name='clecode' class="matrice"></textarea></p>
-<p></br>Pour saisir la matrice:<br> Veuillez saisir le premier nombre ensuite espace, saisir le deuxième nombre, saut de ligne (touche "Entrée"), saisir le troisième nombre, espace, saisir le quatrième nombre. <br>Exemple:<img class="exemple_saisie_matrice" src="Contenu/exemple_saisie.png" alt="exemple_de_saisie_de_matrice"/></p>
+<p>Dimension : <input size='10' name='taillem' type='text'><br>
+<p>Pour saisir la matrice:<br> Pour la première ligne, veuillez saisir chaque coefficient de cette ligne separé par un espace, une fois au bout appuye sur la touche entre pour passer à la ligne suivante. Ainsi de suite.<br>Exemple pour matrice dimension 2:<br><img class="exemple_saisie_matrice" src="Contenu/exemple_saisie.png" alt="exemple_de_saisie_de_matrice"/></p>
+<p>Cle : <textarea name='matrice' class="matrice"></textarea></p>
 <p> <input type="submit" name="chiffrer" value="Crypter/Decrypter" class="boutton_matrice"/></p>
-</form>
+</form> 
 
-
-<?php
+<?php //Les fonctions utilisés pour Hill
 require('euclidehill.php');
 function PGCD($a, $b)
 {
@@ -56,70 +55,182 @@ function inverseModulaire($a, $n)
       return $resu + $n;
    return $resu;
 }
+
+function det($matNN,$taillem)
+{
+    $smat=array(array());
+    $d=0;
+    if ($taillem == 2)
+        return $d=(($matNN[0][0] * $matNN[1][1]) - ($matNN[1][0] * $matNN[0][1]));
+    else
+    {
+        for ($k = 0; $k < $taillem; $k++)
+        {
+            $smati = 0; //submatrix's i value
+            for ($i = 1; $i < $taillem; $i++)
+            {
+                $smatj = 0;
+                for ($j = 0; $j < $taillem; $j++)
+                {
+                    if ($j == $k)
+                        continue;
+                    $smat[$smati][$smatj] = $matNN[$i][$j];
+                    $smatj++;
+                }
+                $smati++;
+            }
+            $d = $d + (pow(-1, $k) * $matNN[0][$k] * det($smat,$taillem-1));
+            // $k=i+j $smat= Matrice N-1
+        }
+    }
+    return $d;
+
+}
+function cof($num,$f)
+{
+  $b=array(array());
+  $fac=array(array());
+  
+
+   for ($q=0;$q<$f;$q++)
+   {
+   for ($p=0;$p<$f;$p++)
+    {
+     $m=0;
+     $n=0;
+     for ($i=0;$i<$f;$i++)
+     {
+       for ($j=0;$j<$f;$j++)
+        {
+          if ($i != $q && $j != $p)
+          {
+            $b[$m][$n]=$num[$i][$j];
+            if ($n<($f-2))
+             $n++;
+            else
+             {
+               $n=0;
+               $m++;
+               }
+            }
+        }
+      }
+      $fac[$q][$p]=pow(-1,$q + $p) * det($b,$f-1);
+    }
+  }
+  return transpose($num,$fac,$f);
+}
+
+function transpose($num,$fac,$r)
+{
+  $b=array(array());
+  $inverse=array(array());
+  for ($i=0;$i<$r;$i++)
+    {
+     for ($j=0;$j<$r;$j++)
+       {
+         $b[$i][$j]=$fac[$j][$i];
+        }
+    }
+  $d=det($num,$r);
+  for ($i=0;$i<$r;$i++)
+    {
+     for ($j=0;$j<$r;$j++)
+       {
+        $inverse[$i][$j]=$b[$i][$j] / $d;
+        }
+    }
+return $inverse;
+}
+
 ?>
+
 
 <?php
 
-// Chiffrement De Hill
+
 
 if (!empty($_POST)) {
-   $tab_res_code  = array();
-   $tab_res_dcode = array();
-   
-   $ccod          = $_POST['clecode'];
-   
-   if (preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#', $_POST['clecode'], $Accod)) {
+  
+  
+  //Partie pour recuperer la cle et pour calculer le determinant 
+  $m=$_POST['taillem']; //Taille de la matrice 
+  $mat=$_POST['matrice']; //La matrice/cle
+  $matN=array();
+  $matN=explode("\\n", $mat);
+  $ch = str_replace("\n"," ", $matN[0]);
+  $matN=explode(" ",$ch);
+  $alphabet = str_split($_POST['alphabet']);
+  $modulo   = count($alphabet);
+  if (preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#', $_POST['matrice'], $mat)) {
+  
+  $cptm=0;
+  for($i=0;$i<=$m-1;$i++)
+  {
+	 for($j=0;$j<=$m-1;$j++)
+	 { 
+		$matNN[$i][$j]=(int)$matN[$cptm];
+		$cptm++;
+	 }
+  }
+  
+  $Gamma    = det($matNN,$m);
+  //Fin de la partie pour recuper la cle et le calcul du determinant
+  //Verifier si la cle est valide 
+
+  $mod      = $Gamma % $modulo; //Mod en fonction de lalphabet
       
-	  $melema   = $Accod[1]; //Matrice element a 
-      $melemb   = $Accod[3]; //Matrice element b
-      $melemc   = $Accod[5]; //Matrice element c
-      $melemd   = $Accod[7]; //Matrice element d
-      //$alphabet = array();
-	  $alphabet = str_split($_POST['alphabet']);
-      $modulo   = count($alphabet);
-      $Gamma    = (($melema * $melemd) - ($melemc * $melemb)); //Calcul de det(A) avec Gamma
-      //verifier si cle valide XO
-      $mod      = $Gamma % $modulo; //Mod en fonction de lalphabet
+  if($mod < 0){
+    $mod = $mod + $modulo; //Rend le modulo positive
+  }
+
+  echo "\$\$ \\Large {\displaystyle \det(A)=\sum _{j=1}^{$m}a_{i;j}(-1)^{i+j}\det(A_{i,j})} <br>\$\$";
+  echo "\$\$ \\Large det(A) = $Gamma <br>\$\$";
+  echo "\$\$ \\Large det(A) \\equiv_{ $modulo } $mod <br>\$\$";
+  if ($Gamma != 0)
+    euclid($modulo, $mod);
+    $pgcd = PGCD($modulo, $mod); // Calcul du PGCD
+    
+    echo "\$\$ \\Large PGCD($modulo,$mod) = $pgcd <br>\$\$";
       
-      if ($mod < 0)
-         $mod = $mod + $modulo;
-         
-      echo "\$\$ \\Large det(A) = (($melema \\times $melemd)-($melemc \\times $melemb)) <br>\$\$";
-      echo "\$\$ \\Large det(A) = $Gamma <br>\$\$";
-      echo "\$\$ \\Large det(A) \\equiv_{ $modulo } $mod <br>\$\$";
-      
-      if ($Gamma != 0)
-         euclid($modulo, $mod);
-      $pgcd = PGCD($modulo, $mod); // Calcul du PGCD
-      
-      echo "\$\$ \\Large PGCD($modulo,$mod) = $pgcd <br>\$\$";
-      
-      if ($pgcd == 1) {
-         $invmod = inverseModulaire($mod, $modulo);
-         echo "\$\$ \\Large \\text{Cle valide} <br>\$\$";
-      }
-   }
-   
-   if ($pgcd != 1)
+    if ($pgcd == 1) {
+      $invmod = inverseModulaire($mod, $modulo);
+      echo "\$\$ \\Large \\text{Cle valide} <br>\$\$";
+    }
+  }
+  if ($pgcd != 1)
       echo "\$\$ \\Large \\text{Cle non valide} <br>\$\$";
-      
-   else {
+  //Fin de la verfication
+  else {
    
       if (isset($_POST['msg']) and trim($_POST['msg']) != '') { //Pour coder 
       
          if (strcmp($_POST['msgcode'], 'optcode') == 0) {
             echo "\$\$    \\Large Cle = \\begin{pmatrix}";
-            echo "$melema&$melemb \\\\ $melemc&$melemd \\end{pmatrix} \$\$";
+            $cpt=0;$vide="";
+            for($i=0;$i<=$m-1;$i++)
+            {
+              for($j=0;$j<=$m-1;$j++)
+              { 
+                echo "$matN[$cpt]&";
+                $cpt++;
+              }
+              echo "\\\\";
+            }
+            echo "\\end{pmatrix} \$\$";
             $msgc   = $_POST['msg'];
             $Amccod = str_split($msgc); // Tableu de caractere qui recupere le msg
             $compt  = count($Amccod);
             
-            if ($compt % 2 != 0) { //Ajout du caractere A
-               $Amcod   = $Amccod;
+            if ($compt % $m != 0){
+              $Amcod   = $Amccod;
+             while ($compt % $m != 0) { //Ajout du caractere A
                $Amcod[] = 'A';
                $compt++;
-            } else
-               $Amcod = $Amccod;
+             } 
+            }
+            else
+            $Amcod = $Amccod;
             $tab_res_code[] = $Amccod;
             foreach ($Amcod as $c => $v) { //Convertie les lettres en chiffres
                $Amcod[$c] = array_search($v, $alphabet);
@@ -132,23 +243,35 @@ if (!empty($_POST)) {
             
             $tab_res_code[] = $Amcod;
             
-            if ($compt % 2 == 0) { //Crypte le msg
-               for ($i = 0; $i < count($Amcod); $i++) {
-                  if ($i % 2 == 0) {
-                     $val       = $Amcod[$i];
-                     $Amcod[$i] = (($Amcod[$i] * $melema) + ($Amcod[$i + 1] * $melemb)) % $modulo;
-                     if ($Amcod[$i] < 0) {
-                        $Amcod[$i] = $Amcod[$i] + $modulo;
-                     }
-                  } else {
-                     $Amcod[$i] = (($val * $melemc) + ($Amcod[$i] * $melemd)) % $modulo;
-                     if ($Amcod[$i] < 0) {
-                        $Amcod[$i] = $Amcod[$i] + $modulo;
-                     }
+            if ($compt % $m == 0) { //Crypte le msg
+
+            //produit de matrice !!!
+            $sum=0;$cpt=0;
+            for ($i=0;$i<$compt;$i=$i+$m){
+
+              for ( $c = 0 ; $c < $m ; $c++ ){
+
+                  for ( $k = 0 ; $k < $m ; $k++ ){
+
+                  $sum = ($sum + $matNN[$c][$k]*$Amcod[$k+$i])%$modulo;
+                  if ($sum < 0) 
+                        $sum=$sum+$modulo;
                   }
-               }
+                  
+                  $mul[$cpt] = $sum;
+                  $cpt++;
+                  $sum = 0;
+                }
+
             }
-            
+            //Fin produit de matrice
+            $Amcod=$mul;
+
+
+            }
+
+
+
             $tab_res_code[] = $Amcod;
             $decrypte       = "";
             foreach ($Amcod as $val) {
@@ -200,24 +323,63 @@ if (!empty($_POST)) {
       if (isset($_POST['msg']) and trim($_POST['msg']) != '') { //Pour decoder 
       
          if (strcmp($_POST['msgcode'], 'optdcode') == 0) {
-         
-            $imelema = ($invmod * $Accod[7]) % $modulo; //Matrice Inverse element a 
-            $imelemb = ($invmod * (-$Accod[3])) % $modulo; //Matrice Inverse element b
-            $imelemc = ($invmod * (-$Accod[5])) % $modulo; //Matrice Inverse element c
-            $imelemd = ($invmod * $Accod[1]) % $modulo; //Matrice Inverse element d
+            
+            $InvmatNN=array(array());
+            if($m==2){
+            $InvmatNN[0][0]=($invmod * (int)$matN[3]) % $modulo;
+            $InvmatNN[0][1]=($invmod * (-(int)$matN[1])) % $modulo;
+            $InvmatNN[1][0]=($invmod * (-(int)$matN[2])) % $modulo;
+            $InvmatNN[1][1]=($invmod * (int)$matN[0]) % $modulo;
+            }
+            else{
+            
+            $InvmatNN=cof($matNN,$m);
+            for ($i=0;$i<$m;$i++)
+            {
+              for ($j=0;$j<$m;$j++)
+              {
+                $InvmatNN[$i][$j]=($InvmatNN[$i][$j]*$invmod)%$modulo;
+              }
+            }
+            }
+            $InvmatN=array();
+            $compteur=0;
+            for($i=0;$i<$m;$i++)
+            {
+              for($j=0;$j<$m;$j++)
+              { 
+                $InvmatN[$compteur]=$InvmatNN[$i][$j];
+                $compteur++;
+              }
+            }
+
             $msgdc   = $_POST['msg'];
             $Amdccod = str_split($msgdc);
             $dcompt  = count($Amdccod);
-            echo "\$\$    \\Large A^{-1} \\equiv_{ $modulo } \\begin{pmatrix}";
-            echo "$imelema&$imelemb \\\\ $imelemc&$imelemd \\end{pmatrix} \$\$";
+            echo "\$\$    \\Large Cle = \\begin{pmatrix}";
+            $compteur=0;
+            for($i=0;$i<$m;$i++)
+            {
+              for($j=0;$j<$m;$j++)
+              { 
+                echo "$InvmatN[$compteur]&";
+                 $compteur++;
+              }
+              echo "\\\\";
+            }
+            echo "\\end{pmatrix} \$\$";
+
             
-            if ($dcompt % 2 != 0) {
-               $Amdcod   = $Amdccod;
+            if ($dcompt % $m != 0) {
+              $Amdcod   = $Amdccod;
+              while ($dcompt % $m != 0) {
+               
                $Amdcod[] = 'A';
                $dcompt++;
+              }
+               
             } else
                $Amdcod = $Amdccod;
-            echo '<br>';
             $tab_res_dcode[] = $Amdccod;
             foreach ($Amdcod as $c => $v) {
                $Amdcod[$c] = array_search($v, $alphabet);
@@ -228,24 +390,31 @@ if (!empty($_POST)) {
             }
             echo '<br>';
             $tab_res_dcode[] = $Amdcod;
-            
-            if ($dcompt % 2 == 0) { //Decrypte le msg
-               for ($i = 0; $i < $dcompt; $i++) {
-                  if ($i % 2 == 0) {
-                     $val        = $Amdcod[$i];
-                     $Amdcod[$i] = (($Amdcod[$i] * $imelema) + ($Amdcod[$i + 1] * $imelemb)) % $modulo;
-                     if ($Amdcod[$i] < 0) {
-                        $Amdcod[$i] = $Amdcod[$i] + $modulo;
-                     }
-                  } else {
-                     $Amdcod[$i] = (($val * $imelemc) + ($Amdcod[$i] * $imelemd)) % $modulo;
-                     if ($Amdcod[$i] < 0) {
-                        $Amdcod[$i] = $Amdcod[$i] + $modulo;
-                     }
+
+            if ($dcompt % $m == 0) {
+            $sum=0;$cpt=0;
+            for ($i=0;$i<$dcompt;$i=$i+$m){
+
+              for ( $c = 0 ; $c < $m ; $c++ ){
+
+                  for ( $k = 0 ; $k < $m ; $k++ ){
+
+                  $sum = ($sum + $InvmatNN[$c][$k]*$Amdcod[$k+$i])%$modulo;
+                  if ($sum < 0) 
+                        $sum=$sum+$modulo;
                   }
-               }
+                  
+                  $mul[$cpt] = $sum;
+                  $cpt++;
+                  $sum = 0;
+                }
+
             }
-            
+            //Fin produit de matrice
+            $Amdcod=$mul;
+
+          }
+
             $tab_res_dcode[] = $Amdcod;
             $decrypt         = "";
             foreach ($Amdcod as $val) {
@@ -294,4 +463,5 @@ if (!empty($_POST)) {
       }
    }
 }
-?> 
+
+?>
