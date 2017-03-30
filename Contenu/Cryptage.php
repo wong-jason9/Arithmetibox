@@ -566,7 +566,10 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
                 $i=0;
                 $moduloC=sizeof($cle);
-                foreach($message as $value){
+               foreach($message as $value){
+                  if ($value === "." or $value === "'" or $value === ","){
+                    $_messageCrypt[] = $value;
+                  }else{
                     $motClair = indexAlpha($alphabet, $value);
                     $cleCrypt = indexAlpha($alphabet, $cle[$i%$moduloC]);
                     $i++;
@@ -576,8 +579,9 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                     }
                     else
                         $crypt = $_crypt%sizeof($alphabet);
-                    
+
                     $_messageCrypt[] = $alphabet[$crypt];
+                  }
                 }
 
                 $messageCrypt = implode($_messageCrypt);
