@@ -18,7 +18,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 </form>
 
 <?php
-    
+
     function cesar(){
     if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
       MessageDansFichier();
@@ -42,7 +42,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 $y=gmp_add($x,$_POST['clef']);
                 $y=gmp_mod($y,$mod);
                 $res[]=$y;
-                            
+
               }
               echo $_POST['message']."<br><br>";
               echo "Après cryptage : <br>";
@@ -53,7 +53,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 $res[$c]=gmp_intval($v);
                 echo $v;
                 $i++;
-              
+
                 if($i<count($res))
                   echo "-";
                 if($v>$nbcarac)
@@ -66,7 +66,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
               }
             }
           }
-                
+
         }
       }
         }
@@ -86,21 +86,21 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     }
     function inverseModulaire($a,$n){
         if(pgcd($a,$n)!=1) return 0;
-        
+
         $A=array();
         $B=array();
         $Q=array();
         $R=array();
-        
+
         $U=array();
         $V=array();
-        
+
         $i=0;
         $A[$i]=$a;
         $B[$i]=$n;
         $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i]));
         $R[$i]=gmp_mod($A[$i], $B[$i]);
-        
+
         while($R[$i]!=0){
             $i++;
             $A[$i] = $B[$i-1];
@@ -108,15 +108,15 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
             $Q[$i]=(int)(gmp_div_q($A[$i], $B[$i]));
             $R[$i]=gmp_mod($A[$i], $B[$i]);
         }
-        
+
         $U[$i]=0;
         $V[$i]=1;
-        
+
         for($j=$i-1 ; $j>=0 ; $j--){
             $U[$j] = $V[$j+1];
             $V[$j] = gmp_add(gmp_mul(gmp_neg($Q[$j]), $U[$j]), $U[$j+1]);   //équivaut à  -$Q[$j]*$U[$j]+$U[$j+1]
         }
-        
+
         $res = gmp_mod($U[0], $n);
         if($res<0) return gmp_add($res, $n);
         return $res;
@@ -151,7 +151,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                 echo $AffL2[$i];
                 if(($i+1)!=$cmpt) echo '&';
             }
-            echo "\\\\\\hline"; 
+            echo "\\\\\\hline";
             for($i=0; $i<$cmpt; $i++) {
                 echo $AffL3[$i];
                 if(($i+1)!=$cmpt) echo '&';
@@ -169,7 +169,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
             if($_POST['paquet']==1){
               echo "\\\\\\hline ";
-              for($i=0; $i<count($AffL6); $i++){  
+              for($i=0; $i<count($AffL6); $i++){
                   echo $AffL6[$i];
                   if(($i+1)!=$cmpt) echo '&';
               }
@@ -187,7 +187,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
             $XYZ = $_POST['alphabet'];
             $nbcarac=gmp_sub(strlen($_POST['alphabet']), 1);
             $AffL1=array(); //Pour stocker les valeurs et afficher le tableau après
-            $AffL2=array();  
+            $AffL2=array();
             $AffL3=array();
             $AffL4=array();
             $AffL5=array();
@@ -221,10 +221,10 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                   foreach($tab_message as $c => $v){
                       $tab_message[$c]=array_search($v,$alphabet);
                   }
-                  
+
                   $i=$_POST['paquet']-1;
                   $codeMessage=0;
-                  foreach($tab_message as $v){    
+                  foreach($tab_message as $v){
                       $codeMessage=gmp_add($codeMessage,gmp_mul($v,pow(10,(2*$i))));
                       $i=gmp_sub($i,1);
                       if($i<0){
@@ -236,7 +236,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
               }
               elseif($_POST['methode']=='code'){
                 //enlever les tiret du message et stocker dans le TABLEAU Amess
-                  $Amess = explode('-', $mess); 
+                  $Amess = explode('-', $mess);
                   $mess = implode("−", $Amess);
                   $Amess = explode('−', $mess);
 
@@ -287,7 +287,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                         $y=gmp_add($y, $mod);
 
                     $AffL5[$cmpt]=$y;
-                        
+
                     $Y=array();
                     for($i=0 ; $i<$paquet and $test==true; $i++){
                         $Y[$i] = gmp_mod($y, 100);
@@ -298,7 +298,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                             echo "clef incorrecte pour crypter";
                             break;
                         }
-                                    
+
                     }
 
                     if($test==false) break;
@@ -316,7 +316,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
                 echo "\$\$ \\textrm{clee= ($clefa, $clefb)} \$\$";
                 echo "\$\$ \\textrm{par paquet de $paquet} \$\$";
-                
+
                 affGrille($cmpt, $AffL1, $AffL2, $AffL3, $AffL4, $AffL5, $AffL6);
             }//FIN IF PREGMATCH
             else echo "Saisie incorrecte";
@@ -332,7 +332,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
   function substitution(){
     $Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $_alphabet = str_split($Alphabet);
-      
+
     if(isset($_FILES['messagecode']) and trim($_FILES['messagecode']['tmp_name'])!='')
       MessageDansFichier();
 
@@ -360,7 +360,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
               $Message = $_POST['message'];
               $_Message = str_split($Message);
-            
+
               $_POST['clef'] = strtoupper($_POST['clef']);
               $_customAlphabet = str_split($_POST['clef']);
 
@@ -381,15 +381,15 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
       }
       else
         echo "Vérifiez la clef";
-    }  
+    }
   }
-    
+
 
   /*****************************
-  
+
         FIN DE SUBSTITUTION
 
-  ******************************/ 
+  ******************************/
 /*********************************************
 
                     VIGENERE
@@ -419,6 +419,7 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
                foreach($message as $value){
                   if ($value === "." or $value === "'" or $value === ","){
                     $_messageCrypt[] = $value;
+                    $i++;
                   }else{
                     $motClair = indexAlpha($alphabet, $value);
                     $cleCrypt = indexAlpha($alphabet, $cle[$i%$moduloC]);
@@ -449,8 +450,8 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
 
                 FIN DE VIGENERE
 
-    **********************************************/ 
- 
+    **********************************************/
+
     if(isset($_POST['fonction'])){
       if($_POST['fonction']=='cesa')
         $cesa=cesar();
@@ -465,4 +466,3 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     ?>
 </body>
 </html>
-
