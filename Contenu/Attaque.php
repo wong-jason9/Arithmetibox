@@ -276,14 +276,6 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
     ***********************************************/
 	
 	require('euclidehill.php');
-/*function PGCD($a, $b)
-{
-   if ($a == 0)
-      return $b;
-   if ($b == 0)
-      return $a;
-   return (PGCD($b, $a % $b));
-}*/
 
 function ahill(){
 
@@ -409,12 +401,6 @@ $alphabet = str_split($_POST['alphabet']);
     
     arsort($tabFrequences);
     arsort($_stats);
-
-    /*Tableau des fréquences de chaque lettre*/
-    /*foreach($_stats as $key => $v)
-      echo $key."=".$v."<br>";*/
-    //print_r($_stats); echo '<br><br>';
-
     
     foreach($tabFrequences as $c=>$v){
       $_ordDescNorm[] = $c;
@@ -422,42 +408,6 @@ $alphabet = str_split($_POST['alphabet']);
 
     foreach($_stats as $c=>$v)
       $_ordDescCustom[] = $c;
-    
-    /*print_r($_ordDescNorm); echo '<br><br>';
-    print_r($_ordDescCustom); echo '<br><br>';*/
-    
-      
-    /*echo '\[ \\begin{array}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}';
-    foreach ($_ordDescCustom as $key => $value) {
-      echo $value."&";
-    }
-    echo '\\\\';
-    
-    foreach ($_ordDescNorm as $key => $value) {
-      echo $value."&";
-    }
-    echo "\\\\";
-    echo "\\hline";
-    echo "\\end{array}";
-    echo '\]';*/
-
-    /*echo '<table class="freq_alphabet">';
-      echo '<tr>';
-     foreach($_ordDescCustom as $key => $value){
-        echo '<td>'.$value.'</td>';
-     }
-      echo '</tr>';
-      echo '<tr>';
-     foreach($_stats as $key => $value){
-        echo '<td>'.$value.'</td>';
-     }
-      echo '</tr>';
-
-      echo '<tr>';
-      foreach($_ordDescNorm as $key => $value)
-        echo '<td>'.$value.'</td>';
-      echo '</tr>';
-    echo '</table>';*/
     
     echo '<table class="freq_alphabet" style="border-collapse: collapse">';
       for($i=0; $i<26; $i++){
@@ -469,17 +419,10 @@ $alphabet = str_split($_POST['alphabet']);
       }
     echo '</table>';
     
-
-
-    //Affiche message sans decryptage
-    //echo $Message; echo '<br>';
-    //echo strlen($Message); echo '<br>';
-    
     for($i=0; $i<26; $i++)
       $Message = preg_replace("#".$_ordDescCustom[$i]."#", $_ordDescNorm[$i], $Message);
 
     echo '<p class="message">'.$Message.'</p>'; echo '<br>';
-    //echo strlen($Message);
   }
 
   /****************************************

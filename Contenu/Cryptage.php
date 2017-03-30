@@ -5,7 +5,6 @@
 <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
 <p><label>Cesar<input type='radio' name='fonction' value='cesa' checked='checked'></label>
 <label>Affine<input type='radio' name='fonction' value='affi'></label>
-<label>Hill<input type='radio' name='fonction' value='hill'></label>
 <label>Substitution<input type="radio" name="fonction" value="subs"></label>
 <label>Vigenere<input type="radio" name="fonction" value="vige"></label></p>
 Alphabet : <input size='50' name='alphabet' type='text' value='ABCDEFGHIJKLMNOPQRSTUVWXYZ'><br>
@@ -324,155 +323,6 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
       }//FIN DU PREMIER IF ISSET TRIM...
   }//FIN DE LA FUNCTION
 
-  
-  /***********************************************
-    ********************HILL************************
-    ***********************************************/
-  require('euclidehill.php');
-  
-  function chill(){
-  
-  $tab_res_code = array();
-   
-  $ccod          = $_POST['clef'];
-   
-   if (preg_match('#^([-]?[0-9]*)(\ )([-]?[0-9]*)(\s*)([-]?[0-9]*)(\ )([-]?[0-9]*)#', $_POST['clef'], $Accod)) {
-      
-    $melema   = $Accod[1]; //Matrice element a 
-      $melemb   = $Accod[3]; //Matrice element b
-      $melemc   = $Accod[5]; //Matrice element c
-      $melemd   = $Accod[7]; //Matrice element d
-      //$alphabet = array();
-    $alphabet = str_split($_POST['alphabet']);
-      $modulo   = count($alphabet);
-      $Gamma    = (($melema * $melemd) - ($melemc * $melemb)); //Calcul de det(A) avec Gamma
-      //verifier si cle valide XO
-      $mod      = $Gamma % $modulo; //Mod en fonction de lalphabet
-      
-      if ($mod < 0)
-         $mod = $mod + $modulo;
-         
-      echo "\$\$ \\Large det(A) = (($melema \\times $melemd)-($melemc \\times $melemb)) <br>\$\$";
-      echo "\$\$ \\Large det(A) = $Gamma <br>\$\$";
-      echo "\$\$ \\Large det(A) \\equiv_{ $modulo } $mod <br>\$\$";
-      
-      if ($Gamma != 0)
-         euclid($modulo, $mod);
-      $pgcd = PGCD($modulo, $mod); // Calcul du PGCD
-      
-      echo "\$\$ \\Large PGCD($modulo,$mod) = $pgcd <br>\$\$";
-      
-      if ($pgcd == 1) {
-         $invmod = inverseModulaire($mod, $modulo);
-         echo "\$\$ \\Large \\text{Cle valide} <br>\$\$";
-      }
-   }
-   
-   if ($pgcd != 1)
-      echo "\$\$ \\Large \\text{Cle non valide} <br>\$\$";
-      
-   if ($pgcd == 1) {
-      
-      if (isset($_POST['message']) and trim($_POST['message']) != '') { //Pour coder  
-      
-            echo "\$\$    \\Large Cle = \\begin{pmatrix}";
-            echo "$melema&$melemb \\\\ $melemc&$melemd \\end{pmatrix} \$\$";
-            $msgc   = $_POST['message'];
-            $Amccod = str_split($msgc); // Tableu de caractere qui recupere le msg
-            $compt  = count($Amccod);
-            
-            if ($compt % 2 != 0) { //Ajout du caractere A
-               $Amcod   = $Amccod;
-               $Amcod[] = 'A';
-               $compt++;
-            } else
-               $Amcod = $Amccod;
-            $tab_res_code[] = $Amccod;
-            foreach ($Amcod as $c => $v) { //Convertie les lettres en chiffres
-               $Amcod[$c] = array_search($v, $alphabet);
-            }
-            
-            $codeMessage = 0;
-            foreach ($Amcod as $v) {
-               $codeMessage += $v * pow(10, (2 * 0));
-            }
-            
-            $tab_res_code[] = $Amcod;
-            
-            if ($compt % 2 == 0) { //Crypte le msg
-               for ($i = 0; $i < count($Amcod); $i++) {
-                  if ($i % 2 == 0) {
-                     $val       = $Amcod[$i];
-                     $Amcod[$i] = (($Amcod[$i] * $melema) + ($Amcod[$i + 1] * $melemb)) % $modulo;
-                     if ($Amcod[$i] < 0) {
-                        $Amcod[$i] = $Amcod[$i] + $modulo;
-                     }
-                  } else {
-                     $Amcod[$i] = (($val * $melemc) + ($Amcod[$i] * $melemd)) % $modulo;
-                     if ($Amcod[$i] < 0) {
-                        $Amcod[$i] = $Amcod[$i] + $modulo;
-                     }
-                  }
-               }
-            }
-            
-            $tab_res_code[] = $Amcod;
-            $decrypte       = "";
-      
-      foreach ($Amcod as $cle => $val) {
-               $decrypte = $decrypte.$_POST['alphabet'][$Amcod[$cle]];
-            }
-      
-            $Amcod          = str_split($decrypte);
-            $tab_res_code[] = $Amcod;
-            
-            //Affichage LateX pour Coder
-            echo "<p>\$\$";
-            echo "\\begin{array}{c||c}"; // collone //
-            foreach ($tab_res_code as $c => $v) {
-               switch ($c) {
-                  case 0:
-                     echo " Texte& ";
-                     foreach ($tab_res_code[$c] as $val) {
-                        echo " $val& ";
-                     }
-                     break;
-                  case 1:
-                     echo " Codage&";
-                     foreach ($tab_res_code[$c] as $val) {
-                        echo " $val& ";
-                     }
-                     break;
-                  case 2:
-                     echo " A.X&";
-                     foreach ($tab_res_code[$c] as $val) {
-                        echo " $val& ";
-                     }
-                     break;
-                  case 3:
-                     echo " Decodage&";
-                     foreach ($tab_res_code[$c] as $val) {
-                        echo " $val& ";
-                     }
-                     break;
-               }
-               echo "\\\\\\hline";
-            }
-            echo "\\end{array}";
-            echo "\$\$</p>";
-            //Fin affichage LateX pour Coder
-            
-            echo "<br>Decodage : $decrypte "; //Affiche le message coder 
-         }
-      }      
-    }
-      
-   
-  
-  /***********************************************
-    *****************FIN DE HILL********************
-    ***********************************************/
-
   /*****************************
 
           SUBSTITUTION
@@ -606,8 +456,6 @@ Ou choisir un fichier contenant le message codé : <input type="file" name="mess
         $cesa=cesar();
       if($_POST['fonction']=='affi')
         affine();
-      if($_POST['fonction']=='hill')
-        chill();
       if($_POST['fonction']=='subs')
         substitution();
        if($_POST['fonction']=='vige')
