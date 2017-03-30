@@ -158,6 +158,6 @@
     </section>
 </body>
 <footer>
-    <p class="texte_footer"> Projet réalisé par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou, Sena Roith, Adrien Cavalieri</p><p class="texte_footer"> #TeamArithmetiBox © 2016-2017</p>
+    <p class="texte_footer"> Projet réalisé par : Jason Wong, Jeremy Dos Santos, Jack Kaing, Quentin Rat, Fahath Mougammadou, Senaroith Nor, Adrien Cavalieri</p><p class="texte_footer"> #TeamArithmetiBox © 2016-2017</p>
 </footer>
 </html>
